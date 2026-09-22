@@ -431,4 +431,4 @@
   </div>
 </footer>
 
-<script id="pf-ext-js">(function(){["click","auxclick","keydown"].forEach(function(ev){document.addEventListener(ev,function(e){var t=e.target;if(!t||!t.closest)return;var el=t.closest("[data-pf-ext],[data-href][role=link]");if(!el)return;if(ev!=="keydown"||e.key==="Enter"||e.key===" "){e.preventDefault();e.stopImmediatePropagation();}},true);});})();</script>
+<script id="pf-ext-js">(function(){var EXT=/^(https?:|tel:|mailto:)/i,OWN=/^https?:\/\/sabavafa\.github\.io/i;function bad(t){if(!t||!t.closest)return null;var el=t.closest('[data-pf-ext],[data-href][role=link]');if(el)return el;var a=t.closest('a');if(a){var h=a.getAttribute('href')||'';if(EXT.test(h)&&!OWN.test(h))return a;}return null;}['click','auxclick','keydown'].forEach(function(ev){document.addEventListener(ev,function(e){var el=bad(e.target);if(!el)return;if(ev!=='keydown'||e.key==='Enter'||e.key===' '){e.preventDefault();e.stopImmediatePropagation();}},true);});})();</script>
