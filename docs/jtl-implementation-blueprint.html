@@ -1,0 +1,431 @@
+<title>Campaign Plugin for JTL-Shop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+  :root {
+    --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EFF3F1; --panel:#FBFCFC;
+    --ink:#171B1A; --ink-2:#3C4241; --muted:#69716F; --faint:#8B9390;
+    --line:#E3E8E6; --line-2:#D2DAD7;
+    --accent:#015253; --accent-tint:#E3F2F0; --accent-ink:#013C3D;
+    --gold:#A97E2E; --gold-tint:#F4EBD7;
+    --ok:#2F7D5B; --ok-tint:#E5F1EA; --ok-line:#BFDECC;
+    --warn:#A6711A; --warn-tint:#F6EEDB; --warn-line:#E7D3A0;
+    --hard:#BE4238; --hard-tint:#F8E6E4; --hard-line:#EEC5C0;
+    --shadow:0 1px 2px rgba(12,30,28,.04), 0 8px 24px rgba(12,30,28,.05);
+    --maxw:66rem;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:#0D1312; --surface:#141A19; --surface-2:#1A2221; --panel:#111716;
+      --ink:#EBF0EE; --ink-2:#C3CBC9; --muted:#8B948F; --faint:#6E7873;
+      --line:#26302E; --line-2:#334140;
+      --accent:#5BB8B0; --accent-tint:#12302E; --accent-ink:#A6DCD5;
+      --gold:#D3AB5C; --gold-tint:#241E10;
+      --ok:#63B489; --ok-tint:#15271E; --ok-line:#274a38;
+      --warn:#D6A64F; --warn-tint:#282011; --warn-line:#4a3c1d;
+      --hard:#E37167; --hard-tint:#2C1512; --hard-line:#502722;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:#0D1312; --surface:#141A19; --surface-2:#1A2221; --panel:#111716;
+    --ink:#EBF0EE; --ink-2:#C3CBC9; --muted:#8B948F; --faint:#6E7873;
+    --line:#26302E; --line-2:#334140;
+    --accent:#5BB8B0; --accent-tint:#12302E; --accent-ink:#A6DCD5;
+    --gold:#D3AB5C; --gold-tint:#241E10;
+    --ok:#63B489; --ok-tint:#15271E; --ok-line:#274a38;
+    --warn:#D6A64F; --warn-tint:#282011; --warn-line:#4a3c1d;
+    --hard:#E37167; --hard-tint:#2C1512; --hard-line:#502722;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.4);
+  }
+
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--ground); color:var(--ink); font-family:"IBM Plex Sans", system-ui, sans-serif; font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:var(--maxw); margin:0 auto; padding:0 1.5rem; }
+  h1,h2,h3 { font-family:"Archivo", system-ui, sans-serif; text-wrap:balance; margin:0; }
+  a { color:var(--accent); }
+  code, .mono { font-family:"IBM Plex Mono", ui-monospace, monospace; }
+  .mono-field { font-family:"IBM Plex Mono", monospace; font-size:.82em; color:var(--accent-ink); background:var(--accent-tint); padding:.06em .38em; border-radius:4px; white-space:nowrap; }
+
+  header.mast { border-bottom:1px solid var(--line); background:linear-gradient(180deg, var(--surface), var(--panel)); }
+  .mast-inner { padding:2.6rem 0 2rem; }
+  .eyebrow { font-family:"IBM Plex Mono", monospace; font-size:.72rem; letter-spacing:.22em; text-transform:uppercase; color:var(--accent); font-weight:600; }
+  .mast h1 { font-size:clamp(1.9rem, 4.4vw, 3rem); font-weight:800; letter-spacing:-.02em; line-height:1.02; margin:.7rem 0 .55rem; }
+  .mast .lede { font-size:1.06rem; color:var(--ink-2); max-width:47rem; margin:0; }
+  .mast .scope { margin-top:.9rem; font-size:.82rem; color:var(--muted); }
+  .mast .scope b { color:var(--ink-2); font-weight:600; }
+
+  .stats { display:grid; grid-template-columns:repeat(4, 1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:12px; overflow:hidden; margin-top:1.8rem; }
+  .stat { background:var(--surface); padding:1rem 1.1rem; }
+  .stat .num { font-family:"Archivo", sans-serif; font-weight:700; font-size:1.55rem; line-height:1.05; letter-spacing:-.01em; }
+  .stat .lbl { font-size:.74rem; color:var(--muted); margin-top:.35rem; letter-spacing:.02em; }
+  .stat.ok .num { color:var(--ok); } .stat.accent .num { color:var(--accent); }
+
+  main { padding:2.6rem 0 3rem; }
+  section { margin-bottom:2.8rem; }
+  .sec-head { display:flex; align-items:baseline; gap:.8rem; margin-bottom:1.1rem; }
+  .sec-head h2 { font-size:1.28rem; font-weight:700; letter-spacing:-.01em; }
+  .sec-head .idx { font-family:"IBM Plex Mono", monospace; font-size:.8rem; color:var(--faint); font-weight:500; }
+  .sec-sub { color:var(--muted); font-size:.92rem; margin:-.4rem 0 1.1rem; max-width:49rem; }
+
+  .verdict { background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:12px; padding:1.5rem 1.6rem; box-shadow:var(--shadow); }
+  .verdict p { margin:0 0 .8rem; color:var(--ink-2); }
+  .verdict p:last-child { margin-bottom:0; }
+  .verdict strong { color:var(--ink); font-weight:600; }
+
+  /* principle cards */
+  .principles { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  .principle { background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:1.2rem 1.3rem; box-shadow:var(--shadow); }
+  .principle .p-k { font-family:"IBM Plex Mono", monospace; font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); font-weight:600; }
+  .principle h3 { font-size:1.02rem; font-weight:700; margin:.35rem 0 .4rem; }
+  .principle p { margin:0; font-size:.9rem; color:var(--ink-2); }
+
+  /* architecture diagram */
+  .arch { border:1px solid var(--line); border-radius:12px; background:var(--panel); padding:1.5rem; box-shadow:var(--shadow); overflow-x:auto; }
+  .tier-grid { display:grid; gap:1rem; min-width:36rem; }
+  .tier { border:1px solid var(--line-2); border-radius:10px; padding:1rem 1.1rem; background:var(--surface); }
+  .tier .t-label { font-family:"IBM Plex Mono", monospace; font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; font-weight:600; margin-bottom:.7rem; display:flex; align-items:center; gap:.5rem; }
+  .tier.master .t-label { color:var(--gold); }
+  .tier.plugin .t-label { color:var(--accent); }
+  .tier.front .t-label { color:var(--ok); }
+  .chips { display:flex; flex-wrap:wrap; gap:.5rem; }
+  .chip2 { font-size:.78rem; padding:.35rem .6rem; border-radius:7px; background:var(--surface-2); border:1px solid var(--line); color:var(--ink-2); }
+  .chip2 b { color:var(--ink); font-weight:600; }
+  .tier.plugin { border-color:var(--accent); border-width:1.5px; }
+  .flowlink { text-align:center; font-family:"IBM Plex Mono", monospace; font-size:.72rem; color:var(--faint); padding:.1rem 0; }
+  .arch-note { margin-top:1.1rem; padding-top:1rem; border-top:1px solid var(--line); font-size:.82rem; color:var(--muted); }
+  .arch-note b { color:var(--ink-2); font-weight:600; }
+
+  /* merchandiser workflow */
+  .wf { display:grid; grid-template-columns:repeat(3,1fr); border:1px solid var(--line); border-radius:12px; overflow:hidden; background:var(--surface); box-shadow:var(--shadow); }
+  .wf-step { position:relative; display:flex; flex-direction:column; gap:.55rem; padding:1.15rem 1.2rem 1.2rem; border-right:1px solid var(--line); }
+  .wf-step:last-child { border-right:0; }
+  .wf-step::before { content:""; position:absolute; top:0; left:0; right:0; height:3px; }
+  .wf-step:not(:last-child)::after { content:"›"; position:absolute; right:-0.72rem; top:50%; transform:translateY(-50%); z-index:2; width:1.35rem; height:1.35rem; display:flex; align-items:center; justify-content:center; background:var(--surface); border:1px solid var(--line); border-radius:50%; color:var(--muted); font-size:1.1rem; line-height:1; font-family:"IBM Plex Mono",monospace; }
+  .wf-tool { align-self:flex-start; display:inline-flex; align-items:center; gap:.35rem; font-family:"IBM Plex Mono",monospace; font-size:.64rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; padding:.26rem .5rem; border-radius:999px; border:1px solid transparent; }
+  .wf-step .n { font-family:"Archivo",sans-serif; font-weight:800; font-size:1rem; color:var(--faint); font-variant-numeric:tabular-nums; }
+  .wf-step h3 { font-size:.96rem; font-weight:700; line-height:1.2; }
+  .wf-step .d { font-size:.82rem; color:var(--ink-2); line-height:1.45; }
+  .wf-step .who { margin-top:auto; font-size:.72rem; color:var(--muted); padding-top:.55rem; border-top:1px dashed var(--line-2); }
+  .wf-step .who b { color:var(--ink-2); font-weight:600; }
+  .wf-wawi::before   { background:var(--gold); }   .wf-wawi   .wf-tool { color:var(--gold);   background:var(--gold-tint);   border-color:var(--gold); }
+  .wf-backend::before{ background:var(--accent); } .wf-backend .wf-tool { color:var(--accent); background:var(--accent-tint); border-color:var(--accent-ink); }
+  .wf-preview::before{ background:var(--warn); }   .wf-preview .wf-tool { color:var(--warn);   background:var(--warn-tint);   border-color:var(--warn-line); }
+  .wf-public::before { background:var(--ok); }     .wf-public  .wf-tool { color:var(--ok);     background:var(--ok-tint);     border-color:var(--ok-line); }
+  .wf-legend { margin-top:1rem; display:flex; flex-wrap:wrap; gap:.5rem 1.2rem; font-size:.8rem; color:var(--muted); }
+  .wf-legend b { color:var(--ink-2); font-weight:600; }
+
+  /* mapping table */
+  .group { border:1px solid var(--line); border-radius:12px; background:var(--surface); overflow:hidden; box-shadow:var(--shadow); }
+  .group + .group { margin-top:1rem; }
+  .group-head { display:flex; align-items:center; gap:.7rem; padding:.85rem 1.1rem; background:var(--surface-2); border-bottom:1px solid var(--line); }
+  .group-head .g-name { font-family:"IBM Plex Mono", monospace; font-size:.76rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-2); font-weight:600; }
+  .row { display:grid; grid-template-columns:1fr 1.25fr auto; align-items:start; gap:1rem; padding:.9rem 1.1rem; border-bottom:1px solid var(--line); }
+  .row:last-child { border-bottom:0; }
+  .feat .name { font-weight:600; color:var(--ink); font-size:.95rem; line-height:1.35; }
+  .feat .detail { color:var(--muted); font-size:.8rem; margin-top:.2rem; line-height:1.45; }
+  .maps { color:var(--ink-2); font-size:.86rem; line-height:1.5; }
+  .maps .k { color:var(--faint); font-family:"IBM Plex Mono", monospace; font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; display:block; margin-bottom:.15rem; }
+  .pill { justify-self:end; font-family:"IBM Plex Mono", monospace; font-size:.66rem; font-weight:600; letter-spacing:.05em; text-transform:uppercase; padding:.26rem .5rem; border-radius:999px; white-space:nowrap; border:1px solid transparent; }
+  .p-native { color:var(--ok); background:var(--ok-tint); border-color:var(--ok-line); }
+  .p-plugin { color:var(--accent); background:var(--accent-tint); border-color:var(--accent-ink); }
+
+  /* code / plugin tree */
+  .tree { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:1.2rem 1.3rem; overflow-x:auto; box-shadow:var(--shadow); }
+  .tree pre { margin:0; font-family:"IBM Plex Mono", monospace; font-size:.82rem; line-height:1.7; color:var(--ink-2); }
+  .tree .c { color:var(--faint); }
+  .tree .f { color:var(--accent-ink); font-weight:600; }
+
+  .callout { border:1px solid var(--hard-line); background:var(--hard-tint); border-radius:12px; padding:1.3rem 1.45rem; }
+  .callout .c-k { font-family:"IBM Plex Mono", monospace; font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--hard); font-weight:700; }
+  .callout h3 { font-size:1.05rem; margin:.35rem 0 .5rem; }
+  .callout p { margin:0 0 .6rem; font-size:.92rem; color:var(--ink-2); }
+  .callout p:last-child { margin:0; }
+
+  .steps-list { display:grid; gap:.55rem; }
+  .sline { display:grid; grid-template-columns:auto 1fr; gap:.7rem; align-items:start; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:.8rem 1rem; }
+  .sline .b { width:.5rem; height:.5rem; border-radius:2px; background:var(--accent); margin-top:.5em; }
+  .sline .txt { font-size:.9rem; color:var(--ink-2); }
+  .sline .txt b { color:var(--ink); font-weight:600; }
+
+  .road { display:grid; border:1px solid var(--line); border-radius:12px; overflow:hidden; background:var(--surface); box-shadow:var(--shadow); }
+  .step { display:grid; grid-template-columns:3rem 1fr auto; gap:1rem; align-items:center; padding:1.05rem 1.2rem; border-bottom:1px solid var(--line); }
+  .step:last-child { border-bottom:0; }
+  .step .n { font-family:"Archivo", sans-serif; font-weight:800; font-size:1.15rem; color:var(--accent); font-variant-numeric:tabular-nums; }
+  .step .body .st { font-weight:600; color:var(--ink); }
+  .step .body .sd { font-size:.86rem; color:var(--muted); margin-top:.15rem; }
+  .step .ph { font-family:"IBM Plex Mono", monospace; font-size:.68rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); border:1px solid var(--line-2); border-radius:999px; padding:.24rem .6rem; white-space:nowrap; }
+  .step.now .ph { color:var(--ok); border-color:var(--ok-line); background:var(--ok-tint); }
+
+  .risks { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+  .risk { background:var(--surface); padding:1.05rem 1.15rem; }
+  .risk .r-h { font-weight:600; color:var(--ink); font-size:.9rem; margin-bottom:.3rem; }
+  .risk p { margin:0; font-size:.84rem; color:var(--muted); line-height:1.5; }
+
+  footer { border-top:1px solid var(--line); padding:1.6rem 0 2.4rem; color:var(--faint); font-size:.8rem; }
+  footer .wrap { display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
+
+  @media (max-width:52rem) {
+    .stats { grid-template-columns:repeat(2,1fr); }
+    .principles { grid-template-columns:1fr; }
+    .row { grid-template-columns:1fr; gap:.4rem; }
+    .row .pill { justify-self:start; }
+    .risks { grid-template-columns:1fr; }
+    .wf { grid-template-columns:1fr; }
+    .wf-step { border-right:0; border-bottom:1px solid var(--line); }
+    .wf-step:last-child { border-bottom:0; }
+    .wf-step:not(:last-child)::after { right:auto; left:50%; top:auto; bottom:-0.72rem; transform:translateX(-50%) rotate(90deg); }
+  }
+</style>
+
+<header class="mast">
+<meta name="robots" content="noindex, nofollow" />
+  <div class="wrap mast-inner">
+    <div class="eyebrow">Implementation Blueprint · JTL-Shop 5</div>
+    <h1>Seasonal Campaigns as a JTL-Shop Plugin</h1>
+    <p class="lede">How to make the campaign prototype fully implementable on JTL-Shop — by mapping every feature onto native JTL machinery (Aktionen, Sonderpreise, Wawi, Portlets, plugin hooks) and keeping the plugin a thin presentation-and-scheduling layer that never touches pricing.</p>
+    <p class="scope">Target: <b>JTL-Shop 5.x</b> (PHP 8 · Smarty · <b>Snackys</b> base + <b>ETK2022</b> child template · OnPage Composer) + <b>JTL-Wawi</b> as master data · shop: <b>edelstahl-tuerklingel.de</b> <span style="color:var(--ok)">— stack confirmed against the live site</span></p>
+
+    <div class="stats">
+      <div class="stat accent"><div class="num">1 plugin</div><div class="lbl">thin orchestration layer</div></div>
+      <div class="stat ok"><div class="num">Native</div><div class="lbl">pricing via Aktionen / Sonderpreise</div></div>
+      <div class="stat"><div class="num">Wawi</div><div class="lbl">single source of truth</div></div>
+      <div class="stat ok"><div class="num">0 lines</div><div class="lbl">of front-end price math</div></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section>
+    <div class="verdict">
+      <p><strong>The core decision: separate presentation from pricing.</strong> The plugin owns campaign scheduling, resolution and presentation. Prices, discounts, VAT and stock stay entirely inside JTL/Wawi. A campaign <em>references</em> a JTL promotion rather than computing one — so the badge on the card and the price in the cart can never disagree, and everything stays PAngV-compliant and customer-group correct out of the box.</p>
+      <p>This turns the assessment's hard items green: <strong>discount enforcement</strong> becomes a native Aktion/Sonderpreis and <strong>price &amp; VAT</strong> come from the shop's price calc. What remains for the plugin is exactly the part JTL doesn't already do: knowing which campaign is live today, and dressing the page for it.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="idx">A</span><h2>Four principles the build rests on</h2></div>
+    <div class="principles">
+      <div class="principle">
+        <div class="p-k">Principle 01</div>
+        <h3>Plugin presents, JTL prices</h3>
+        <p>The resolution engine and templates live in the plugin. Every euro is calculated by JTL's price engine against Wawi data. The plugin reads the priced line item — it never multiplies by 1.19.</p>
+      </div>
+      <div class="principle">
+        <div class="p-k">Principle 02</div>
+        <h3>Wawi is the source of truth</h3>
+        <p>Products, prices, VAT, customer groups, stock and promotions are authored in Wawi and synced to the shop. The plugin adds only campaign metadata in its own tables — it never writes prices the sync would overwrite.</p>
+      </div>
+      <div class="principle">
+        <div class="p-k">Principle 03</div>
+        <h3>Server-rendered, then enhanced</h3>
+        <p>Hero, promo strip and product slots render in Smarty via OPC Portlets &amp; template hooks — good for SEO and CLS. JS only enhances (countdown, the premium dropdowns) on top of the Bootstrap 4 + jQuery the shop already ships, never injects the campaign after load.</p>
+      </div>
+      <div class="principle">
+        <div class="p-k">Principle 04</div>
+        <h3>Resolve once, cache hard</h3>
+        <p>The active campaign is resolved per request but cached with JTL's object cache, keyed on campaign + customer group + language, and flushed the moment a window opens or closes.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="idx">B</span><h2>Architecture — three tiers</h2></div>
+    <p class="sec-sub">Data flows down; the plugin sits in the middle and orchestrates. Nothing in the storefront tier computes a price or a discount.</p>
+    <div class="arch">
+      <div class="tier-grid">
+        <div class="tier master">
+          <div class="t-label">▲ Master data — JTL-Wawi</div>
+          <div class="chips">
+            <span class="chip2"><b>Artikel</b> · products &amp; categories</span>
+            <span class="chip2"><b>Preise</b> · net/gross, customer groups</span>
+            <span class="chip2"><b>Aktionen</b> · promotions (date-ranged)</span>
+            <span class="chip2"><b>Sonderpreise</b> · special prices von/bis</span>
+            <span class="chip2"><b>Lagerbestand</b> · stock</span>
+          </div>
+        </div>
+        <div class="flowlink">│ Wawi → Shop sync (JTL connector) │</div>
+        <div class="tier plugin">
+          <div class="t-label">◆ Campaign plugin (Shop DB)</div>
+          <div class="chips">
+            <span class="chip2"><b>xplugin_camp_campaign</b> · scheduling + meta</span>
+            <span class="chip2"><b>Resolver</b> · which campaign wins today</span>
+            <span class="chip2"><b>Admin tab</b> · authoring UI</span>
+            <span class="chip2"><b>aktion_ref</b> → links to a Wawi Aktion</span>
+          </div>
+        </div>
+        <div class="flowlink">│ Portlets · hooks · Smarty assigns │</div>
+        <div class="tier front">
+          <div class="t-label">▼ Storefront — Snackys / ETK2022 · Smarty</div>
+          <div class="chips">
+            <span class="chip2"><b>Hero</b> Portlet</span>
+            <span class="chip2"><b>Promo-Strip</b> box</span>
+            <span class="chip2"><b>Countdown</b> (JS enhance)</span>
+            <span class="chip2"><b>Product slot</b> — reads priced items</span>
+            <span class="chip2"><b>Badge</b> — reads the Aktion price</span>
+          </div>
+        </div>
+      </div>
+      <p class="arch-note"><b>Read the middle tier as the whole scope of work.</b> Everything above it JTL already provides; everything below it is templating. The plugin is small on purpose.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="idx">C</span><h2>Where each task happens — the merchandiser workflow</h2></div>
+    <p class="sec-sub">One campaign touches three surfaces. The prototype fuses them into a single page; in production each step lives in its own tool, with its own access. Colour marks the surface.</p>
+    <div class="wf">
+      <div class="wf-step wf-wawi">
+        <span class="wf-tool">JTL-Wawi · Desktop</span>
+        <span class="n">01</span>
+        <h3>Create the discount</h3>
+        <p class="d">Author the <b>Aktion / Sonderpreis</b> — percent or fixed, date range, target category, customer groups. This is the binding, checkout-enforced price. Syncs into the shop.</p>
+        <p class="who">Who: <b>Merchandising</b> · JTL-Wawi (desktop ERP)</p>
+      </div>
+      <div class="wf-step wf-backend">
+        <span class="wf-tool">Shop-Backend · /admin</span>
+        <span class="n">02</span>
+        <h3>Author &amp; schedule the campaign</h3>
+        <p class="d">In the plugin tab: window, hero, eyebrow, badge, template — and pick the Aktion it references (<span class="mono-field">kAktion</span>). No price is entered here.</p>
+        <p class="who">Who: <b>Staff</b> · shop backend, role-gated login</p>
+      </div>
+      <div class="wf-step wf-public">
+        <span class="wf-tool">Frontend · Public</span>
+        <span class="n">03</span>
+        <h3>It goes live</h3>
+        <p class="d">Hero, promo and badges render server-side and cache; JTL enforces the discount in cart &amp; checkout on the window's dates. Nothing to click — it just appears.</p>
+        <p class="who">Who: <b>All shoppers</b> · public storefront</p>
+      </div>
+    </div>
+    <div class="wf-legend">
+      <span><b>Colour = surface.</b></span>
+      <span>Gold · JTL-Wawi</span>
+      <span>Teal · Shop-backend tab</span>
+      <span>Green · public storefront</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="idx">D</span><h2>Feature → JTL mapping</h2></div>
+    <p class="sec-sub">Every prototype feature against its concrete JTL mechanism. <b style="color:var(--ok)">Native</b> = JTL already does it; <b style="color:var(--accent)">Plugin</b> = the plugin provides it.</p>
+
+    <div class="group">
+      <div class="group-head"><span class="g-name">Resolution &amp; scheduling</span></div>
+      <div class="row"><div class="feat"><div class="name">Date-window + recurring resolution</div><div class="detail">priority overlap · New-Year wrap · evergreen fallback · pause</div></div>
+        <div class="maps"><span class="k">JTL</span>Pure PHP port of the engine, run in <span class="mono-field">Bootstrap::boot()</span> on a page hook; evaluated in <span class="mono-field">Europe/Berlin</span>.</div>
+        <div class="pill p-plugin">Plugin</div></div>
+      <div class="row"><div class="feat"><div class="name">Campaign storage &amp; meta</div><div class="detail">hero copy, template, badge, targetCategories</div></div>
+        <div class="maps"><span class="k">JTL</span>Custom table via a <span class="mono-field">Migration</span>; not synced from Wawi (shop-only presentation data).</div>
+        <div class="pill p-plugin">Plugin</div></div>
+    </div>
+
+    <div class="group">
+      <div class="group-head"><span class="g-name">Pricing &amp; discounts — the crux</span></div>
+      <div class="row"><div class="feat"><div class="name">Discount enforcement</div><div class="detail"><span class="mono-field">discountRule{type,value,scope}</span></div></div>
+        <div class="maps"><span class="k">JTL</span>Maps to a Wawi <b>Aktion</b> or article <b>Sonderpreis</b> (percent / fixed) on the scope's category. Enforced at cart &amp; checkout by JTL — the plugin only stores <span class="mono-field">aktion_ref</span>.</div>
+        <div class="pill p-native">Native</div></div>
+      <div class="row"><div class="feat"><div class="name">Price &amp; VAT display</div><div class="detail">gross/net, customer group, country</div></div>
+        <div class="maps"><span class="k">JTL</span>JTL price calc + <span class="mono-field">Kundengruppe</span>. Struck price &amp; PAngV 30-day reference handled by the shop's Sonderpreis display.</div>
+        <div class="pill p-native">Native</div></div>
+      <div class="row"><div class="feat"><div class="name">Discount badge on card</div><div class="detail">"−25%", "Gratis Versand", …</div></div>
+        <div class="maps"><span class="k">JTL</span>Smarty reads the article's active special price from the priced product object — badge and cart share one source.</div>
+        <div class="pill p-native">Native</div></div>
+    </div>
+
+    <div class="group">
+      <div class="group-head"><span class="g-name">Storefront presentation</span></div>
+      <div class="row"><div class="feat"><div class="name">Hero · promo strip · secondary · Black-Month template</div><div class="detail">per-winner headline, eyebrow, gold stage</div></div>
+        <div class="maps"><span class="k">JTL</span>Plugin <b>Portlets</b> (OnPage Composer blocks) + template hooks; the Black-Month template is a Portlet variant.</div>
+        <div class="pill p-plugin">Plugin</div></div>
+      <div class="row"><div class="feat"><div class="name">Product grid from targetCategories</div><div class="detail">showcase items, spares filtered out</div></div>
+        <div class="maps"><span class="k">JTL</span>Query the shop catalog by category/manufacturer via JTL APIs; "spare/accessory" becomes a category or attribute filter — no static JSON.</div>
+        <div class="pill p-native">Native</div></div>
+      <div class="row"><div class="feat"><div class="name">Countdown timer</div><div class="detail">"Aktion läuft noch X Tage"</div></div>
+        <div class="maps"><span class="k">JTL</span>End instant assigned by Smarty from the campaign window; small JS ticks it client-side.</div>
+        <div class="pill p-plugin">Plugin</div></div>
+    </div>
+
+    <div class="group">
+      <div class="group-head"><span class="g-name">Admin &amp; ops</span></div>
+      <div class="row"><div class="feat"><div class="name">Authoring UI (CRUD, search, overlap warning)</div><div class="detail">the polished admin already built</div></div>
+        <div class="maps"><span class="k">JTL</span>A plugin <b>backend tab</b> (<span class="mono-field">adminmenu</span> in info.xml); reuse the existing HTML/CSS/JS against a plugin controller.</div>
+        <div class="pill p-plugin">Plugin</div></div>
+      <div class="row"><div class="feat"><div class="name">Roles &amp; audit trail</div><div class="detail">who may schedule/publish</div></div>
+        <div class="maps"><span class="k">JTL</span>JTL backend <b>user permissions</b> gate the tab; a small log table records changes.</div>
+        <div class="pill p-native">Native</div></div>
+      <div class="row"><div class="feat"><div class="name">Caching</div><div class="detail">resolve once, serve fast</div></div>
+        <div class="maps"><span class="k">JTL</span>JTL <b>object cache</b> (Redis/file); cache key includes resolved campaign + customer group + language; flush on schedule flip.</div>
+        <div class="pill p-native">Native</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="idx">E</span><h2>The discount bridge (do this right)</h2></div>
+    <div class="callout">
+      <div class="c-k">Single most important integration</div>
+      <h3>A campaign never sets a price. It points at a JTL promotion.</h3>
+      <p>Authoring flow: a merchandiser creates the <b>Aktion / Sonderpreis</b> in Wawi (percent or fixed, date range, target category, customer groups) — that is the legally-binding, checkout-enforced discount. In the campaign plugin they then create the matching <b>campaign</b> (hero, badge text, template, window) and select that Aktion in an <span class="mono-field">aktion_ref</span> dropdown.</p>
+      <p>Result: the plugin schedules and dresses the <em>presentation</em>; JTL owns the <em>money</em>. No front-end price math, no divergence between badge and cart, PAngV reference pricing inherited for free. Optionally the plugin can align the two date windows on save so they can't drift apart.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="idx">F</span><h2>Plugin anatomy (Shop 5)</h2></div>
+    <p class="sec-sub">A conventional JTL-Shop 5 plugin layout. Small surface area — most files are template and admin, not logic.</p>
+    <div class="tree"><pre>metzler_campaigns/
+├─ <span class="f">info.xml</span>                 <span class="c"># metadata, compat, adminmenu tab, settings</span>
+├─ <span class="f">Bootstrap.php</span>            <span class="c"># boot(Dispatcher): subscribe to page hooks, register Portlets</span>
+├─ Migrations/
+│  └─ <span class="f">Migration2026…​.php</span>    <span class="c"># up()/down(): xplugin_camp_campaign + _log tables</span>
+├─ src/
+│  ├─ <span class="f">CampaignResolver.php</span>   <span class="c"># pure port of campaign-engine.js — unit-testable</span>
+│  └─ <span class="f">CampaignRepository.php</span> <span class="c"># CRUD over the plugin tables</span>
+├─ Portlets/
+│  ├─ <span class="f">CampaignHero/</span>          <span class="c"># OnPage Composer block → hero.tpl</span>
+│  └─ <span class="f">CampaignPromo/</span>
+├─ adminmenu/
+│  └─ <span class="f">Campaigns/</span>            <span class="c"># backend tab — reuses the built admin UI + a controller</span>
+├─ template/
+│  ├─ <span class="f">hero.tpl</span>  <span class="f">promo.tpl</span>  <span class="f">countdown.tpl</span>  <span class="f">product-slot.tpl</span>
+└─ locales/  <span class="c"># de-DE strings</span></pre></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="idx">G</span><h2>Making the prototype code carry over</h2></div>
+    <div class="steps-list">
+      <div class="sline"><span class="b"></span><span class="txt"><b>Engine → PHP, near line-for-line.</b> <span class="mono-field">campaign-engine.js</span> is pure and dependency-free; <span class="mono-field">resolveActiveCampaign</span>, priority sort, month/day wrap and the disabled gate port directly to <span class="mono-field">CampaignResolver.php</span> and keep their unit tests.</span></div>
+      <div class="sline"><span class="b"></span><span class="txt"><b>Data model → migration columns.</b> The seed JSON fields map 1:1 to table columns; <span class="mono-field">discountRule</span> is replaced by an <span class="mono-field">aktion_ref</span> foreign key into JTL's promotion, not stored math.</span></div>
+      <div class="sline"><span class="b"></span><span class="txt"><b>Admin UI → backend tab, mostly as-is.</b> The authored HTML/CSS/JS (premium dropdowns, table, overlap warning) drops into the admin tab; only the localStorage store swaps for AJAX calls to the plugin controller.</span></div>
+      <div class="sline"><span class="b"></span><span class="txt"><b>Storefront markup → Smarty templates.</b> The hero/promo/countdown/card markup becomes <span class="mono-field">.tpl</span> partials fed by Smarty assigns; the design-system CSS ships with the plugin.</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="idx">H</span><h2>JTL-specific risks</h2></div>
+    <div class="risks">
+      <div class="risk"><div class="r-h">Don't fight the Wawi sync</div><p>Never write article prices from the plugin — Wawi will overwrite them on the next sync. Only ever <i>reference</i> an Aktion/Sonderpreis; keep plugin tables to presentation + scheduling.</p></div>
+      <div class="risk"><div class="r-h">Template updates</div><p>Ship templates inside the plugin (or the ETK2022 child template), never by editing Snackys directly, so a template update doesn't clobber the campaign markup.</p></div>
+      <div class="risk"><div class="r-h">Cache correctness</div><p>A campaign that flips at midnight must purge the object cache at the boundary; a stale cache is the classic "the sale didn't start" ticket.</p></div>
+      <div class="risk"><div class="r-h">Migration discipline</div><p>All schema changes via versioned <span class="mono-field">Migration</span> classes with working <span class="mono-field">down()</span>, so install / update / uninstall stay clean across shop versions.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="idx">I</span><h2>Build sequence</h2></div>
+    <div class="road">
+      <div class="step now"><div class="n">01</div><div class="body"><div class="st">Skeleton + resolver + one Portlet</div><div class="sd">info.xml, Bootstrap, migration, PHP resolver, and the campaign hero Portlet reading a campaign that references an existing Wawi Aktion. Cacheable, no price code.</div></div><div class="ph">Start here</div></div>
+      <div class="step"><div class="n">02</div><div class="body"><div class="st">Discount bridge + badges</div><div class="sd">The <span class="mono-field">aktion_ref</span> link, badge/promo/countdown templates reading the priced product, date-window alignment on save.</div></div><div class="ph">Core</div></div>
+      <div class="step"><div class="n">03</div><div class="body"><div class="st">Backend authoring tab</div><div class="sd">Port the built admin UI into the plugin tab against a controller; permissions + audit log.</div></div><div class="ph">Authoring</div></div>
+      <div class="step"><div class="n">04</div><div class="body"><div class="st">Cache flush &amp; go-live hardening</div><div class="sd">Schedule-boundary cache invalidation so a campaign appears and disappears on time, plus go-live checks.</div></div><div class="ph">Hardening</div></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>JTL-Shop 5 implementation blueprint · Seasonal Campaign System</span>
+    <span>Companion to the production-feasibility assessment.</span>
+  </div>
+</footer>

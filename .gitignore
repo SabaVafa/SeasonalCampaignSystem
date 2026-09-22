@@ -1,0 +1,23 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+*.swp
+*.swo
+*~
+
+# Logs / temp
+*.log
+.cache/
+tmp/
+
+# Local Claude settings (keep launch.json for the dev server)
+.claude/settings.local.json
+
+# Internal README kept local only (not published to the public remote)
+
+.claude/
+metzler-content-briefing.md
+*.zip

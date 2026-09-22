@@ -1,0 +1,155 @@
+/**
+ * Black Month campaign skin (template id "blackfriday").
+ * Adapted from the brand-authored components in Desktop/Home/black-friday.css.
+ * Self-contained tokens (matte black · warm off-white · champagne gold used
+ * surgically). Only applies when the storefront renders the "blackfriday"
+ * template — the .bf-* classes are inert otherwise.
+ */
+:root {
+  --bf-ink:    #0A0B0D;
+  --bf-ink-2:  #111318;
+  --bf-gold:   #C8A24C;
+  --bf-gold-2: #E4CE8F;
+  --bf-bone:   #ECE7DB;
+  --bf-text:   #E9E5DC;
+  --bf-muted:  rgba(233, 229, 220, 0.56);
+  --bf-r:      0.25rem;   /* mirrors Metzler --radius (was --r-m in styles-v2) */
+}
+
+/* ── Countdown announcement bar (top of page) ── */
+.bf-bar { background: var(--bf-ink); color: #fff; border-bottom: 0.0625rem solid rgba(200,162,76,0.35); }
+.bf-bar__inner { display: flex; align-items: center; gap: clamp(0.75rem,2vw,1.75rem); min-height: 2.875rem; padding-block: 0.5rem; }
+.bf-bar__label { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--bf-gold-2); white-space: nowrap; }
+.bf-bar__dot { width: 0.4375rem; height: 0.4375rem; border-radius: 50%; background: var(--bf-gold); animation: bfPulse 2.2s infinite; }
+@keyframes bfPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(200,162,76,0.5); }
+  70%  { box-shadow: 0 0 0 0.4375rem rgba(200,162,76,0); }
+  100% { box-shadow: 0 0 0 0 rgba(200,162,76,0); }
+}
+.bf-bar__msg { font-size: 0.8125rem; color: rgba(255,255,255,0.72); white-space: nowrap; }
+.bf-bar__timer { display: inline-flex; align-items: flex-end; gap: 0.875rem; margin-left: auto; }
+.bf-seg { display: inline-flex; flex-direction: column; align-items: center; min-width: 1.875rem; }
+.bf-seg b { font-size: 1.125rem; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; color: #fff; }
+.bf-seg i { font-style: normal; font-size: 0.5625rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-top: 0.1875rem; }
+.bf-bar__cta { display: inline-flex; align-items: center; height: 2rem; padding: 0 1rem; border: 0.0625rem solid var(--bf-gold); border-radius: var(--bf-r); color: var(--bf-gold-2); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; text-decoration: none; transition: background 0.18s ease, color 0.18s ease; }
+.bf-bar__cta:hover { background: var(--bf-gold); color: var(--bf-ink); }
+@media (max-width: 53.75rem) { .bf-bar__msg { display: none; } .bf-bar__timer { gap: 0.625rem; } .bf-seg b { font-size: 1rem; } }
+@media (max-width: 35rem) { .bf-bar__inner { gap: 0.625rem; } .bf-bar__cta { display: none; } .bf-seg { min-width: 1.5rem; } .bf-bar__label { letter-spacing: 0.12em; font-size: 0.75rem; } }
+
+/* ── Hero — 2-column split on the page grid (synced from Home/black-friday.css).
+   Copy + image both live inside .container, so the copy lines up with the nav
+   and the image's right edge lands on the page's content edge. The dark band is
+   full-bleed. Type + rhythm scale with the copy COLUMN (container queries), so
+   they stay proportional in the desktop split and the stacked mobile band. ── */
+.bf-hero { position: relative; overflow: hidden; color: var(--bf-text); background: var(--bf-ink); padding-block: 0; }
+/* Storefront reuses the shared .hero host (class="hero bf-hero"); neutralise the
+   .hero .container 4.5rem padding so the BF grid controls its own rhythm. */
+.bf-hero .container { padding-top: 0; padding-bottom: 0; }
+/* Copy column caps at ~44% / 660px so the text never floats in a sea of dark on
+   wide monitors; the image takes the remaining 1fr. */
+.bf-hero__primary {
+  display: grid;
+  grid-template-columns: min(calc(44% + 1rem), 41.25rem) 1fr;
+  gap: clamp(1.5rem, 3vw, 3.5rem);
+  align-items: stretch;
+  min-height: clamp(21.25rem, 30vw, 30rem);
+}
+.bf-hero__copy-col {
+  display: flex; flex-direction: column; justify-content: center;
+  padding-block: clamp(1.75rem, 3vw, 3rem);
+  min-width: 0;
+  container-type: inline-size;   /* cqi = 1% of THIS column's width */
+}
+.bf-hero__copy { max-width: 100%; }
+.bf-hero__media { position: relative; overflow: hidden; min-width: 0; }
+.bf-hero__media picture { display: block; width: 100%; height: 100%; }
+.bf-hero__photo { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+
+.bf-hero__eyebrow {
+  display: inline-flex; align-items: center; gap: 0.75rem; margin: 0;
+  font-size: clamp(0.6875rem, 2.4vw, 0.75rem);
+  font-size: clamp(0.6875rem, 2.15cqi, 0.75rem);
+  font-weight: 700; letter-spacing: 0.26em; text-transform: uppercase; color: var(--bf-gold-2);
+}
+.bf-hero__eyebrow::before { content: ""; width: 2.125rem; height: 0.0625rem; background: var(--bf-gold); }
+.bf-hero__title {
+  margin: clamp(0.875rem, 4vw, 1.625rem) 0 0;
+  margin-top: clamp(0.875rem, 4.1cqi, 1.625rem);
+  font-size: clamp(1.5rem, 4vw, 2.7rem);
+  font-size: clamp(1.5rem, 7.4cqi, 2.7rem);
+  font-weight: 600; line-height: 1.2; letter-spacing: -0.015em; color: var(--bf-text);
+}
+.bf-hero__offer {
+  margin: clamp(0.625rem, 2vw, 1.25rem) 0 0;
+  margin-top: clamp(0.625rem, 3.2cqi, 1.25rem);
+  font-size: clamp(1.0625rem, 2.9vw, 1.25rem);
+  font-size: clamp(1.0625rem, 3.6cqi, 1.25rem);
+  font-weight: 300; line-height: 1.4; letter-spacing: -0.005em; color: var(--bf-text);
+}
+.bf-hero__offer .num { font-weight: 700; color: var(--bf-gold-2); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.bf-hero__offer-tail { color: rgba(233,229,220,0.52); }
+.bf-hero__meta {
+  margin: 0.875rem 0 0;
+  margin-top: clamp(0.625rem, 2.9cqi, 1.125rem);
+  font-size: clamp(0.8125rem, 1.9vw, 0.875rem);
+  font-size: clamp(0.8125rem, 2.5cqi, 0.875rem);
+  letter-spacing: 0.05em; color: rgba(233,229,220,0.72);
+}
+.bf-hero__meta b { color: var(--bf-gold-2); font-weight: 600; }
+.bf-hero__ctas {
+  margin-top: clamp(1.25rem, 5vw, 2.375rem);
+  margin-top: clamp(1.25rem, 6cqi, 2.375rem);
+  display: flex; align-items: center; gap: 1.375rem; flex-wrap: wrap;
+}
+.bf-hero__cta { display: inline-flex; align-items: center; height: 2.875rem; padding-inline: 3rem; min-width: 20rem; justify-content: center; border-radius: 0.125rem; font-size: 1rem; font-weight: 700; letter-spacing: 0.01em; background: var(--bf-bone); color: #14151A; text-decoration: none; transition: background 0.18s ease, transform 0.18s ease; }
+.bf-hero__cta:hover { background: #FBF8F1; transform: translateY(-0.0625rem); }
+.bf-hero__link { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; font-weight: 600; color: var(--bf-text); border-bottom: 0.0625rem solid rgba(233,229,220,0.3); padding-bottom: 0.1875rem; text-decoration: none; transition: color 0.18s ease, border-color 0.18s ease; }
+.bf-hero__link:hover { color: var(--bf-gold-2); border-color: var(--bf-gold); }
+.bf-hero__link span { transition: transform 0.18s ease; }
+.bf-hero__link:hover span { transform: translateX(0.1875rem); }
+
+/* ── Tablet & mobile (<1024): stack — image full-bleed band on top, copy below. ── */
+@media (max-width: 63.9375rem) {
+  .bf-hero__primary { grid-template-columns: 1fr; min-height: 0; row-gap: 0; }
+  .bf-hero__copy-col { order: 2; padding-block: clamp(2rem, 7vw, 3.25rem); }
+  /* image breaks out of the container inset → edge-to-edge band across the top */
+  .bf-hero__media {
+    order: 1;
+    margin-inline: calc(-1 * clamp(var(--sp-6, 1.5rem), 4vw, 3.5rem));
+    aspect-ratio: 16 / 9;
+    min-height: clamp(15rem, 46vw, 23.75rem);
+  }
+}
+/* ── Phone: taller crop, full-width CTA ── */
+@media (max-width: 40rem) {
+  .bf-hero__media { aspect-ratio: 4 / 3; }
+  .bf-hero__cta { width: 100%; min-width: 0; justify-content: center; }
+}
+
+/* ── Champagne-gold discount plate on product cards (BF only) ── */
+.product-card__badge.is-bf {
+  background: linear-gradient(160deg, #F4E4B0 0%, #E9D49A 40%, #C8A24C 100%);
+  color: #14151A; border: 0.0625rem solid rgba(120,90,20,0.45);
+  box-shadow: inset 0 0.0625rem 0 rgba(255,255,255,0.5), inset 0 -0.0625rem 0 rgba(120,90,20,0.3), 0 0.25rem 0.75rem rgba(0,0,0,0.3);
+  font-weight: 800;
+}
+
+/* ── Black Month discount plate on the homepage category tiles ──
+   Overrides the base red .cat-card__discount (styles-v2.css) so the injected
+   Black Month badges match the gold plate used on the storefront product cards. */
+.cat-card__discount--bf {
+  background: linear-gradient(160deg, #F4E4B0 0%, #E9D49A 40%, #C8A24C 100%);
+  color: #14151A;
+  border: 0.0625rem solid rgba(120,90,20,0.45);
+  border-radius: var(--r-m, 0.25rem);
+  padding: 0.5rem 0.75rem;
+  box-shadow: inset 0 0.0625rem 0 rgba(255,255,255,0.5), inset 0 -0.0625rem 0 rgba(120,90,20,0.3), 0 0.5rem 1.25rem rgba(0,0,0,0.35);
+  font-weight: 900;
+  letter-spacing: 0.01em;
+  text-shadow: none;
+}
+/* Percentage only — drop the "Black Month" label on the tile tags at every size (synced from Home) */
+.cat-card__discount--bf span { display: none; }
+
+/* Sale promo strip → matte black + gold when Black Month is live */
+.promo-strip.is-bf { background: var(--bf-ink); color: var(--bf-gold-2); border-bottom: 0.0625rem solid rgba(200,162,76,0.35); }

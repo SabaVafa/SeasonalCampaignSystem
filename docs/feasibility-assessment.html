@@ -1,0 +1,436 @@
+<title>Campaign Platform Feasibility</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+  :root {
+    --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EFF3F1; --panel:#FBFCFC;
+    --ink:#171B1A; --ink-2:#3C4241; --muted:#69716F; --faint:#8B9390;
+    --line:#E3E8E6; --line-2:#D2DAD7;
+    --accent:#015253; --accent-tint:#E3F2F0; --accent-ink:#013C3D;
+    --gold:#A97E2E; --gold-tint:#F4EBD7;
+    --ok:#2F7D5B; --ok-tint:#E5F1EA; --ok-line:#BFDECC;
+    --warn:#A6711A; --warn-tint:#F6EEDB; --warn-line:#E7D3A0;
+    --hard:#BE4238; --hard-tint:#F8E6E4; --hard-line:#EEC5C0;
+    --shadow:0 1px 2px rgba(12,30,28,.04), 0 8px 24px rgba(12,30,28,.05);
+    --shadow-lift:0 2px 6px rgba(12,30,28,.06), 0 18px 44px rgba(12,30,28,.10);
+    --maxw:66rem;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:#0D1312; --surface:#141A19; --surface-2:#1A2221; --panel:#111716;
+      --ink:#EBF0EE; --ink-2:#C3CBC9; --muted:#8B948F; --faint:#6E7873;
+      --line:#26302E; --line-2:#334140;
+      --accent:#5BB8B0; --accent-tint:#12302E; --accent-ink:#A6DCD5;
+      --gold:#D3AB5C; --gold-tint:#241E10;
+      --ok:#63B489; --ok-tint:#15271E; --ok-line:#274a38;
+      --warn:#D6A64F; --warn-tint:#282011; --warn-line:#4a3c1d;
+      --hard:#E37167; --hard-tint:#2C1512; --hard-line:#502722;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.4);
+      --shadow-lift:0 2px 8px rgba(0,0,0,.45), 0 22px 50px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:#0D1312; --surface:#141A19; --surface-2:#1A2221; --panel:#111716;
+    --ink:#EBF0EE; --ink-2:#C3CBC9; --muted:#8B948F; --faint:#6E7873;
+    --line:#26302E; --line-2:#334140;
+    --accent:#5BB8B0; --accent-tint:#12302E; --accent-ink:#A6DCD5;
+    --gold:#D3AB5C; --gold-tint:#241E10;
+    --ok:#63B489; --ok-tint:#15271E; --ok-line:#274a38;
+    --warn:#D6A64F; --warn-tint:#282011; --warn-line:#4a3c1d;
+    --hard:#E37167; --hard-tint:#2C1512; --hard-line:#502722;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.4);
+    --shadow-lift:0 2px 8px rgba(0,0,0,.45), 0 22px 50px rgba(0,0,0,.5);
+  }
+
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:"IBM Plex Sans", system-ui, sans-serif;
+    font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  .wrap { max-width:var(--maxw); margin:0 auto; padding:0 1.5rem; }
+  h1,h2,h3 { font-family:"Archivo", system-ui, sans-serif; text-wrap:balance; margin:0; }
+  a { color:var(--accent); }
+  code, .mono { font-family:"IBM Plex Mono", ui-monospace, monospace; }
+  .mono-field { font-family:"IBM Plex Mono", monospace; font-size:.82em; color:var(--accent-ink); background:var(--accent-tint); padding:.06em .38em; border-radius:4px; white-space:nowrap; }
+
+  /* ── Masthead ── */
+  header.mast { border-bottom:1px solid var(--line); background:linear-gradient(180deg, var(--surface), var(--panel)); }
+  .mast-inner { padding:2.6rem 0 2rem; }
+  .eyebrow { font-family:"IBM Plex Mono", monospace; font-size:.72rem; letter-spacing:.22em; text-transform:uppercase; color:var(--accent); font-weight:600; }
+  .mast h1 { font-size:clamp(1.9rem, 4.4vw, 3rem); font-weight:800; letter-spacing:-.02em; line-height:1.02; margin:.7rem 0 .55rem; }
+  .mast .lede { font-size:1.06rem; color:var(--ink-2); max-width:46rem; margin:0; }
+  .mast .scope { margin-top:.9rem; font-size:.82rem; color:var(--muted); }
+  .mast .scope b { color:var(--ink-2); font-weight:600; }
+
+  /* ── Summary stat strip ── */
+  .stats { display:grid; grid-template-columns:repeat(4, 1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:12px; overflow:hidden; margin-top:1.8rem; }
+  .stat { background:var(--surface); padding:1rem 1.1rem; }
+  .stat .num { font-family:"Archivo", sans-serif; font-weight:700; font-size:1.7rem; line-height:1; letter-spacing:-.01em; font-variant-numeric:tabular-nums; display:flex; align-items:baseline; gap:.4rem; }
+  .stat .lbl { font-size:.74rem; color:var(--muted); margin-top:.35rem; letter-spacing:.02em; }
+  .stat .dot { width:.6rem; height:.6rem; border-radius:50%; display:inline-block; }
+  .d-ok { background:var(--ok); } .d-warn { background:var(--warn); } .d-hard { background:var(--hard); }
+  .stat.ok .num { color:var(--ok); } .stat.warn .num { color:var(--warn); } .stat.hard .num { color:var(--hard); }
+
+  main { padding:2.6rem 0 3rem; }
+  section { margin-bottom:2.8rem; }
+  .sec-head { display:flex; align-items:baseline; gap:.8rem; margin-bottom:1.1rem; }
+  .sec-head h2 { font-size:1.28rem; font-weight:700; letter-spacing:-.01em; }
+  .sec-head .idx { font-family:"IBM Plex Mono", monospace; font-size:.8rem; color:var(--faint); font-weight:500; }
+  .sec-sub { color:var(--muted); font-size:.92rem; margin:-.4rem 0 1.1rem; max-width:48rem; }
+
+  /* ── Executive verdict ── */
+  .verdict { background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:12px; padding:1.5rem 1.6rem; box-shadow:var(--shadow); }
+  .verdict p { margin:0 0 .8rem; color:var(--ink-2); }
+  .verdict p:last-child { margin-bottom:0; }
+  .verdict strong { color:var(--ink); font-weight:600; }
+
+  /* ── Feature groups ── */
+  .group { border:1px solid var(--line); border-radius:12px; background:var(--surface); overflow:hidden; box-shadow:var(--shadow); }
+  .group + .group { margin-top:1rem; }
+  .group-head { display:flex; align-items:center; gap:.7rem; padding:.85rem 1.1rem; background:var(--surface-2); border-bottom:1px solid var(--line); }
+  .group-head .g-name { font-family:"IBM Plex Mono", monospace; font-size:.76rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-2); font-weight:600; }
+  .group-head .g-count { font-size:.74rem; color:var(--faint); margin-left:auto; font-variant-numeric:tabular-nums; }
+
+  .row { display:grid; grid-template-columns:auto 1fr 1.15fr auto; align-items:start; gap:1rem; padding:.9rem 1.1rem .9rem .85rem; border-bottom:1px solid var(--line); position:relative; }
+  .row:last-child { border-bottom:0; }
+  .row .stripe { width:3px; align-self:stretch; border-radius:3px; margin:.05rem 0; }
+  .s-ok { background:var(--ok); } .s-warn { background:var(--warn); } .s-hard { background:var(--hard); }
+  .feat .name { font-weight:600; color:var(--ink); font-size:.98rem; line-height:1.35; }
+  .feat .detail { color:var(--muted); font-size:.82rem; margin-top:.2rem; line-height:1.45; }
+  .need { color:var(--ink-2); font-size:.86rem; line-height:1.5; }
+  .need .k { color:var(--faint); font-family:"IBM Plex Mono", monospace; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; display:block; margin-bottom:.15rem; }
+  .pill { justify-self:end; align-self:start; font-family:"IBM Plex Mono", monospace; font-size:.68rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; padding:.28rem .55rem; border-radius:999px; white-space:nowrap; border:1px solid transparent; }
+  .p-ok { color:var(--ok); background:var(--ok-tint); border-color:var(--ok-line); }
+  .p-warn { color:var(--warn); background:var(--warn-tint); border-color:var(--warn-line); }
+  .p-hard { color:var(--hard); background:var(--hard-tint); border-color:var(--hard-line); }
+
+  /* ── Deep-dive challenge panels ── */
+  .challenges { display:grid; gap:1rem; }
+  .challenge { border:1px solid var(--line); border-radius:12px; background:var(--surface); padding:1.4rem 1.5rem; box-shadow:var(--shadow); }
+  .challenge.is-hard { border-color:var(--hard-line); }
+  .challenge .ch-top { display:flex; align-items:center; gap:.7rem; margin-bottom:.7rem; flex-wrap:wrap; }
+  .challenge h3 { font-size:1.08rem; font-weight:700; }
+  .challenge .num { font-family:"IBM Plex Mono", monospace; font-size:.8rem; color:var(--faint); font-weight:600; }
+  .challenge p { margin:0 0 .7rem; color:var(--ink-2); font-size:.94rem; }
+  .challenge p:last-child { margin-bottom:0; }
+  .takes { margin-top:.9rem; padding-top:.9rem; border-top:1px dashed var(--line-2); }
+  .takes .k { font-family:"IBM Plex Mono", monospace; font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); font-weight:600; display:block; margin-bottom:.5rem; }
+  .takes ul { margin:0; padding:0; list-style:none; display:grid; gap:.45rem; }
+  .takes li { position:relative; padding-left:1.15rem; font-size:.9rem; color:var(--ink-2); }
+  .takes li::before { content:""; position:absolute; left:0; top:.55em; width:.42rem; height:.42rem; border-radius:2px; background:var(--accent); }
+
+  /* ── Preview flow diagram ── */
+  .flow { border:1px solid var(--line); border-radius:12px; background:var(--panel); padding:1.5rem; box-shadow:var(--shadow); overflow-x:auto; }
+  .flow-grid { display:grid; gap:1.4rem; min-width:34rem; }
+  .lane { display:grid; grid-template-columns:8.5rem 1fr; gap:1rem; align-items:center; }
+  .lane-label { font-family:"IBM Plex Mono", monospace; font-size:.74rem; font-weight:600; letter-spacing:.04em; line-height:1.35; }
+  .lane.public .lane-label { color:var(--ok); }
+  .lane.staff .lane-label { color:var(--warn); }
+  .chain { display:flex; align-items:stretch; gap:0; flex-wrap:nowrap; }
+  .node { flex:1; background:var(--surface); border:1px solid var(--line-2); border-radius:9px; padding:.6rem .7rem; font-size:.78rem; line-height:1.3; color:var(--ink); text-align:center; display:flex; flex-direction:column; justify-content:center; gap:.15rem; }
+  .node .t { font-weight:600; }
+  .node .s { font-size:.68rem; color:var(--muted); font-family:"IBM Plex Mono", monospace; }
+  .lane.public .node.tag { border-color:var(--ok-line); background:var(--ok-tint); }
+  .lane.staff .node.tag { border-color:var(--warn-line); background:var(--warn-tint); }
+  .arrow { flex:0 0 1.6rem; display:flex; align-items:center; justify-content:center; color:var(--faint); font-family:"IBM Plex Mono", monospace; }
+  .flow-note { margin-top:1.2rem; padding-top:1rem; border-top:1px solid var(--line); font-size:.82rem; color:var(--muted); }
+  .flow-note b { color:var(--ink-2); font-weight:600; }
+
+  /* ── Risks ── */
+  .risks { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+  .risk { background:var(--surface); padding:1.05rem 1.15rem; }
+  .risk .r-h { font-weight:600; color:var(--ink); font-size:.92rem; margin-bottom:.3rem; display:flex; align-items:center; gap:.5rem; }
+  .risk .r-h .tag2 { font-family:"IBM Plex Mono", monospace; font-size:.62rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; padding:.12rem .4rem; border-radius:4px; }
+  .t-law { color:var(--hard); background:var(--hard-tint); }
+  .t-ops { color:var(--warn); background:var(--warn-tint); }
+  .risk p { margin:0; font-size:.85rem; color:var(--muted); line-height:1.5; }
+
+  /* ── Roadmap ── */
+  .road { display:grid; gap:0; counter-reset:step; border:1px solid var(--line); border-radius:12px; overflow:hidden; background:var(--surface); box-shadow:var(--shadow); }
+  .step { display:grid; grid-template-columns:3rem 1fr auto; gap:1rem; align-items:center; padding:1.05rem 1.2rem; border-bottom:1px solid var(--line); }
+  .step:last-child { border-bottom:0; }
+  .step .n { font-family:"Archivo", sans-serif; font-weight:800; font-size:1.15rem; color:var(--accent); font-variant-numeric:tabular-nums; }
+  .step .body .st { font-weight:600; color:var(--ink); }
+  .step .body .sd { font-size:.86rem; color:var(--muted); margin-top:.15rem; }
+  .step .ph { font-family:"IBM Plex Mono", monospace; font-size:.68rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); border:1px solid var(--line-2); border-radius:999px; padding:.24rem .6rem; white-space:nowrap; }
+  .step.now .ph { color:var(--ok); border-color:var(--ok-line); background:var(--ok-tint); }
+
+  footer { border-top:1px solid var(--line); padding:1.6rem 0 2.4rem; color:var(--faint); font-size:.8rem; }
+  footer .wrap { display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
+
+  @media (max-width:52rem) {
+    .stats { grid-template-columns:repeat(2,1fr); }
+    .row { grid-template-columns:auto 1fr; gap:.5rem .8rem; }
+    .row .need { grid-column:2; }
+    .row .pill { grid-column:2; justify-self:start; }
+    .risks { grid-template-columns:1fr; }
+    .lane { grid-template-columns:1fr; gap:.5rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { scroll-behavior:auto; } }
+</style>
+
+<header class="mast">
+<meta name="robots" content="noindex, nofollow" />
+  <div class="wrap mast-inner">
+    <div class="eyebrow">Engineering Feasibility · Backend + Frontend</div>
+    <h1>Seasonal Campaign Platform — Production Feasibility</h1>
+    <p class="lede">A feature-by-feature read on what it takes to move the METZLER campaign prototype from a client-side mockup to a production feature on a live shop. Verdicts are architectural, not effort estimates.</p>
+    <p class="scope">Assessed against the repo as built · <b>vanilla engine + localStorage store + storefront + admin</b> · shop <b>edelstahl-tuerklingel.de</b> · platform confirmed <b>JTL-Shop 5</b> (Snackys/ETK2022 · OPC) · DE / EUR / de-DE</p>
+
+    <div class="stats">
+      <div class="stat"><div class="num">23</div><div class="lbl">features assessed</div></div>
+      <div class="stat ok"><div class="num"><span class="dot d-ok"></span>14</div><div class="lbl">Ready — standard build</div></div>
+      <div class="stat warn"><div class="num"><span class="dot d-warn"></span>7</div><div class="lbl">Needs real integration</div></div>
+      <div class="stat hard"><div class="num"><span class="dot d-hard"></span>2</div><div class="lbl">Hard — non-negotiable</div></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section>
+    <div class="verdict">
+      <p><strong>Verdict: highly feasible — this is a well-shaped prototype, not a fantasy.</strong> Roughly 80% of the surface is standard e-commerce merchandising and CMS work, and the hardest-to-get-right part — the resolution engine — is already production-shaped: it is pure, dependency-free, and takes an explicit <span class="mono-field">resolveActiveCampaign(campaigns, date)</span> date argument instead of reaching for <span class="mono-field">Date.now()</span>. That one seam is exactly where a real backend plugs in.</p>
+      <p>The real cost and risk live in <strong>three integration surfaces</strong>: a scheduled campaign backend to replace the localStorage store; wiring <span class="mono-field">discountRule</span> into the shop's actual pricing/promotion engine; and caching so the resolved campaign is served fast and flipped on schedule. Only one of these — <strong>discount &amp; price integrity</strong> — is genuinely hard and legally non-negotiable for a German shop. The target platform has since been confirmed as <strong>JTL-Shop 5</strong> (OnPage Composer in use), which supplies all three natively — the companion JTL blueprint maps every feature onto it.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="idx">A</span><h2>Feature-by-feature feasibility</h2></div>
+    <p class="sec-sub">Grouped by layer. The stripe and pill encode the same verdict — <b style="color:var(--ok)">Ready</b> ships on standard platform primitives, <b style="color:var(--warn)">Integration</b> needs a real system behind it, <b style="color:var(--hard)">Hard</b> carries correctness or legal risk.</p>
+
+    <div class="group">
+      <div class="group-head"><span class="g-name">Resolution Engine</span><span class="g-count">7 features · 6 ready</span></div>
+
+      <div class="row"><div class="stripe s-ok"></div>
+        <div class="feat"><div class="name">Date-window resolution</div><div class="detail">Active when a date falls in <span class="mono-field">[startDate, endDate]</span>.</div></div>
+        <div class="need"><span class="k">Production</span>Runs server- or edge-side against request time. Trivial.</div>
+        <div class="pill p-ok">Ready</div></div>
+
+      <div class="row"><div class="stripe s-warn"></div>
+        <div class="feat"><div class="name">Recurring year-agnostic windows</div><div class="detail">Month/day only, wraps across New Year (12-26 → 01-06).</div></div>
+        <div class="need"><span class="k">Production</span>Logic is sound; pin evaluation to the shop timezone (Europe/Berlin) and local-midnight boundaries — DST &amp; wrap are the edge cases.</div>
+        <div class="pill p-warn">Integration</div></div>
+
+      <div class="row"><div class="stripe s-ok"></div>
+        <div class="feat"><div class="name">Priority overlap resolution</div><div class="detail">Highest <span class="mono-field">priority</span> wins the hero when windows collide.</div></div>
+        <div class="need"><span class="k">Production</span>Pure comparison. Pair with the authoring overlap warning (already prototyped).</div>
+        <div class="pill p-ok">Ready</div></div>
+
+      <div class="row"><div class="stripe s-ok"></div>
+        <div class="feat"><div class="name">Evergreen fallback</div><div class="detail"><span class="mono-field">isFallback</span> baseline when nothing is active.</div></div>
+        <div class="need"><span class="k">Production</span>Guarantees a page always resolves. Keep as the cacheable default.</div>
+        <div class="pill p-ok">Ready</div></div>
+
+      <div class="row"><div class="stripe s-ok"></div>
+        <div class="feat"><div class="name">Pause / disable gate</div><div class="detail"><span class="mono-field">disabled</span> campaigns never win, anywhere.</div></div>
+        <div class="need"><span class="k">Production</span>Maps to a publish state; a killswitch is standard and welcome.</div>
+        <div class="pill p-ok">Ready</div></div>
+
+      <div class="row"><div class="stripe s-ok"></div>
+        <div class="feat"><div class="name">Secondary &amp; upcoming lookahead</div><div class="detail">Non-winning actives → smaller promos; next-to-start teaser.</div></div>
+        <div class="need"><span class="k">Production</span>Same query, different slice. Powers "coming soon" merchandising.</div>
+        <div class="pill p-ok">Ready</div></div>
+
+      <div class="row"><div class="stripe s-ok"></div>
+        <div class="feat"><div class="name">Discount label formatting</div><div class="detail">percent · free_shipping · free_gravur · bundle · gift → text.</div></div>
+        <div class="need"><span class="k">Production</span>Display only. The <i>enforcement</i> of these is the hard part below.</div>
+        <div class="pill p-ok">Ready</div></div>
+    </div>
+
+    <div class="group">
+      <div class="group-head"><span class="g-name">Data &amp; Persistence</span><span class="g-count">3 features · 2 ready</span></div>
+
+      <div class="row"><div class="stripe s-ok"></div>
+        <div class="feat"><div class="name">Campaign data model</div><div class="detail">dates, recurring, priority, theme, hero copy, <span class="mono-field">targetCategories</span>, <span class="mono-field">discountRule</span>, badge, template, images.</div></div>
+        <div class="need"><span class="k">Production</span>Clean schema — maps 1:1 to a CMS content type or a campaign DB table.</div>
+        <div class="pill p-ok">Ready</div></div>
+
+      <div class="row"><div class="stripe s-warn"></div>
+        <div class="feat"><div class="name">Live-preview persistence</div><div class="detail">Today: <span class="mono-field">localStorage["metzler.campaigns.v1"]</span> override on the seed.</div></div>
+        <div class="need"><span class="k">Production</span>Replace with a content service (draft / scheduled / published). This is the #1 integration item.</div>
+        <div class="pill p-warn">Integration</div></div>
+
+      <div class="row"><div class="stripe s-ok"></div>
+        <div class="feat"><div class="name">Import / Export / Reset</div><div class="detail">JSON round-trip matching the seed shape.</div></div>
+        <div class="need"><span class="k">Production</span>Becomes backup / migration / bulk-load tooling. Keep it.</div>
+        <div class="pill p-ok">Ready</div></div>
+    </div>
+
+    <div class="group">
+      <div class="group-head"><span class="g-name">Storefront Rendering</span><span class="g-count">6 features · 3 ready</span></div>
+
+      <div class="row"><div class="stripe s-ok"></div>
+        <div class="feat"><div class="name">Campaign hero &amp; eyebrow</div><div class="detail">Headline, eyebrow label, seasonal subline per winner.</div></div>
+        <div class="need"><span class="k">Production</span>A CMS-driven hero slot bound to the resolved campaign.</div>
+        <div class="pill p-ok">Ready</div></div>
+
+      <div class="row"><div class="stripe s-ok"></div>
+        <div class="feat"><div class="name">Black Month premium template</div><div class="detail"><span class="mono-field">template:"blackfriday"</span> — dedicated stage, gold treatment.</div></div>
+        <div class="need"><span class="k">Production</span>A template variant keyed on a field. Standard theming.</div>
+        <div class="pill p-ok">Ready</div></div>
+
+      <div class="row"><div class="stripe s-warn"></div>
+        <div class="feat"><div class="name">Countdown timer</div><div class="detail">"Aktion läuft noch X Tage" / live Black-Month countdown.</div></div>
+        <div class="need"><span class="k">Production</span>Client renders it, but must count to a server-authoritative end instant in shop TZ — never the browser clock.</div>
+        <div class="pill p-warn">Integration</div></div>
+
+      <div class="row"><div class="stripe s-ok"></div>
+        <div class="feat"><div class="name">Promo strip</div><div class="detail">Sitewide message band under the header.</div></div>
+        <div class="need"><span class="k">Production</span>A cacheable content slot. Trivial.</div>
+        <div class="pill p-ok">Ready</div></div>
+
+      <div class="row"><div class="stripe s-warn"></div>
+        <div class="feat"><div class="name">Product grid from targetCategories</div><div class="detail">Category slugs → showcase products, accessories filtered out.</div></div>
+        <div class="need"><span class="k">Production</span>Swap the static finder JSON for the real catalog / search API with merchandising rules &amp; live stock.</div>
+        <div class="pill p-warn">Integration</div></div>
+
+      <div class="row"><div class="stripe s-warn"></div>
+        <div class="feat"><div class="name">Homepage slot injection</div><div class="detail"><span class="mono-field">home-campaign.js</span> injects campaign components into the real page.</div></div>
+        <div class="need"><span class="k">Production</span>Becomes server-rendered slots in the page template, not client-side injection — better for SEO &amp; CLS.</div>
+        <div class="pill p-warn">Integration</div></div>
+    </div>
+
+    <div class="group">
+      <div class="group-head"><span class="g-name">Products &amp; Pricing</span><span class="g-count">3 features · 1 hard core</span></div>
+
+      <div class="row"><div class="stripe s-warn"></div>
+        <div class="feat"><div class="name">Category → product bridging</div><div class="detail">Provider loads only the datasets a campaign needs, caches, filters spares.</div></div>
+        <div class="need"><span class="k">Production</span>The pattern is right; the source becomes the catalog API. The accessory heuristic becomes a real merchandising facet.</div>
+        <div class="pill p-warn">Integration</div></div>
+
+      <div class="row"><div class="stripe s-hard"></div>
+        <div class="feat"><div class="name">Discount enforcement</div><div class="detail">Badge on card ↔ actual price in cart &amp; at checkout.</div></div>
+        <div class="need"><span class="k">Production</span>The badge is display; the discount must be enforced by the shop's promotion engine. A badge that doesn't match the cart is a trust &amp; legal defect, not a cosmetic one.</div>
+        <div class="pill p-hard">Hard</div></div>
+
+      <div class="row"><div class="stripe s-hard"></div>
+        <div class="feat"><div class="name">Price &amp; VAT computation</div><div class="detail">Prototype uses indicative gross = net × 1.19.</div></div>
+        <div class="need"><span class="k">Production</span>Prices must come from the pricing service — VAT rules, customer group, country, gross/net display law. The hardcoded ×1.19 is prototype-only.</div>
+        <div class="pill p-hard">Hard</div></div>
+    </div>
+
+    <div class="group">
+      <div class="group-head"><span class="g-name">Admin Authoring</span><span class="g-count">4 features · 3 ready</span></div>
+
+      <div class="row"><div class="stripe s-ok"></div>
+        <div class="feat"><div class="name">Campaign CRUD + duplicate</div><div class="detail">Create, edit, duplicate, delete; live slug; template picker.</div></div>
+        <div class="need"><span class="k">Production</span>Front-end is done; back it with a REST/GraphQL campaign API.</div>
+        <div class="pill p-ok">Ready</div></div>
+
+      <div class="row"><div class="stripe s-ok"></div>
+        <div class="feat"><div class="name">Search · filter · status · overlap warning</div><div class="detail">Winner display, paused filter, start-date conflict hints.</div></div>
+        <div class="need"><span class="k">Production</span>Compute the same resolution server-side to fill the table. Solid UX already.</div>
+        <div class="pill p-ok">Ready</div></div>
+
+      <div class="row"><div class="stripe s-ok"></div>
+        <div class="feat"><div class="name">Date-simulation readout</div><div class="detail">"Datum simulieren" shows which campaign wins on a chosen date.</div></div>
+        <div class="need"><span class="k">Production</span>Resolver-only computation in the backend — no storefront render. Ready.</div>
+        <div class="pill p-ok">Ready</div></div>
+
+      <div class="row"><div class="stripe s-warn"></div>
+        <div class="feat"><div class="name">Roles · approval · audit trail</div><div class="detail">Not in the prototype — required for a live merchandising tool.</div></div>
+        <div class="need"><span class="k">Production</span>Net-new: who can schedule/publish, a review gate, and a change log. Standard, but must be built.</div>
+        <div class="pill p-warn">Integration</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="idx">B</span><h2>The three integration challenges</h2></div>
+    <p class="sec-sub">Everything marked <b style="color:var(--warn)">Integration</b> or <b style="color:var(--hard)">Hard</b> collapses into three problems. Solve these and the rest is assembly.</p>
+
+    <div class="challenges">
+      <div class="challenge">
+        <div class="ch-top"><span class="num">01</span><h3>Scheduled campaign backend</h3><span class="pill p-warn">Integration</span></div>
+        <p>The engine and data model are ready; the store is the gap. localStorage becomes a content service (headless CMS or a campaign table) with <span class="mono-field">draft → scheduled → published</span> states. Resolution moves server- or edge-side so the public page is computed once and cached.</p>
+        <div class="takes"><span class="k">What it takes</span>
+          <ul>
+            <li>A campaign content type mirroring the current schema — the schema is already the hard-won part.</li>
+            <li>Resolution as a shared service the storefront and admin table both call with an explicit date.</li>
+            <li>Scheduling that flips state at the window boundary in <span class="mono-field">Europe/Berlin</span>, with cache invalidation on the flip.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="challenge is-hard">
+        <div class="ch-top"><span class="num">02</span><h3>Discount &amp; price integrity</h3><span class="pill p-hard">Hard</span></div>
+        <p>This is the one that must be right. Displaying "−25%" is easy; guaranteeing the cart and checkout charge −25%, VAT-correct, for the right customer group and country, is a promotion-engine problem. In Germany it is also a legal one — a struck price must reference the correct baseline (PAngV / lowest price in the last 30 days).</p>
+        <p><span class="mono-field">discountRule{ type, value, scope }</span> should not compute prices in the front end at all. It should map to a rule the platform's pricing/promotion engine owns, and the storefront reads the <i>resulting</i> price so badge and cart can never disagree.</p>
+        <div class="takes"><span class="k">What it takes</span>
+          <ul>
+            <li>Translate each <span class="mono-field">discountRule</span> into a native promotion (cart price rule / voucher / bundle) in the commerce platform.</li>
+            <li>Badge, PDP price and cart all read one source of truth — the priced line item, never a recomputed guess.</li>
+            <li>PAngV-compliant reference pricing carried through the discount UI.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="challenge">
+        <div class="ch-top"><span class="num">03</span><h3>Caching &amp; CDN</h3><span class="pill p-warn">Integration</span></div>
+        <p>A live shop caches aggressively. Public traffic wants the resolved campaign baked into an edge-cached page — the cache key includes the resolved campaign id, and the cache is invalidated the moment a window opens or closes.</p>
+        <p>The work is getting that invalidation right, so a scheduled campaign appears within seconds of its start rather than on TTL expiry, and the evergreen fallback stays the always-cacheable default.</p>
+        <div class="takes"><span class="k">What it takes</span>
+          <ul>
+            <li>Edge cache keyed on resolved-campaign + customer group + locale.</li>
+            <li>Scheduled-flip cache purge so a new campaign appears within seconds, not on TTL expiry.</li>
+            <li>The evergreen fallback as the always-cacheable baseline when nothing is active.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="idx">C</span><h2>Risks &amp; honest caveats</h2></div>
+    <div class="risks">
+      <div class="risk">
+        <div class="r-h">Struck-price law (PAngV) <span class="tag2 t-law">legal</span></div>
+        <p>A German shop showing a reduced price must display the lowest price of the prior 30 days as the reference. The discount UI must carry this figure, not just the percentage.</p>
+      </div>
+      <div class="risk">
+        <div class="r-h">Timezone &amp; DST on recurring windows <span class="tag2 t-ops">edge</span></div>
+        <p>"Starts 24.11" means local midnight Europe/Berlin. The year-wrap and DST transitions are the spots to test — resolve in one canonical zone, not the visitor's.</p>
+      </div>
+      <div class="risk">
+        <div class="r-h">Concurrency &amp; approval <span class="tag2 t-ops">process</span></div>
+        <p>Two editors, overlapping windows, a mistimed publish. The overlap warning is a good start; production needs a review gate and an audit trail.</p>
+      </div>
+      <div class="risk">
+        <div class="r-h">Client-side injection &amp; CLS <span class="tag2 t-ops">perf</span></div>
+        <p>Injecting hero/promo after load shifts layout and hurts SEO. Move campaign slots into server-rendered templates for the live site.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="idx">D</span><h2>Recommended sequence</h2></div>
+    <p class="sec-sub">Ordered so value ships before the hard parts, and each phase de-risks the next.</p>
+    <div class="road">
+      <div class="step now">
+        <div class="n">01</div>
+        <div class="body"><div class="st">Server-resolved merchandising</div><div class="sd">Campaign service + edge-cached resolution driving hero, promo strip, badges &amp; secondary slots — read-only, no price changes. Ships visible value fast and stays fully cacheable.</div></div>
+        <div class="ph">Start here</div>
+      </div>
+      <div class="step">
+        <div class="n">02</div>
+        <div class="body"><div class="st">Discount enforcement</div><div class="sd">Wire <span class="mono-field">discountRule</span> to the promotion engine so badge, PDP and cart agree; carry PAngV reference pricing. The non-negotiable phase.</div></div>
+        <div class="ph">Core</div>
+      </div>
+      <div class="step">
+        <div class="n">03</div>
+        <div class="body"><div class="st">Self-serve authoring</div><div class="sd">Roles, approval workflow, audit trail and a scheduling calendar on top of the existing admin UI.</div></div>
+        <div class="ph">Scale</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Feasibility assessment · Seasonal Campaign System</span>
+    <span>Verdicts are architectural — not effort or cost estimates.</span>
+  </div>
+</footer>

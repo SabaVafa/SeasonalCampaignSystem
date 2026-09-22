@@ -1,0 +1,320 @@
+/**
+ * Metzler Design System — Design Tokens
+ * Version: 1.3
+ * Font: Helvetica Neue (system stack — no custom @font-face required)
+ * Base: 16px = 1rem
+ *
+ * Usage in any project:
+ *   <link rel="stylesheet" href="metzler-tokens.css">
+ *   then use: color: var(--color-teal);
+ */
+
+:root {
+
+  /* ─────────────────────────────────────────
+     TYPOGRAPHY
+  ───────────────────────────────────────── */
+
+  /*
+   * Font rule — same weights, sizes, and line-heights on all systems:
+   * macOS / Ubuntu  → "Helvetica Neue", Helvetica, Arial, sans-serif
+   * Windows         → Arial, "Helvetica Neue", Helvetica, sans-serif  (Arial first = default)
+   *
+   * Use the stack below as-is; the browser resolves to the correct typeface automatically.
+   */
+  --font-family:         "Helvetica Neue", Helvetica, Arial, sans-serif; /* macOS / Ubuntu */
+  --font-family-windows: Arial, "Helvetica Neue", Helvetica, sans-serif; /* Windows */
+
+  /* Font weights — the three body weights */
+  --font-regular: 400;   /* body copy */
+  --font-bold:    600;   /* emphasis */
+  --font-strong:  800;   /* strong emphasis */
+
+  /* Display — fluid / responsive */
+  --display-1-size:   clamp(3rem, 9vw, 5rem);   /* max 80px */
+  --display-1-weight: 700;
+  --display-1-lh:     0.85;
+
+  --display-2-size:   clamp(3rem, 7vw, 3.5rem);   /* max 56px */
+  --display-2-weight: 700;
+  --display-2-lh:     0.92;
+
+  --display-3-size:   3rem;       /* 48px — matches rendered .display-3 */
+  --display-3-weight: 700;
+  --display-3-lh:     1.0;
+
+  --display-4-size:   2.875rem;   /* 46px */
+  --display-4-weight: 700;
+  --display-4-lh:     1.1;
+
+  /* Headings */
+  --text-h1-size:   1.875rem;     /* 30px */
+  --text-h1-weight: 700;
+  --text-h1-lh:     1.25;
+
+  --text-h2-size:   1.5rem;       /* 24px */
+  --text-h2-weight: 700;
+  --text-h2-lh:     1.3;
+
+  --text-h3-size:   1.25rem;      /* 20px */
+  --text-h3-weight: 700;
+  --text-h3-lh:     1.35;
+
+  --text-h4-size:   1.125rem;     /* 18px */
+  --text-h4-weight: 700;
+  --text-h4-lh:     1.375;
+
+  /* Body */
+  --text-body-size:            1rem;       /* 16px */
+  --text-body-weight:          400;
+  --text-body-lh:              1.55;
+
+  --text-body-medium-weight:   500;
+
+  --text-body-bold-weight:     700;
+  --text-body-bold-lh:         1.375;
+
+  /* Body XL — large intro / callout copy */
+  --text-body-xl-size:         1.25rem;   /* 20px */
+  --text-body-xl-weight:       400;
+  --text-body-xl-lh:           1.5;
+
+  --text-body-xl-medium-weight: 500;
+
+  --text-body-xl-bold-weight:   700;
+  --text-body-xl-bold-lh:       1.375;
+
+  /* Body Large — lead paragraphs, intros */
+  --text-body-lg-size:         1.125rem;  /* 18px */
+  --text-body-lg-weight:       400;
+  --text-body-lg-lh:           1.5;
+
+  --text-body-lg-medium-weight: 500;
+
+  --text-body-lg-bold-weight:   700;
+  --text-body-lg-bold-lh:       1.375;
+
+  /* Body Small */
+  --text-body-sm-size:         0.875rem;  /* 14px */
+  --text-body-sm-weight:       400;
+  --text-body-sm-lh:           1.5;
+
+  --text-body-sm-medium-weight: 500;
+  --text-body-sm-bold-weight:   700;
+  --text-body-sm-bold-lh:       1.375;
+
+  /* Caption */
+  --text-caption-size:         0.75rem;   /* 12px */
+  --text-caption-weight:       400;
+  --text-caption-lh:           1.4;
+
+  --text-caption-medium-weight: 500;
+  --text-caption-bold-weight:   700;
+
+
+  /* ─────────────────────────────────────────
+     COLORS — TEAL (Brand Primary)
+  ───────────────────────────────────────── */
+
+  --color-teal-50:   #F2F6F6;   /* Subtle brand-tinted backgrounds, selected row */
+  --color-teal-75:   #E3F2F0;   /* Button hover fills, active list rows */
+  --color-teal-100:  #E6EEEE;   /* Info box fills, selected filter chips */
+  --color-teal:      #015253;   /* DEFAULT — CTAs, nav, focus rings, links */
+  --color-teal-500:  #015253;   /* Alias for --color-teal */
+  --color-teal-600:  #014A4B;   /* Hover / pressed state */
+  --color-teal-700:  #01292A;   /* Footer background, pressed/active states, high-contrast text on teal surfaces */
+  --color-teal-900:  #001D1D;   /* Darkest sections & CTA bands, max-contrast */
+
+
+  /* ─────────────────────────────────────────
+     COLORS — BRAND
+  ───────────────────────────────────────── */
+
+  --color-metzler-rot:    #D42924;   /* Logo M-square, discount badges only */
+  --color-digital-black:  #1A171B;   /* Headlines, "METZLER" wordmark */
+
+
+  /* ─────────────────────────────────────────
+     COLORS — GREEN (Success / Availability)
+  ───────────────────────────────────────── */
+
+  --color-green:       #009951;          /* In-stock, success, checkboxes, radio */
+  --color-green-muted: rgba(0,153,81,0.5); /* Muted / disabled selected states */
+
+
+  /* ─────────────────────────────────────────
+     COLORS — RED (Error / Signal)
+     Anchored to Metzler Rot (#D42924)
+  ───────────────────────────────────────── */
+
+  --color-red-50:   #FFF0EF;   /* Alert/error background fills */
+  --color-red:      #D42924;   /* DEFAULT (Metzler Rot) — error text, badges */
+  --color-red-500:  #D42924;   /* Alias for --color-red */
+  --color-red-600:  #B52320;   /* Hover / pressed */
+  --color-red-900:  #4D0E0D;   /* Readable text on red-50 surfaces */
+
+
+  /* ─────────────────────────────────────────
+     COLORS — ACCENT
+  ───────────────────────────────────────── */
+
+  --color-mint:       #5CDBD3;   /* Footer links, hyperlinks on dark/teal bg */
+  --color-star:       #FFC041;   /* Review stars, rating UI */
+
+
+  /* ─────────────────────────────────────────
+     COLORS — GRAPHITE SURFACES
+  ───────────────────────────────────────── */
+
+  --color-paper:          #F5F6FA;   /* Page bg, sidebar, search bar */
+  --color-graphite-100:   #F0F0F0;   /* Row dividers, inactive tabs, skeleton */
+  --color-graphite-200:   #E6E6E8;   /* Hairline separators in lists */
+  --color-graphite-300:   #DADADA;   /* Default input borders, card outlines */
+  --color-graphite-400:   #BFBFC2;   /* Focused borders, table outline */
+  --color-graphite-450:   #CCCCCC;   /* Soft borders, dividers, skeleton lines */
+
+
+  /* ─────────────────────────────────────────
+     COLORS — GRAPHITE TEXT
+  ───────────────────────────────────────── */
+
+  --color-graphite-500:   #A1A1A1;   /* Placeholders, disabled labels */
+  --color-graphite-600:   #6A6A6A;   /* Metadata, captions, timestamps */
+  --color-graphite-700:   #54545C;   /* Secondary text, helper text */
+  --color-graphite-800:   #2E2E36;   /* Body paragraphs, input values */
+  --color-graphite-850:   #333333;   /* Icon fills, dark UI labels */
+  --color-graphite-900:   #1A1A1F;   /* Headings, product names, prices */
+
+
+  /* ─────────────────────────────────────────
+     COLORS — BASE
+  ───────────────────────────────────────── */
+
+  --color-black:  #000000;
+  --color-white:  #FFFFFF;
+
+
+  /* ─────────────────────────────────────────
+     GRADIENTS
+  ───────────────────────────────────────── */
+
+  --gradient-brand:  linear-gradient(90deg, #01292A 0%, #011D1E 50%, #000000 100%);
+  --gradient-accent: linear-gradient(135deg, #5CDBD3, #015253);
+
+
+  /* ─────────────────────────────────────────
+     BORDER RADIUS
+  ───────────────────────────────────────── */
+
+  --radius-sm:    0.125rem;   /* 2px  — badges */
+  --radius:       0.25rem;    /* 4px  — DEFAULT: buttons, inputs, checkboxes */
+  --radius-lg:    0.5rem;     /* 8px  — product cards, filter sections */
+  --radius-xl:    0.75rem;    /* 12px — popups, modals */
+  --radius-pill:  624.94rem;  /* fully rounded pill shape */
+
+
+  /* ─────────────────────────────────────────
+     SHADOWS
+  ───────────────────────────────────────── */
+
+  --shadow-card:   0 0.125rem 0.5rem rgba(0,0,0,0.08);
+  --shadow-hover:  0 0.25rem 1.25rem rgba(0,0,0,0.10);   /* card / interactive hover elevation */
+  --shadow-modal:  0 1.25rem 3.75rem rgba(0,0,0,0.2), 0 0.25rem 1rem rgba(0,0,0,0.1);
+  --shadow-tooltip: 0 0.25rem 1rem rgba(0,0,0,0.15);
+
+
+  /* ─────────────────────────────────────────
+     SPACING SCALE
+  ───────────────────────────────────────── */
+
+  --space-1:   0.25rem;   /* 4px  */
+  --space-2:   0.5rem;    /* 8px  */
+  --space-3:   0.75rem;   /* 12px */
+  --space-4:   1rem;      /* 16px */
+  --space-5:   1.25rem;   /* 20px */
+  --space-6:   1.5rem;    /* 24px */
+  --space-8:   2rem;      /* 32px */
+  --space-10:  2.5rem;    /* 40px */
+  --space-12:  3rem;      /* 48px */
+  --space-16:  4rem;      /* 64px */
+
+
+  /* ─────────────────────────────────────────
+     BREAKPOINTS (reference — use in @media)
+  ───────────────────────────────────────── */
+  /*
+    --bp-sm:   480px    small mobile
+    --bp-md:   768px    mobile → desktop threshold (hamburger → full nav)
+    --bp-lg:   1024px   tablet landscape
+    --bp-xl:   1280px   desktop
+    --bp-2xl:  1440px   wide desktop
+    --bp-3xl:  1600px   max content width
+  */
+
+}
+
+
+/* ─────────────────────────────────────────
+   SEMANTIC ALIASES — shorthand helpers
+───────────────────────────────────────── */
+
+:root {
+  /* CTA primary */
+  --btn-primary-bg:       var(--color-teal);
+  --btn-primary-bg-hover: var(--color-teal-600);
+  --btn-primary-color:    var(--color-white);
+
+  /* Text hierarchy */
+  --text-heading-color:   var(--color-graphite-900);
+  --text-body-color:      var(--color-graphite-800);
+  --text-muted-color:     var(--color-graphite-600);
+  --text-placeholder:     var(--color-graphite-500);
+  --text-link:            var(--color-teal);
+
+  /* Surfaces */
+  --surface-page:         var(--color-paper);
+  --surface-card:         var(--color-white);
+  --surface-input-border: var(--color-graphite-300);
+  --surface-input-focus:  var(--color-teal);
+
+  /* Status */
+  --status-success:       var(--color-green);
+  --status-error:         var(--color-red);
+  --status-warning:       #E67E00;
+  --status-info:          var(--color-teal);
+}
+
+
+/* ─────────────────────────────────────────
+   TYPOGRAPHY UTILITY CLASSES — .h1–.h4
+   3 responsive size conditions:
+   Desktop ≥992px · Tablet 768–991px · Mobile ≤767px
+   Heading size vars are overridden per breakpoint below,
+   so both the .h1–.h4 classes AND element <h1>–<h4>
+   (if styled from the same vars) scale automatically.
+───────────────────────────────────────── */
+
+.h1 { font-size: var(--text-h1-size); font-weight: var(--text-h1-weight); line-height: var(--text-h1-lh); letter-spacing: -0.02em;  color: var(--text-heading-color); font-family: var(--font-family); }
+.h2 { font-size: var(--text-h2-size); font-weight: var(--text-h2-weight); line-height: var(--text-h2-lh); letter-spacing: -0.015em; color: var(--text-heading-color); font-family: var(--font-family); }
+.h3 { font-size: var(--text-h3-size); font-weight: var(--text-h3-weight); line-height: var(--text-h3-lh); letter-spacing: -0.01em;  color: var(--text-heading-color); font-family: var(--font-family); }
+.h4 { font-size: var(--text-h4-size); font-weight: var(--text-h4-weight); line-height: var(--text-h4-lh); letter-spacing: -0.005em; color: var(--text-heading-color); font-family: var(--font-family); }
+
+/* Tablet — 768–991px */
+@media (max-width: 991px) {
+  :root {
+    --text-h1-size: 1.625rem;    /* 26px */
+    --text-h2-size: 1.375rem;    /* 22px */
+    --text-h3-size: 1.1875rem;   /* 19px */
+    --text-h4-size: 1.0625rem;   /* 17px */
+  }
+}
+
+/* Mobile — ≤767px */
+@media (max-width: 767px) {
+  :root {
+    --text-h1-size: 1.5rem;      /* 24px */
+    --text-h2-size: 1.25rem;     /* 20px */
+    --text-h3-size: 1.125rem;    /* 18px */
+    --text-h4-size: 1rem;        /* 16px */
+  }
+}

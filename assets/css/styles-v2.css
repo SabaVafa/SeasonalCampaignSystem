@@ -1,0 +1,3092 @@
+/* ============================================================
+   Metzler — Edelstahl-Tuerklingel.de · Premium Homepage Redesign
+   Built on the official Metzler Design System (v1.0)
+   ============================================================
+
+   BREAKPOINT CONTRACT
+   -------------------
+   Mobile   : ≤ 767px
+   Tablet   : 768px – 1023px
+   Desktop  : ≥ 1024px
+
+   New responsive rules MUST target one of these three tiers.
+   Legacy queries (≤720, ≤900, ≤1100, ≤1280) remain in place
+   for now but should be migrated section-by-section. Do not
+   add new queries with non-standard bounds.
+   ============================================================ */
+
+/* ── Tokens ── */
+:root {
+  /* Colors — Primary */
+  --teal: #015253;         /* DS teal-500 — primary CTA fill */
+  --teal-600: #014A4B;     /* DS teal-600 — button hover/pressed */
+  --teal-dark: #01292A;    /* DS teal-700 — button active */
+  --teal-100: #E6EEEE;     /* DS teal-100 — secondary button hover fill */
+  --teal-hover: #006D75;
+  --teal-mint: #5CDBD3;
+  --teal-5: rgba(1, 82, 83, 0.05);
+  --teal-10: rgba(1, 82, 83, 0.10);
+
+  /* Colors — Brand & status */
+  --rot: #D42924;
+  --schwarz: #1A171B;
+  --green: #009951;
+  --red-default: #C90000;
+
+  /* Colors — Neutrals */
+  --black: #000000;
+  --black-80: rgba(0, 0, 0, 0.8);
+  --white: #FFFFFF;
+  --white-50: rgba(255, 255, 255, 0.5);
+  --graphite-500: #A1A1A1;
+  --graphite-300: #DADADA;
+  --graphite-100: #F0F0F0;
+  --paper-white: #F5F6FA;
+  --text-muted: #6A6A6A;        /* muted caption ink — matches About us eyebrows */
+
+  /* Type scale */
+  --text-display: 2.875rem;     /* 46 */
+  --text-h1: 1.875rem;          /* 30 */
+  --text-h2: 1.5rem;            /* 24 */
+  --text-h3: 1.25rem;           /* 20 */
+  --text-h4: 1.125rem;          /* 18 */
+  --text-body: 1rem;            /* 16 */
+  --text-body-sm: 0.875rem;     /* 14 */
+  --text-caption: 0.75rem;      /* 12 */
+
+  --lh-display: 1.15;
+  --lh-heading: 1.3;
+  --lh-body: 1.5;
+
+  /* Spacing scale */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-20: 80px;
+  --sp-24: 96px;
+
+  /* Radius */
+  --r-xs: 1px;
+  --r-s: 2px;
+  --r-m: 4px;
+  --r-l: 8px;
+  --r-xl: 12px;
+  --r-xxl: 20px;
+  --r-pill: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.18);
+
+  /* Layout */
+  --container: 1380px;
+  --gutter: var(--sp-6);
+  --section-y: var(--sp-20);
+}
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: var(--text-body);
+  line-height: var(--lh-body);
+  color: var(--black);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+}
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
+ul, ol { padding: 0; margin: 0; list-style: none; }
+h1, h2, h3, h4, h5, h6, p { margin: 0; }
+
+/* ── Utilities ── */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding-inline: clamp(var(--sp-6), 4vw, 56px);
+}
+
+/* Desktop (≥1440): match the main metzler site (edelstahl-tuerklingel.de)
+   — a flat 1600px container with 100px gutters (1400px content), held at
+   that cap on every larger screen so the layout stays consistent with the
+   rest of the site instead of stretching out on wide monitors. */
+@media (min-width: 1440px) {
+  :root { --container: 1600px; }
+  .container { padding-inline: 100px; }
+}
+.section { padding-block: var(--section-y); }
+.eyebrow {
+  font-size: var(--text-caption);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--sp-5);
+}
+.section-title {
+  font-size: var(--text-display);
+  font-weight: 700;
+  line-height: var(--lh-display);
+  color: var(--schwarz);
+  letter-spacing: -0.01em;
+}
+.section-sub {
+  margin-top: var(--sp-5);
+  font-size: var(--text-h4);
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.72);
+  max-width: 56ch;
+}
+
+/* ── Buttons (per design system) ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 48px;
+  padding: 0 var(--sp-6);
+  border-radius: var(--r-m);
+  font-size: var(--text-body);
+  font-weight: 700;
+  line-height: 1;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+  white-space: nowrap;
+}
+/* Buttons follow the design system: primary = teal-500 fill, hover
+   teal-600, active teal-700; secondary = 2px outline, hover teal-100,
+   active teal fill; secondary-light (on dark) = white outline, hover
+   white 10%, active white fill / teal text. */
+.btn--primary { background: var(--teal); color: var(--white); }
+.btn--primary:hover { background: var(--teal-600); }
+.btn--primary:active { background: var(--teal-dark); }
+.btn--secondary {
+  background: transparent;
+  color: var(--teal);
+  border: 2px solid var(--teal);
+}
+.btn--secondary:hover { background: var(--teal-100); }
+.btn--secondary:active { background: var(--teal); color: var(--white); }
+.btn--secondary-light {
+  background: transparent;
+  color: var(--white);
+  border: 2px solid var(--white);
+}
+.btn--secondary-light:hover { background: rgba(255, 255, 255, 0.1); }
+.btn--secondary-light:active { background: var(--white); color: var(--teal); }
+.btn--arrow { padding-right: var(--sp-5); }
+.btn--arrow svg { width: 9px; height: 16px; }
+.btn--lg { height: 56px; padding-inline: var(--sp-8); font-size: var(--text-h4); }
+
+/* Text link with underline accent */
+.tlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  color: var(--teal);
+  border-bottom: 1.5px solid currentColor;
+  padding-bottom: 2px;
+}
+.tlink:hover { color: var(--teal-hover); }
+.tlink--mint { color: var(--teal-mint); }
+
+/* ============================================================
+   1. Sticky Header
+   ============================================================ */
+.topbar {
+  background: var(--teal);
+  color: var(--white);
+  font-size: var(--text-caption);
+}
+.topbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 36px;
+  gap: var(--sp-6);
+}
+.topbar__claims {
+  display: flex;
+  gap: var(--sp-6);
+  align-items: center;
+}
+.topbar__claims li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255, 255, 255, 0.85);
+}
+.topbar__links {
+  display: flex;
+  gap: var(--sp-8);
+  color: rgba(255, 255, 255, 0.85);
+}
+.topbar__links a:hover { color: var(--teal-mint); }
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--white);
+  border-bottom: 1px solid var(--graphite-300);
+}
+.header__main {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--sp-10);
+  height: 80px;
+}
+.header__logo img { height: 36px; }
+.header__search {
+  position: relative;
+  width: 100%;
+  max-width: 846px;
+  justify-self: center;
+}
+.header__search input {
+  width: 100%;
+  height: 44px;
+  padding: 0 var(--sp-5) 0 44px;
+  background: var(--paper-white);
+  border: 1px solid var(--graphite-300);
+  border-radius: var(--r-l);
+  font-size: var(--text-body);
+  color: var(--black);
+}
+.header__search input::placeholder { color: var(--graphite-500); }
+/* Replace the browser default clear-X (which Chrome/Edge tint with
+   the system accent colour — usually blue) with a custom SVG in
+   --graphite-500 so it matches the magnifier on the left. */
+.header__search input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  margin-left: 8px;
+  cursor: pointer;
+  background:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23A1A1A1' stroke-width='2.2' stroke-linecap='round'><line x1='6' y1='6' x2='18' y2='18'/><line x1='6' y1='18' x2='18' y2='6'/></svg>")
+    center / contain no-repeat;
+  opacity: 0.85;
+  transition: opacity 0.15s ease;
+}
+.header__search input::-webkit-search-cancel-button:hover { opacity: 1; }
+.header__search input:focus {
+  outline: none;
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px var(--teal-10);
+}
+.header__search svg {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--graphite-500);
+}
+.header__icons {
+  display: flex;
+  gap: var(--sp-2);
+  justify-self: end;
+  margin-right: -12px;
+}
+
+/* Hamburger button — hidden on desktop, shown on ≤720 */
+.header__burger {
+  display: none;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: 0;
+  padding: 12px;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+}
+/* Mobile-only search icon — hidden on desktop */
+.header__search-icon {
+  display: none;
+}
+/* Mobile-only left-actions wrapper — display: contents on desktop so
+   the burger/search children (both display:none) don't add a grid slot */
+.header__left-actions { display: contents; }
+.header__burger span {
+  display: block;
+  height: 2px;
+  background: var(--schwarz);
+  border-radius: 1px;
+}
+
+/* ============================================================
+   Mobile slide-in nav (≤720px)
+   ============================================================ */
+.mobile-nav {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.25s ease, visibility 0.25s;
+}
+.mobile-nav.is-open { visibility: visible; opacity: 1; }
+.mobile-nav__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+}
+.mobile-nav__panel {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: min(86vw, 380px);
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 4px 0 32px rgba(0, 0, 0, 0.2);
+}
+/* On mobile the drawer fills the entire viewport — full width
+   AND full height — so it covers the sticky header / topbar
+   completely. Reads as a true full-screen overlay. Uses
+   position: fixed directly on the panel (not absolute inside
+   the .mobile-nav parent) to avoid iOS Safari quirks where
+   sticky-header stacking contexts intercept the drawer. */
+@media (max-width: 767px) {
+  .mobile-nav { z-index: 1100 !important; }
+  .mobile-nav__panel {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    max-width: none !important;
+    box-shadow: none !important;
+    z-index: 1101 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+.mobile-nav.is-open .mobile-nav__panel { transform: translateX(0); }
+.mobile-nav__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-5) var(--sp-6);
+  border-bottom: 1px solid var(--graphite-300);
+}
+.mobile-nav__head img { height: 28px; }
+.mobile-nav__close {
+  width: 36px;
+  height: 36px;
+  border: 0;
+  background: transparent;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--schwarz);
+}
+.mobile-nav nav { flex: 1; overflow-y: auto; padding: var(--sp-3) 0; }
+.mobile-nav ul { list-style: none; margin: 0; padding: 0; }
+.mobile-nav li { border-bottom: 1px solid var(--graphite-300); }
+.mobile-nav a {
+  display: block;
+  padding: var(--sp-5) var(--sp-6);
+  color: var(--schwarz);
+  font-size: var(--text-body);
+  font-weight: 600;
+  text-decoration: none;
+}
+.mobile-nav a:active { background: var(--paper-white); }
+.mobile-nav__cta {
+  padding: var(--sp-5) var(--sp-6);
+  border-top: 1px solid var(--graphite-300);
+}
+.mobile-nav__cta .btn { width: 100%; justify-content: center; }
+
+/* ============================================================
+   Sticky bottom action bar (≤720px)
+   ============================================================ */
+.mobile-bar {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 900;
+  background: var(--white);
+  border-top: 1px solid var(--graphite-300);
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+  padding: 8px env(safe-area-inset-right, 0) env(safe-area-inset-bottom, 8px) env(safe-area-inset-left, 0);
+}
+.mobile-bar__action {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 4px;
+  color: var(--schwarz);
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.mobile-bar__action svg,
+.mobile-bar__action img { width: 22px; height: 22px; }
+.mobile-bar__action--accent { color: var(--teal); }
+
+@media (max-width: 720px) {
+  .header__burger { display: flex; }
+  .header__main { grid-template-columns: auto 1fr auto; }
+  .header__nav { display: none; }
+  /* Mobile sticky action bar removed — no bottom padding needed */
+  .mobile-bar { display: none !important; }
+  body { padding-bottom: 0; }
+}
+
+/* ============================================================
+   MOBILE HEADER LOCK (≤720px) — placed AFTER all other mobile
+   media queries so it wins the cascade against earlier rules.
+   ============================================================ */
+@media (max-width: 720px) {
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 90;
+    background: var(--white);
+  }
+  /* 3-col grid: [burger+search group] | logo | [profile+cart group]
+     Both side groups are flex containers with identical structure,
+     guaranteeing pixel-perfect mirroring across the header. */
+  .header__main {
+    grid-template-columns: auto 1fr auto !important;
+    gap: 0 !important;
+    height: 64px !important;
+    padding-block: 0 !important;
+  }
+  /* Left-actions flex container mirrors .header__icons exactly */
+  .header__left-actions {
+    display: flex;
+    gap: 0;
+    justify-self: start;
+    margin-left: -13px;
+  }
+  /* Search bar hidden — replaced by icon button */
+  .header__search { display: none !important; }
+
+  /* Unified header buttons — burger, search, profile, cart all
+     render identically: 48x48 frame, 22x22 glyph, pill radius */
+  .header__burger,
+  .header__search-icon,
+  .icon-btn {
+    width: 48px !important;
+    height: 48px !important;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: var(--r-pill);
+    color: var(--schwarz);
+    cursor: pointer;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+  }
+  .header__burger svg { width: 22px !important; height: 18px !important; color: var(--schwarz); }
+  .header__search-icon svg { width: 20px !important; height: 21px !important; color: var(--schwarz); }
+  .icon-btn svg,
+  .icon-btn img { width: 22px !important; height: 22px !important; }
+
+  /* Icons row has no internal gap so cart sits flush against profile,
+     matching the burger-to-search adjacency */
+  .header__icons { gap: 0 !important; margin-right: -13px !important; }
+
+  /* Individual button margins reset — spacing handled by parent
+     .header__left-actions flex container, mirroring .header__icons */
+  .header__burger,
+  .header__search-icon { margin-left: 0 !important; }
+
+  /* Logo — center-aligned in its grid column */
+  .header__logo { justify-self: center; }
+  .header__logo img { height: 24px; }
+}
+
+/* Tablet header block moved to end of file to win source-order
+   priority over the ≤900 block. See "TABLET HEADER" at bottom. */
+
+/* ============================================================
+   DESKTOP LOCK (≥1024px) — explicit guarantees so mobile rules
+   from any earlier media query can NEVER leak onto desktop.
+   ============================================================ */
+@media (min-width: 1024px) {
+  /* Mobile-only chrome is forced hidden on desktop. mobile-nav
+     drawer is NOT force-hidden — it uses visibility/opacity for
+     its own animation (visibility:hidden by default, visible on
+     .is-open), so the desktop "Kategorien" button can open it. */
+  .header__burger,
+  .header__search-icon,
+  .mobile-bar { display: none !important; }
+
+  /* Scrolled state — body gains .is-scrolled when scrollY exceeds
+     a threshold. The category strip hides and the compact
+     "Kategorien" pill appears in the top row as its replacement. */
+  body.is-scrolled .header__nav { display: none !important; }
+  body.is-scrolled .header__kategorien { display: inline-flex; }
+
+  /* Desktop horizontal nav is forced visible */
+  .header__nav { display: block !important; }
+
+  /* Search bar stays integrated into the top header row */
+  .header__search {
+    grid-column: auto !important;
+    order: 0 !important;
+    max-width: 846px !important;
+    padding-bottom: 0 !important;
+  }
+
+  /* Header row stays its desktop height + grid columns */
+  .header__main {
+    grid-template-columns: auto 1fr auto !important;
+    height: 80px !important;
+    padding-block: 0 !important;
+    gap: var(--sp-10) !important;
+  }
+
+  /* Body padding-bottom (mobile bar safe zone) removed */
+  body { padding-bottom: 0 !important; }
+
+  /* Re-flow header top row when scrolled — must come AFTER the
+     desktop lock .header__main override above so it wins on
+     source order despite !important on both sides. */
+  body.is-scrolled .header__main {
+    grid-template-columns: auto auto 1fr auto !important;
+    gap: var(--sp-5) !important;
+  }
+
+  /* Desktop drawer — anchored below the sticky header (top: 80px)
+     and no backdrop dim, so the rest of the page stays fully
+     visible. Drawer keeps its default slide-from-left animation. */
+  /* Let clicks outside the panel reach underlying elements (e.g.
+     the Kategorien button) so it can act as a toggle. Re-enable
+     pointer events only on the panel itself. */
+  .mobile-nav { pointer-events: none; }
+  .mobile-nav__panel { top: 80px; pointer-events: auto; }
+  .mobile-nav__backdrop { display: none; }
+  .mobile-nav__head { display: none; }
+
+  /* Drawer rows on desktop: layout text on the left and a right
+     chevron on the right of each link. */
+  .mobile-nav a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-5);
+  }
+  .mobile-nav a::after {
+    content: "";
+    flex: 0 0 auto;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--graphite-500);
+    border-top: 2px solid var(--graphite-500);
+    transform: rotate(45deg);
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .mobile-nav a:hover::after {
+    border-color: var(--teal);
+    transform: rotate(45deg) translate(2px, -2px);
+  }
+}
+.icon-btn {
+  width: 52px;
+  height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r-pill);
+  color: var(--schwarz);
+  position: relative;
+}
+.icon-btn:hover { background: var(--paper-white); }
+.icon-btn svg,
+.icon-btn img { width: 28px; height: 28px; }
+.icon-btn .badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  background: var(--teal);
+  color: var(--white);
+  border-radius: var(--r-pill);
+  font-size: 10px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header__nav {
+  border-top: 1px solid var(--graphite-300);
+}
+.header__nav ul {
+  display: flex;
+  gap: var(--sp-4);
+  height: 52px;
+  align-items: center;
+  justify-content: space-between;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.header__nav ul::-webkit-scrollbar { display: none; }
+.header__nav a {
+  font-size: var(--text-body);
+  font-weight: 500;
+  color: var(--black);
+  white-space: nowrap;
+  padding-block: 6px;
+  border-bottom: 2px solid transparent;
+}
+.header__nav a:hover { color: var(--teal); border-bottom-color: var(--teal); }
+.header__nav a.is-featured {
+  color: var(--teal);
+  font-weight: 700;
+}
+
+/* "Kategorien" button in the top header row — visible only on
+   desktop when the page is scrolled (body.is-scrolled). At rest,
+   the full category strip is shown below; on scroll, the strip
+   hides and this button replaces it as a compact entry point. */
+.header__kategorien {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  height: 40px;
+  padding: 0 18px;
+  background: var(--teal);
+  color: var(--white);
+  border-radius: var(--r-m);
+  font-size: var(--text-body);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.18s ease;
+}
+.header__kategorien:hover { background: var(--teal-hover); }
+.header__kategorien-icon { width: 18px; height: 15px; display: block; }
+
+/* "Alle" button inside the category strip — visible only on tablet
+   (768–1023). Hidden on mobile and desktop. */
+.header__nav-all {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  height: 36px;
+  padding: 0 14px;
+  background: var(--teal);
+  color: var(--white);
+  border-radius: var(--r-m);
+  font-size: var(--text-body-sm);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  flex: 0 0 auto;
+  transition: background 0.18s ease;
+}
+.header__nav-all:hover { background: var(--teal-hover); }
+.header__nav-all-icon {
+  width: 16px;
+  height: 13px;
+  display: block;
+}
+
+/* Legacy .hero / .hero__* block removed — the homepage now uses
+   .hero-banner instead. */
+
+/* ============================================================
+   3. Trust Bar
+   ============================================================ */
+/* Timeline of awards & proof — flip-card badges (ported from About us).
+   Desktop: 7-badge row. Tablet/mobile: swipeable rail with arrows. */
+.trustbar {
+  background: var(--paper-white);
+  /* padding-block inherits .section's var(--section-y) so the trust bar
+     breathes at the same rhythm as every other content section. */
+}
+.trustbar::before { display: none; content: none; }
+.trustbar__head {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto clamp(32px, 4vw, 48px);
+}
+.trustbar__rail {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: clamp(8px, 1vw, 16px);
+  position: relative;
+}
+.trustbar__rail::before {
+  content: "";
+  position: absolute;
+  top: 56px;
+  left: 6%;
+  right: 6%;
+  height: 1px;
+  background: var(--graphite-300);
+  z-index: 0;
+}
+.trustbar__item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 clamp(4px, 0.6vw, 10px);
+  cursor: default;
+  outline: none;
+}
+.trustbar__icon {
+  position: relative;
+  z-index: 2;
+  width: 112px;
+  height: 112px;
+  perspective: 1000px;
+  background: transparent;
+  border: 0;
+}
+.trustbar__face {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: var(--white);
+  border: 1px solid var(--graphite-300);
+  border-radius: var(--r-l);
+  box-shadow: 0 6px 22px rgba(0,0,0,0.05);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition: transform 600ms cubic-bezier(.2, .7, .2, 1), box-shadow 320ms ease, border-color 320ms ease;
+}
+.trustbar__face--front { z-index: 2; transform: rotateY(0deg); }
+.trustbar__face--back {
+  z-index: 1;
+  transform: rotateY(180deg);
+  background: var(--white);
+  border: 1px solid var(--teal);
+  color: var(--schwarz);
+  padding: 14px 12px;
+  text-align: center;
+  gap: 4px;
+}
+.trustbar__face--back strong {
+  display: block;
+  font-size: var(--text-body-sm);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--teal);
+  letter-spacing: -0.005em;
+}
+.trustbar__face--back span {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+  color: var(--text-muted);
+}
+.trustbar__cue-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--teal);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  opacity: 0;
+  transform: translateY(-2px);
+  pointer-events: none;
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+.trustbar__cue-text svg { width: 12px; height: 12px; }
+.trustbar__item.is-flipped .trustbar__cue-text,
+.trustbar__item:hover .trustbar__cue-text,
+.trustbar__item:focus-within .trustbar__cue-text,
+.trustbar__item:focus-visible .trustbar__cue-text {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.trustbar__face--front img,
+.trustbar__face--front svg {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  display: block;
+}
+.trustbar__item:nth-child(1) .trustbar__face--front img { width: 62px; height: 62px; }
+.trustbar__item:nth-child(2) .trustbar__face--front img { width: 86px; height: 86px; }
+.trustbar__item:nth-child(3) .trustbar__face--front img { width: 64px; height: 64px; }
+.trustbar__item:nth-child(4) .trustbar__face--front img { width: 86px; height: 86px; }
+.trustbar__item:nth-child(5) .trustbar__face--front img { width: 94px; height: 94px; }
+.trustbar__item:nth-child(6) .trustbar__face--front img { width: 94px; height: 94px; }
+.trustbar__item:nth-child(7) .trustbar__face--front img { width: 70px; height: 70px; }
+.trustbar__node { display: none; }
+.trustbar__title {
+  margin: clamp(20px, 2vw, 28px) 0 4px;
+  font-size: var(--text-body-sm);
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  color: var(--schwarz);
+  line-height: 1.3;
+}
+.trustbar__sub {
+  margin: 0;
+  font-size: var(--text-caption);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  line-height: 1.4;
+  white-space: nowrap;
+}
+.trustbar__item--link { cursor: pointer; }
+
+/* Strip viewport + scroll arrows */
+.strip-viewport { position: relative; }
+.strip-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-m);
+  border: 1px solid var(--graphite-300);
+  background: var(--white);
+  color: var(--schwarz);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, opacity 0.22s ease;
+}
+.strip-arrow svg { width: 24px; height: 24px; stroke-width: 1.5; }
+.strip-arrow--prev { left: 8px; }
+.strip-arrow--prev svg { transform: rotate(180deg); }
+.strip-arrow--next { right: 8px; }
+@media (hover: hover) {
+  .strip-arrow:hover { background: var(--teal); color: var(--white); border-color: var(--teal); }
+}
+.strip-arrow:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(1,82,83,0.10); }
+.strip-arrow.is-hidden { opacity: 0; pointer-events: none; }
+@media (min-width: 1280px) { .strip-arrow { display: none; } }
+
+/* Tablet/mobile: viewport breaks to the screen edge; arrows pull back to the page margin */
+@media (max-width: 1279px) {
+  .trustbar__viewport { margin-inline: calc(-1 * clamp(var(--sp-6), 4vw, 56px)); }
+  .trustbar__viewport .strip-arrow--prev { left: clamp(var(--sp-6), 4vw, 56px); }
+  .trustbar__viewport .strip-arrow--next { right: clamp(var(--sp-6), 4vw, 56px); }
+}
+/* Tablet/mobile: rail becomes a swipeable single-row scroller */
+@media (max-width: 1279px) {
+  .trustbar__rail {
+    display: flex;
+    flex-wrap: nowrap;
+    grid-template-columns: none;
+    gap: var(--sp-6);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: var(--sp-2);
+    margin-bottom: calc(-1 * var(--sp-2));
+    padding-inline: clamp(var(--sp-6), 4vw, 56px);
+  }
+  .trustbar__rail::-webkit-scrollbar { display: none; }
+  .trustbar__rail::before { display: none; }
+  .trustbar__item {
+    flex: 0 0 clamp(150px, 30%, 160px);
+    scroll-snap-align: start;
+  }
+  .trustbar__sub { white-space: normal; }
+}
+@media (min-width: 768px) and (max-width: 1279px) {
+  .trustbar__rail { scroll-padding-inline: clamp(var(--sp-6), 4vw, 56px); }
+}
+/* Flip interaction */
+.trustbar__item:hover,
+.trustbar__item:focus-visible { z-index: 5; }
+@media (hover: hover) {
+  .trustbar__item:hover .trustbar__face--front { transform: rotateY(-180deg); }
+  .trustbar__item:hover .trustbar__face--back { transform: rotateY(0deg); box-shadow: 0 14px 32px rgba(0,0,0,0.18); }
+}
+.trustbar__item:focus-visible .trustbar__face--front,
+.trustbar__item.is-hinting .trustbar__face--front,
+.trustbar__item.is-flipped .trustbar__face--front { transform: rotateY(-180deg); }
+.trustbar__item:focus-visible .trustbar__face--back,
+.trustbar__item.is-hinting .trustbar__face--back,
+.trustbar__item.is-flipped .trustbar__face--back { transform: rotateY(0deg); box-shadow: 0 14px 32px rgba(0,0,0,0.18); }
+@media (max-width: 767px) {
+  .trustbar__rail { gap: var(--sp-2); }
+  .trustbar__item { flex: 0 0 44%; min-width: 150px; padding-inline: 2px; }
+  .trustbar__item:active .trustbar__face--front { transform: rotateY(-180deg); }
+  .trustbar__item:active .trustbar__face--back { transform: rotateY(0deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .trustbar__face { transition: none !important; }
+  .trustbar__item:hover .trustbar__face--front,
+  .trustbar__item:focus-visible .trustbar__face--front { transform: none; }
+  .trustbar__item:hover .trustbar__face--back,
+  .trustbar__item:focus-visible .trustbar__face--back { transform: rotateY(180deg); }
+}
+
+/* ============================================================
+   4. Hero Banner (XDM10) — built from scratch.
+   No <img> tags. Single background-image on the section,
+   layered under a left-to-right gradient that fades the image
+   into pure black. Zero seams, fully responsive.
+   ============================================================ */
+/* Monolithic Canvas: single seamless black environment. The device
+   sits directly on the website floor — no frame, no box, no seam. */
+.hero-banner {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: var(--white);
+  min-height: 540px;
+  /* Top key light (warm white wash from upper-left) layered above slate base */
+  background:
+    radial-gradient(ellipse 75% 60% at 25% 0%, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 35%, transparent 70%),
+    #0E0F12;
+  display: flex;
+  align-items: stretch;
+}
+
+/* Floor reflection — extended ellipse beneath the device */
+.hero-banner::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background:
+    /* Wide horizontal floor wash — bridges across the entire bottom */
+    linear-gradient(to top, rgba(40, 45, 50, 0.2) 0%, rgba(40, 45, 50, 0.08) 40%, transparent 100%),
+    /* Secondary soft wash extending toward the text block */
+    radial-gradient(
+      ellipse 110% 90% at 25% 100%,
+      rgba(55, 60, 68, 0.2) 0%,
+      rgba(40, 45, 50, 0.1) 45%,
+      transparent 85%
+    ),
+    /* Primary reflection ellipse beneath device — wider proportional spread */
+    radial-gradient(
+      ellipse 200% 110% at 50% 100%,
+      rgba(85, 92, 100, 0.42) 0%,
+      rgba(65, 72, 80, 0.32) 18%,
+      rgba(48, 53, 60, 0.22) 38%,
+      rgba(32, 36, 42, 0.12) 60%,
+      rgba(20, 22, 26, 0.05) 80%,
+      transparent 100%
+    );
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Magazine-edge hairline at bottom */
+.hero-banner::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,255,255,0.08) 25%,
+    rgba(255,255,255,0.08) 75%,
+    transparent 100%);
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Product stage — anchored right, monumental scale */
+.hero-banner__stage {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 35%;
+  /* Right edge aligns with the .container's right padding at every
+     breakpoint — same formula as .hero-banner__copy's margin-left,
+     mirrored. Keeps the device image within the overall layout
+     grid instead of bleeding to the viewport edge. */
+  --hero-pad: clamp(var(--sp-6), 4vw, 56px);
+  right: max(var(--hero-pad), calc((100vw - var(--container)) / 2 + var(--hero-pad)));
+  z-index: 1;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+@media (min-width: 1440px) {
+  .hero-banner__stage {
+    /* Flat 100px gutter matches the .container's padding-inline above,
+       so the stage's right edge aligns exactly with the container edge
+       and stays put on every screen ≥1440 (same cap as the container). */
+    --hero-pad: 100px;
+    right: max(var(--hero-pad), calc((100vw - var(--container)) / 2 + var(--hero-pad)));
+  }
+}
+
+.hero-banner__poster {
+  height: 105%;
+  width: auto;
+  max-width: none;
+  object-fit: contain;
+  object-position: right center;
+  /* No transform — poster stays within the stage box so its right
+     edge aligns with the container's right padding (matches the
+     header's cart-icon column). */
+  transform: none;
+  mix-blend-mode: screen;
+  filter: brightness(1.05) contrast(1.06);
+  /* Aggressive left-edge mask — hides the photo's natural spotlight halo
+     completely until well past the empty zone, eliminating the vertical
+     light streak between the text column and the device. */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 28%, rgba(0,0,0,0.25) 36%, rgba(0,0,0,0.7) 44%, #000 52%, #000 100%);
+  mask-image: linear-gradient(to right, transparent 0%, transparent 28%, rgba(0,0,0,0.25) 36%, rgba(0,0,0,0.7) 44%, #000 52%, #000 100%);
+  /* Mirror reflection beneath the product — fades from 35% opacity to 0
+     creating a real photographic floor reflection of the device */
+  /* Long, atmospheric reflection falloff — 20% at top decays smoothly
+     to 0% across an extended distance, no horizontal cut, no sharp edge. */
+  -webkit-box-reflect: below -2% linear-gradient(to bottom, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.17) 12%, rgba(255,255,255,0.13) 28%, rgba(255,255,255,0.09) 45%, rgba(255,255,255,0.05) 65%, rgba(255,255,255,0.02) 82%, rgba(255,255,255,0.005) 92%, transparent 100%);
+}
+
+.hero-banner__reddot {
+  position: absolute;
+  bottom: 8%;
+  right: 27%;
+  width: 22%;
+  max-width: 220px;
+  height: auto;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.98;
+}
+
+/* Copy — left rail mirrors .container's effective content edge
+   (container's outer auto-margin + padding-inline) so the hero text
+   starts at the exact same x-position as header/nav/trust bar
+   regardless of viewport size. */
+.hero-banner__copy {
+  --hero-pad: clamp(var(--sp-6), 4vw, 56px);
+  position: relative;
+  z-index: 3;
+  align-self: center;
+  margin-left: max(var(--hero-pad), calc((100vw - var(--container)) / 2 + var(--hero-pad)));
+  margin-right: var(--sp-6);
+  max-width: 880px;
+  padding-block: var(--sp-10);
+}
+@media (min-width: 1440px) {
+  .hero-banner__copy {
+    /* Flat 100px gutter mirrors the .container padding so the copy's
+       left rail aligns to the same grid edge on every screen ≥1440. */
+    --hero-pad: 100px;
+    margin-left: max(var(--hero-pad), calc((100vw - var(--container)) / 2 + var(--hero-pad)));
+    max-width: 1100px;
+  }
+}
+
+.hero-banner__title {
+  font-size: clamp(1.75rem, 3.06vw, 2.7rem);
+  line-height: 1.3;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -0.015em;
+  max-width: 32ch;
+  min-height: 2.6em;
+}
+.hero-banner__break { display: none; }
+@media (min-width: 1801px) {
+  .hero-banner__title { max-width: none; }
+  .hero-banner__break { display: initial; }
+}
+
+/* Pill chips — Hikvision + Designed in Germany */
+.hero-banner__chips {
+  display: flex;
+  gap: var(--sp-4);
+  margin-top: var(--sp-5);
+  flex-wrap: wrap;
+}
+.hero-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 28px;
+  padding: 0 12px;
+  background: var(--white);
+  color: var(--schwarz);
+  border-radius: var(--r-s);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.hero-chip__pre { color: var(--schwarz); }
+.hero-chip__hikvision {
+  font-weight: 900;
+  color: var(--rot);
+  letter-spacing: 0;
+  font-size: 12px;
+}
+.hero-chip__hikvision span { color: var(--schwarz); }
+.hero-chip__flag {
+  width: 18px;
+  height: 12px;
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.hero-banner__body {
+  margin-top: var(--sp-6);
+  font-size: var(--text-body);
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 80ch;
+  min-height: 3.5em;
+}
+
+.hero-banner__ctas {
+  margin-top: var(--sp-8);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-6);
+  max-width: 720px;
+}
+.hero-banner__cta {
+  height: 44px;
+  justify-content: center;
+  font-size: var(--text-body);
+  padding-inline: var(--sp-8);
+}
+.hero-banner__cta--secondary {
+  background: transparent;
+  color: var(--white);
+  border: none;
+  box-shadow: inset 0 0 0 1.5px var(--white);
+}
+.hero-banner__cta--secondary:hover { background: rgba(255, 255, 255, 0.08); }
+
+/* Vertical rhythm scales up on large screens for premium spacing */
+@media (min-width: 1440px) {
+  .hero-banner__chips { margin-top: var(--sp-6); }
+  .hero-banner__body { margin-top: 28px; }
+  .hero-banner__ctas { margin-top: var(--sp-10); }
+  /* .hero-banner__stage right is set by the container-aligned rule
+     in the @media (min-width: 1440px) block above (near .hero-banner__stage). */
+}
+@media (min-width: 1920px) {
+  .hero-banner__chips { margin-top: 28px; }
+  .hero-banner__body { margin-top: var(--sp-8); }
+  .hero-banner__ctas { margin-top: var(--sp-12); }
+  .hero-banner__stage { left: 50%; }
+}
+
+/* Tablet: hero stage shifts further right to avoid copy collision,
+   product image scales down */
+@media (max-width: 1280px) {
+  .hero-banner__stage { left: 60%; }
+  .hero-banner__copy { max-width: 620px; }
+}
+
+/* Mobile only: stack copy above product. Tablet (768–1023) keeps
+   the desktop side-by-side layout, tuned by the ≤1280 rule above. */
+@media (max-width: 767px) {
+  .hero-banner {
+    min-height: auto;
+    flex-direction: column;
+    padding-block: var(--sp-10);
+  }
+  /* Hide both decorative pseudos on mobile — the floor reflection
+     would bleed into the body text area, and the bottom hairline
+     adds a stray gradient line under the CTAs. */
+  .hero-banner::before,
+  .hero-banner::after { display: none; }
+  .hero-banner__stage {
+    position: relative;
+    left: 0;
+    width: 100%;
+    height: 360px;
+    order: -1;
+    /* Clip any image overflow (including the webkit box-reflect)
+       so nothing bleeds beneath the stage on mobile. */
+    overflow: hidden;
+  }
+  .hero-banner__copy {
+    margin-left: var(--sp-6);
+    margin-right: var(--sp-6);
+    max-width: none;
+    padding-block: 0;
+  }
+  .hero-banner__title {
+    font-size: var(--text-h2);
+    max-width: none;
+    /* Match the .hero-banner__chips margin-top below the title so the
+       space above and below the title text is consistent. */
+    margin-top: var(--sp-5);
+  }
+  .hero-banner__ctas { grid-template-columns: 1fr; max-width: none; }
+  .hero-banner__poster {
+    height: 100%;
+    width: 100%;
+    transform: none;
+    /* Bias the focal point upward so the reflective ground at the
+       bottom of the source reads with the same visual weight as the
+       spotlight glow above the device. */
+    object-fit: cover;
+    object-position: center 35%;
+    mix-blend-mode: normal;
+    filter: none;
+    -webkit-mask-image: none;
+    mask-image: none;
+    /* Disable the desktop webkit mirror reflection — it doubles the
+       device beneath the poster on mobile. */
+    -webkit-box-reflect: none;
+  }
+  .hero-banner__reddot {
+    width: 32%;
+    max-width: 220px;
+    min-width: 120px;
+    /* Mobile-specific nudge: shift 70px further left than the
+       inherited desktop right: 27%. */
+    right: calc(27% + 70px);
+  }
+}
+
+/* Legacy .config / .config__* block removed — the Configurator
+   Teaser section was dropped from the page. */
+
+/* ============================================================
+   6. Category Grid
+   ============================================================ */
+.cats__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: var(--sp-8);
+  margin-bottom: var(--sp-12);
+}
+/* Asymmetric grid based on user reference layout:
+   4 columns × 4 rows.
+   Row 1 (300px): small | Sprechanlagen wide (2-col) | small
+   Rows 2-3 (220px each): Paketboxen tall | Briefkästen big (2×2) | Türklingeln + Hausnummern stacked
+   Row 4 (191px): 4 compact cards */
+.cats__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* Row 1 split into 256+44 — Mülltonnen/Hochbeete sit in 256, Paketboxen
+     and Türklingeln extend up into row 1b (44) so their gutter to the
+     row-1 cards above them is 20px (consistent with all other gutters).
+     Row 2 split into 84+96 — Sprechanlagen extends 20% into Paketboxen,
+     Briefkästen starts where Sprechanlagen ends. */
+  grid-template-rows: 256px 44px 42px 96px 200px 220px;
+  gap: var(--sp-5);
+}
+.cat-card {
+  position: relative;
+  display: block;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  background: var(--paper-white);
+  isolation: isolate;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+/* Row 1 (rows 1a-only = 256px tall for the side cards) */
+.cat-card--c1 { grid-column: 1; grid-row: 1; }            /* Mülltonnenboxen — row 1a (256) */
+.cat-card--c2 { grid-column: 2 / span 2; grid-row: 1 / span 3; }  /* Sprechanlagen — rows 1a+1b+2a (424) */
+.cat-card--c3 { grid-column: 4; grid-row: 1; }            /* Hochbeete — row 1a (256) */
+/* Middle rows */
+.cat-card--c4 { grid-column: 1; grid-row: 2 / span 4; }   /* Paketboxen — rows 1b+2a+2b+3 (484), starts 20px below Mülltonnen */
+.cat-card--c5 { grid-column: 2 / span 2; grid-row: 4 / span 2; }  /* Briefkästen — rows 2b+3 (316), starts where Sprechanlagen ends */
+.cat-card--c6 { grid-column: 4; grid-row: 2 / span 3; }   /* Türklingeln — rows 1b+2a+2b (264), starts 20px below Hochbeete */
+.cat-card--c7 { grid-column: 4; grid-row: 5; }            /* Hausnummern — row 3 (200) */
+/* Bottom compact row */
+.cat-card--c8  { grid-column: 1; grid-row: 6; }
+.cat-card--c9  { grid-column: 2; grid-row: 6; }
+.cat-card--c10 { grid-column: 3; grid-row: 6; }
+.cat-card--c11 { grid-column: 4; grid-row: 6; }
+
+/* Daylight harmonization for row 4 studio shots — warms tone +
+   boosts brightness/saturation so they read closer to the
+   outdoor photography in rows 1–3 */
+.cat-card--c8 img,
+.cat-card--c9 img,
+.cat-card--c10 img {
+  filter: brightness(1.04) contrast(1.04) saturate(1.18) sepia(0.06);
+}
+
+
+/* Discount badge — design system spec: red, Heebo Bold-style, ~82px wide */
+.cat-card__discount {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 3;
+  background: var(--white);
+  color: var(--rot);
+  border: 2px solid var(--rot);
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: var(--text-h4);
+  font-weight: 900;
+  line-height: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 56px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+.cat-card__discount span {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.cat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+.cat-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  transition: transform 0.6s ease;
+}
+.cat-card:hover img { transform: scale(1.04); }
+.cat-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.7) 100%);
+}
+.cat-card__body {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--sp-6);
+  color: var(--white);
+  z-index: 1;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--sp-4);
+}
+.cat-card__title {
+  position: relative;
+  font-size: var(--text-h2);
+  font-weight: 700;
+  line-height: 1.2;
+  padding-top: var(--sp-4);
+}
+/* Hover indicator line — appears animatedly above the title on card hover */
+.cat-card__title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 36px;
+  height: 2px;
+  background: var(--teal-mint);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.cat-card:hover .cat-card__title::before {
+  transform: scaleX(1);
+}
+.cat-card__arrow {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-pill);
+  background: var(--white);
+  color: var(--teal);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.cat-card:hover .cat-card__arrow {
+  background: var(--teal);
+  color: var(--white);
+}
+
+/* ============================================================
+   7. Why Metzler — 3-up
+   ============================================================ */
+/* Full content section — inherits .section's 80px padding-block so it
+   breathes at the same 160px inter-section rhythm as cats/awards/etc.
+   (was a compact sp-12 override). */
+.why { background: var(--paper-white); }
+.why__head { text-align: center; margin-bottom: var(--sp-12); }
+.why__head .section-sub { margin-inline: auto; }
+.why__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-12);
+  align-items: start;
+}
+.why__item {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--sp-4);
+  padding: 0;
+  margin: 0;
+}
+.why__item h3,
+.why__item p {
+  padding: 0;
+  margin: 0;
+  text-indent: 0;
+}
+.why__icon {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--r-l);
+  background: var(--white);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--teal);
+  border: 1px solid var(--graphite-300);
+}
+.why__icon svg { width: 32px; height: 32px; }
+.why__item h3 {
+  font-size: var(--text-h2);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--schwarz);
+}
+.why__item p {
+  color: rgba(0, 0, 0, 0.7);
+  line-height: 1.6;
+}
+
+/* ============================================================
+   8. Awards (redesigned)
+   ============================================================ */
+.awards {
+  background: var(--teal-dark);
+  color: var(--white);
+}
+.awards__top {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  /* text + CTAs in the left column, photo on the right spanning both rows */
+  grid-template-areas: "content visual" "cta visual";
+  column-gap: var(--sp-12);
+  row-gap: var(--sp-8);
+  align-items: center;
+}
+.awards__content { grid-area: content; }
+.awards__visual  { grid-area: visual; }
+.awards__ctas    { grid-area: cta; }
+.awards .eyebrow { color: var(--teal-mint); }
+/* Credential block — pairs the siegel with a typographic label
+   so the badge reads as part of an intentional unit, not a
+   floating image. Forms a horizontal "press credential" stamp
+   anchored above the headline. */
+.awards__credential {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-5);
+  padding: var(--sp-3) var(--sp-5) var(--sp-3) 0;
+  margin-bottom: var(--sp-6);
+}
+.awards__badge {
+  display: block;
+  width: auto;
+  height: 88px;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+  flex-shrink: 0;
+}
+.awards__credential-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-left: var(--sp-5);
+  border-left: 1px solid rgba(255, 255, 255, 0.18);
+}
+.awards__credential-label {
+  /* Kicker aligned to the standard .eyebrow spec (12px / 0.15em) so it
+     matches every other section's eyebrow; keeps teal-mint since the
+     muted gray would be illegible on the dark section. */
+  font-size: var(--text-caption);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--teal-mint);
+}
+.awards__credential-meta {
+  font-size: var(--text-body-sm);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.78);
+  letter-spacing: 0.01em;
+}
+
+/* Desktop: scale the credential row up to read as a proper
+   press-credential anchor alongside the headline. */
+@media (min-width: 1024px) {
+  .awards__credential { gap: var(--sp-6); }
+  .awards__badge { height: 128px; }
+  .awards__credential-text { padding-left: var(--sp-6); gap: 6px; }
+  /* credential-label stays at the .eyebrow spec (12px / 0.15em) on desktop too */
+  .awards__credential-meta { font-size: var(--text-body); }
+}
+
+.awards h2 {
+  font-size: var(--text-display);
+  line-height: var(--lh-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--white);
+  max-width: 26ch;
+}
+.awards__sub {
+  margin-top: var(--sp-5);
+  font-size: var(--text-h4);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.78);
+  max-width: 56ch;
+}
+.awards__ctas {
+  display: flex;
+  gap: var(--sp-5);
+  align-items: center;
+  flex-wrap: wrap;
+}
+.awards__cta {
+  height: 44px;
+  padding-inline: var(--sp-8);
+  font-size: var(--text-body);
+  justify-content: center;
+  border-radius: var(--r-m);
+  background: var(--teal);
+  color: var(--white);
+}
+.awards__cta:hover { background: var(--teal-600); }
+.awards__cta:active { background: var(--teal-dark); }
+/* Secondary (outline) CTA — matches the primary's 44px height + padding
+   so the pair aligns; white outline reads on the dark section. */
+.awards__cta-secondary {
+  height: 44px;
+  padding-inline: var(--sp-8);
+  justify-content: center;
+}
+/* Mobile: CTAs go full-width (matches the About us section). */
+@media (max-width: 640px) {
+  .awards__ctas .btn { width: 100%; }
+}
+/* Editorial composition — clean, no rotation, restrained.
+   Photo + siegel at bottom-right corner overlap, year strip
+   below for typographic anchor. */
+.awards__visual {
+  position: relative;
+  isolation: isolate;
+}
+.awards__photo {
+  position: relative;
+  margin: 0;
+  border-radius: var(--r-l);
+  overflow: hidden;
+  aspect-ratio: 5 / 4;
+  box-shadow: 0 28px 56px rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+.awards__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.7) contrast(1.04);
+}
+.awards__siegel {
+  position: absolute;
+  right: -6%;
+  bottom: -10%;
+  width: 38%;
+  max-width: 240px;
+  height: auto;
+  z-index: 2;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.55));
+}
+
+/* Year-strip below the photo — small caps, wide letter-spacing,
+   teal-mint accent dots — anchors the visual typographically. */
+.awards__years {
+  margin-top: var(--sp-8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-3);
+  font-size: var(--text-caption);
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.78);
+  padding-top: var(--sp-5);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+.awards__years-dot {
+  color: var(--teal-mint);
+  letter-spacing: 0;
+}
+
+@media (max-width: 900px) {
+  .awards__siegel { width: 32%; right: 0; bottom: -8%; }
+}
+
+/* Legacy .gallery__* block removed — the Editorial Gallery
+   section was dropped from the page. */
+
+/* ============================================================
+   10. Reviews
+   ============================================================ */
+.reviews { background: var(--paper-white); }
+.reviews__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-8);
+  margin-bottom: var(--sp-12);
+}
+.reviews__tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: var(--sp-6) 0 var(--sp-8);
+  padding: 8px;
+  background: var(--white);
+  border: 1px solid var(--graphite-300);
+  /* Match the review card radius (8px) for numeric consistency. */
+  border-radius: 8px;
+  overflow: hidden;
+}
+.reviews__tab { flex: 1; justify-content: center; }
+.reviews__tab {
+  position: relative;
+  background: transparent;
+  border: 0;
+  padding: 14px 22px;
+  font: inherit;
+  font-size: var(--text-body);
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.65);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  /* Concentric with the .reviews__tabs (8px) minus 2px so the inner
+     pill stays visually parallel to the outer shell. */
+  border-radius: 6px;
+  transition: background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+}
+.reviews__tab:hover {
+  color: var(--schwarz);
+  background: rgba(0, 0, 0, 0.03);
+}
+.reviews__tab.is-active {
+  color: var(--schwarz);
+  background: rgba(0, 0, 0, 0.06);
+  box-shadow: none;
+}
+.reviews__tab-logo {
+  height: 20px;
+  width: 20px;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+}
+.reviews__tab-score {
+  font-weight: 700;
+  color: var(--schwarz);
+  font-variant-numeric: tabular-nums;
+}
+.reviews__tab-count {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.45);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+.reviews__tab.is-active .reviews__tab-score { color: var(--teal); }
+.reviews__cta {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--sp-8);
+}
+/* "Weitere Bewertungen laden" button — spec: 42px tall, transparent
+   with 1.5px teal border, 4px radius, 16px/500 Helvetica. Hover:
+   teal @ 5% background, text and border stay teal. */
+.reviews__load-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;                /* 8px */
+  height: 2.625rem;           /* 42px */
+  padding: 0.7rem 1.2rem;     /* 11.2px 19.2px */
+  border-radius: 4px;
+  border: 1.5px solid #015253;
+  background: transparent;
+  color: #015253;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1rem;            /* 16px */
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.reviews__load-more:hover {
+  background: rgba(1, 82, 83, 0.05);
+  color: #015253;
+  border-color: #015253;
+}
+.reviews__load-more svg { width: 20px; height: 20px; }
+.reviews__rating {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+}
+.reviews__rating-num {
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--schwarz);
+  line-height: 1;
+}
+.reviews__rating-meta { display: flex; flex-direction: column; gap: 4px; }
+.stars { color: #FAAD14; letter-spacing: 2px; font-size: 18px; }
+.reviews__rating-stars { display: block; height: 42px; width: auto; }
+.reviews__rating-label {
+  font-size: var(--text-body-sm);
+  color: rgba(0, 0, 0, 0.6);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.reviews__rating-source { height: 18px; width: auto; }
+/* Inline span inside .section-title h2. Vertical-align: middle
+   centers the count within the title's x-height band so the
+   "n" of "Bewertungen" sits visually level with the "n" of
+   "Kunden" rather than dangling at the title's baseline. */
+.reviews__rating-count {
+  font-size: var(--text-body-sm);
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.55);
+  letter-spacing: 0;
+  margin-left: 4px;
+  vertical-align: middle;
+  position: relative;
+  top: -2px;
+}
+.reviews__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-6);
+}
+.review {
+  background: var(--white);
+  border: 1px solid var(--graphite-300);
+  /* Explicit 8px — identical to the .reviews__tabs bar above so the
+     two curves read as the same shape. */
+  border-radius: 8px;
+  padding: var(--sp-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  position: relative;
+}
+.review__platform {
+  position: absolute;
+  top: calc(var(--sp-6) - 4px);
+  right: var(--sp-6);
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  opacity: 0.95;
+}
+.review__head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+}
+.review__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(1, 82, 83, 0.08);
+  color: var(--teal);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.review__info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  flex: 1;
+}
+.review__stars { display: block; height: 22px; width: auto; order: 1; }
+.review__name { font-weight: 700; color: var(--schwarz); font-size: var(--text-body-sm); order: 2; }
+.review__quote {
+  font-size: var(--text-body);
+  line-height: 1.6;
+  color: var(--schwarz);
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.review__city {
+  font-size: var(--text-caption);
+  color: rgba(0, 0, 0, 0.55);
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--graphite-100);
+}
+
+/* ============================================================
+   10b. ABOUT BRIDGE — brand-story split linking to the About us page.
+   Mirrors the Awards section's grammar: two-column grid inside the
+   .container, image as a rounded figure (no card wrapper), so it
+   reads as native to the page. Visual on the left alternates against
+   Awards (visual right) for editorial rhythm.
+   ============================================================ */
+.about-bridge__grid {
+  display: grid;
+  /* match the Awards grid (1.3fr 1fr) so this section's text column lines up
+     with the Awards right column above it */
+  grid-template-columns: 1.3fr 1fr;
+  gap: var(--sp-12);
+  align-items: center;
+}
+.about-bridge__media {
+  margin: 0;
+  border-radius: var(--r-l);
+  overflow: hidden;
+  aspect-ratio: 5 / 4;
+}
+.about-bridge__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* Title capped to 26ch to match the Awards title's max text width. */
+.about-bridge .section-title { max-width: 26ch; }
+.about-bridge__lead {
+  margin-top: var(--sp-5);
+  font-size: var(--text-h4);
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.72);
+  max-width: 56ch;
+}
+/* CTA row — primary button + secondary text link (different destinations),
+   same composition as the Awards section, filling the column width. */
+.about-bridge__ctas {
+  margin-top: var(--sp-8);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-5);
+  flex-wrap: wrap;
+}
+/* Buttons split the full width of the text column (equal halves). */
+.about-bridge__ctas .btn {
+  flex: 1 1 0;
+  min-width: 0;
+  justify-content: center;
+  padding-inline: var(--sp-8);
+}
+.about-bridge__break { display: none; }
+@media (min-width: 768px) {
+  .about-bridge__break { display: initial; }
+}
+/* Stack image over copy on tablet/mobile — same breakpoint as the
+   other split sections. */
+@media (max-width: 900px) {
+  .about-bridge__grid { grid-template-columns: 1fr; gap: var(--sp-8); }
+  .about-bridge__media { aspect-ratio: 16 / 10; }
+  .about-bridge__lead { max-width: none; }
+}
+@media (max-width: 640px) {
+  /* Stack full-width so long labels can't overflow the container
+     (flex:1 1 0 above would otherwise keep them side-by-side). */
+  .about-bridge__ctas { flex-direction: column; align-items: stretch; gap: var(--sp-4); }
+  /* flex:0 0 auto so the .btn's 48px height applies (flex-basis:0 above
+     would otherwise collapse the button to its text line height). */
+  .about-bridge__ctas .btn { flex: 0 0 auto; width: 100%; justify-content: center; }
+}
+
+/* ============================================================
+   11. FAQ
+   ============================================================ */
+.faq__inner {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: var(--sp-16);
+}
+.faq__list { display: flex; flex-direction: column; gap: 0; }
+.faq__item {
+  border-bottom: 1px solid var(--graphite-300);
+  position: relative;
+  transition: background 0.18s ease;
+}
+.faq__item:first-child { border-top: 1px solid var(--graphite-300); }
+.faq__item:hover { background: rgba(0, 0, 0, 0.015); }
+.faq__item[open] { background: rgba(1, 82, 83, 0.025); }
+.faq__item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--teal);
+  transform: scaleY(0);
+  transform-origin: center;
+  transition: transform 0.25s ease;
+}
+.faq__item[open]::before { transform: scaleY(1); }
+.faq__q {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  padding: var(--sp-6) var(--sp-5);
+  font-size: var(--text-h4);
+  font-weight: 700;
+  color: var(--schwarz);
+  gap: var(--sp-6);
+  cursor: pointer;
+  transition: color 0.18s ease;
+}
+.faq__item[open] .faq__q { color: var(--teal); }
+/* FAQ toggle indicator — bare 24×24 chevron-down, no frame.
+   On open the chevron flips vertically (scaleY(-1)), matching
+   the pattern used on the Metzler production-process page. */
+.faq__q-icon {
+  flex: 0 0 auto;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: grid;
+  place-items: center;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  color: var(--graphite-500);
+  transition: color 0.2s ease;
+}
+.faq__q-icon svg { width: 1.5rem; height: 1.5rem; transition: transform 0.2s ease; }
+.faq__item:hover .faq__q-icon { color: var(--teal); }
+.faq__item[open] .faq__q-icon { color: var(--teal); }
+.faq__item[open] .faq__q-icon svg { transform: scaleY(-1); }
+.faq__a {
+  padding: 0 var(--sp-5) var(--sp-6);
+  color: rgba(0, 0, 0, 0.72);
+  line-height: 1.6;
+  font-size: var(--text-body);
+}
+.faq__support {
+  background: var(--paper-white);
+  border: 1px solid var(--graphite-300);
+  border-radius: var(--r-l);
+  padding: var(--sp-8);
+  align-self: start;
+  position: sticky;
+  top: 110px;
+}
+.faq__support h3 {
+  font-size: var(--text-h3);
+  font-weight: 700;
+  color: var(--schwarz);
+  letter-spacing: -0.01em;
+}
+.faq__support p {
+  margin-top: var(--sp-3);
+  color: rgba(0, 0, 0, 0.68);
+  font-size: var(--text-body-sm);
+  line-height: 1.6;
+}
+.faq__support .btn { margin-top: var(--sp-6); width: 100%; justify-content: center; }
+.faq__support .btn--primary:hover { background: var(--teal-600); }
+/* Inline links inside FAQ answers */
+.faq__a a { color: var(--teal); text-decoration: underline; }
+.faq__a a:hover { color: var(--teal-600); }
+.faq__phone {
+  margin-top: var(--sp-6);
+  padding: var(--sp-5);
+  background: var(--white);
+  border-radius: var(--r-m);
+  border: 1px solid var(--graphite-300);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(0, 0, 0, 0.55);
+  font-weight: 600;
+}
+.faq__phone strong {
+  display: block;
+  color: var(--teal);
+  font-size: var(--text-h3);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-top: 6px;
+  text-transform: none;
+}
+.faq__phone-hours {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+/* ============================================================
+   12. Footer (matched to Figma node 4438:23420)
+   ============================================================ */
+.footer {
+  background: var(--teal-dark);
+  color: var(--white);
+  padding-block: var(--sp-16) var(--sp-6);
+  font-size: var(--text-body-sm);
+}
+
+/* Top: 5-column grid — Brand | Hotlines | Informationen | Service | Follow us+Qualität */
+.footer__top {
+  display: grid;
+  grid-template-columns: 1.5fr 1.3fr 1fr 1fr 1.2fr;
+  gap: var(--sp-10);
+  padding-bottom: var(--sp-10);
+}
+
+.footer h4 {
+  font-size: var(--text-body);
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: var(--sp-5);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Brand column */
+.footer__brand-logo { height: 36px; margin-bottom: var(--sp-5); }
+.footer__labels-title { margin-top: var(--sp-8); }
+.footer__labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  align-items: center;
+  margin-top: var(--sp-4);
+}
+.footer__labels img {
+  height: 56px;
+  width: auto;
+  opacity: 0.92;
+  transition: opacity 0.2s ease;
+}
+.footer__labels img:hover { opacity: 1; }
+.footer__brand-line {
+  font-size: var(--text-body-sm);
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.55;
+  margin-bottom: var(--sp-5);
+}
+.footer__brand-link {
+  color: var(--white);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.footer__brand-link:hover { color: var(--teal-mint); }
+.footer__brand-strong {
+  font-size: var(--text-body-sm);
+  color: var(--white);
+  font-weight: 700;
+  line-height: 1.55;
+  max-width: 28ch;
+}
+
+/* Hotlines column */
+.footer__hotline { display: flex; flex-direction: column; gap: var(--sp-5); }
+.footer__hotline-label {
+  display: block;
+  font-size: var(--text-body-sm);
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.footer__hotline-num {
+  display: block;
+  font-size: var(--text-body-sm);
+  font-weight: 500;
+  color: var(--teal-mint);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  margin-bottom: 2px;
+}
+.footer__hotline-num:hover { color: var(--white); }
+.footer__hotline-item em {
+  display: block;
+  font-style: normal;
+  font-size: var(--text-caption);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Link columns */
+.footer__links { display: flex; flex-direction: column; gap: var(--sp-3); }
+
+/* Footer accordions — collapsible on mobile, always expanded on
+   tablet/desktop. Uses native <details>/<summary> for zero JS. */
+.footer__details summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}
+.footer__details summary::-webkit-details-marker { display: none; }
+.footer__details summary::marker { content: ""; }
+.footer__details summary h4 { margin: 0; }
+/* Chevron — rotates when section is open */
+.footer__details summary::after {
+  content: "";
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+  margin-bottom: 2px;
+}
+.footer__details[open] summary::after { transform: rotate(-135deg); }
+/* On tablet + desktop the section is always expanded; hide the
+   chevron and make the summary non-interactive so it reads as a
+   normal column heading. */
+@media (min-width: 641px) {
+  .footer__details summary { cursor: default; pointer-events: none; }
+  .footer__details summary::after { display: none; }
+}
+/* Hairline below each accordion on mobile so the sections read
+   as distinct rows (matches the production live site). */
+@media (max-width: 640px) {
+  .footer__details {
+    padding-block: var(--sp-2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .footer__details[open] .footer__links { padding-top: var(--sp-2); }
+  /* Negate the .footer__top grid row-gap (sp-10 = 40px) between
+     adjacent accordions so the two rows sit flush against each
+     other, separated only by the 1px hairline. Other footer
+     blocks keep their 40px gap. */
+  .footer__details + .footer__details {
+    margin-top: calc(-1 * var(--sp-10));
+  }
+}
+.footer__links a {
+  font-size: var(--text-body-sm);
+  color: rgba(255, 255, 255, 0.85);
+}
+.footer__links a:hover { color: var(--teal-mint); }
+
+/* Follow us + Qualität column */
+.footer__social {
+  display: flex;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-8);
+}
+.footer__social a {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-pill);
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  color: var(--white);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.footer__social a:hover {
+  background: var(--teal-mint);
+  border-color: var(--teal-mint);
+  color: var(--teal-dark);
+}
+.footer__social svg { width: 18px; height: 18px; }
+.footer__qual-h { margin-bottom: var(--sp-4); }
+.footer__topshops {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-2);
+}
+
+/* TopShop quality badges (CSS-rendered placeholders matching brand colors) */
+.topshop-badge {
+  position: relative;
+  aspect-ratio: 1 / 1.15;
+  background: var(--rot);
+  border-radius: var(--r-m);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 2px;
+  color: var(--white);
+  text-align: center;
+  line-height: 1;
+  overflow: hidden;
+}
+.topshop-badge--gold { background: linear-gradient(180deg, #C7A86A 0%, #8E6F2E 100%); }
+.topshop-badge::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-radius: 3px;
+  pointer-events: none;
+}
+.topshop-badge__icon {
+  font-size: 14px;
+  margin-bottom: 3px;
+  line-height: 1;
+  filter: brightness(2);
+}
+.topshop-badge__label {
+  font-size: 7.5px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+.topshop-badge__year {
+  font-size: 9px;
+  font-weight: 700;
+  margin-top: 3px;
+  background: var(--white);
+  color: var(--rot);
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+.topshop-badge--gold .topshop-badge__year { color: #6E5320; }
+
+/* Partners row */
+.footer__partners {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--sp-10);
+  align-items: center;
+  padding-block: var(--sp-6);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+.footer__partners-block { display: flex; flex-direction: column; gap: var(--sp-3); }
+.footer__partners-label {
+  font-size: var(--text-body-sm);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+}
+.footer__partners-logos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  align-items: center;
+}
+.footer__partners-logos img {
+  height: 26px;
+  width: auto;
+  background: var(--white);
+  border-radius: 3px;
+  padding: 3px 5px;
+  object-fit: contain;
+}
+
+/* Trusted Shops rating */
+.footer__rating {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  column-gap: var(--sp-3);
+  row-gap: 2px;
+}
+.footer__rating-emblem {
+  grid-row: 1 / span 2;
+  display: flex;
+  align-items: center;
+}
+.footer__rating-stars {
+  font-size: 14px;
+  color: #FAAD14;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+.footer__rating-meta { display: flex; flex-direction: column; gap: 1px; }
+.footer__rating-meta strong {
+  font-size: var(--text-body-sm);
+  color: var(--white);
+  font-weight: 700;
+}
+.footer__rating-count {
+  font-size: var(--text-caption);
+  color: var(--teal-mint);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.footer__rating-count:hover { color: var(--white); }
+
+/* Legal links strip */
+.footer__legal-links {
+  display: flex;
+  flex-wrap: wrap;   /* wrap instead of overflowing the page below desktop */
+  justify-content: space-between;
+  gap: var(--sp-3) var(--sp-5);
+  padding-block: var(--sp-6);
+  font-size: var(--text-caption);
+  white-space: nowrap;
+}
+.footer__legal-links a {
+  color: rgba(255, 255, 255, 0.85);
+}
+.footer__legal-links a:hover { color: var(--teal-mint); }
+
+/* Copyright */
+.footer__copy {
+  text-align: center;
+  font-size: var(--text-body-sm);
+  color: rgba(255, 255, 255, 0.7);
+  padding-top: var(--sp-3);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.footer__copy a {
+  color: var(--teal-mint);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.footer__copy-sep {
+  display: inline-block;
+  margin-inline: var(--sp-3);
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 1100px) {
+  .footer__top { grid-template-columns: 1.2fr 1fr 1fr; }
+  .footer__top > *:nth-child(4), .footer__top > *:nth-child(5) { grid-column: span 1; }
+}
+
+@media (max-width: 720px) {
+  .awards__ctas { justify-content: center; text-align: center; }
+  .awards__ctas > * { margin-inline: auto; }
+  /* Reviews header — stack title + rating vertically on mobile */
+  .reviews__head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--sp-4);
+  }
+  .reviews__rating { align-self: flex-start; }
+  .reviews__rating-num { font-size: 32px; }
+  .reviews__rating-stars { height: 24px; }
+
+  /* FAQ: move "Beratung gewünscht" contact card AFTER the FAQ list on mobile */
+  .faq__inner { display: flex; flex-direction: column; }
+  .faq__inner > *:first-child { order: 2; }
+  .faq__inner > *:last-child { order: 1; }
+
+  /* Reviews filter tabs — desktop segmented control, scrollable with peek */
+  .reviews__tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 8px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    position: relative;
+    /* Reserve a visible "peek window" on the right so the next tab
+       always shows beyond the second one. */
+    padding-right: 22%;
+  }
+  .reviews__tabs::-webkit-scrollbar { display: none; }
+  .reviews__tab {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    padding: 10px 14px;
+    font-size: 13px;
+    gap: 8px;
+  }
+  .reviews__tab-logo { width: 16px; height: 16px; }
+  .reviews__tab-count { font-size: 11px; }
+}
+
+@media (max-width: 900px) {
+  :root { --section-y: var(--sp-16); }
+  .topbar__claims li:nth-child(n+3) { display: none; }
+
+  /* cats inherits --section-y like every other section (no override) */
+  .cats__head { margin-bottom: var(--sp-12); }
+  .header__main { grid-template-columns: auto 1fr auto; gap: var(--sp-3); }
+  .header__search { grid-column: 1 / -1; order: 99; max-width: none; padding-bottom: var(--sp-3); }
+  .header__main { height: auto; padding-block: var(--sp-3); }
+  .awards__top,
+  .faq__inner { grid-template-columns: 1fr; gap: var(--sp-12); }
+  /* single column: DOM flows content → CTAs → photo (credential stays on top,
+     CTAs sit directly under the copy, above the image) */
+  .awards__top { grid-template-areas: none; }
+  .awards__content, .awards__visual, .awards__ctas { grid-area: auto; }
+  /* ============================================================
+     MOBILE BENTO — built from scratch using grid-template-areas.
+     Three Figma modules stacked. Each module = full-width hero +
+     2-col row of tall(left) / LS(top-right) / Sq(bot-right).
+     Row heights driven by per-tile aspect-ratio so the rail stays
+     proportional at any width.
+
+     Mapping:
+       M1 → Briefkasten | Sprech | Müll  | Türklingel
+       M2 → Hochbeete   | Paket  | Außen | Funk
+       M3 → Schild      | Haus   | Schriftzug | —
+     ============================================================ */
+  .cats__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-auto-rows: auto;
+    grid-template-areas:
+      "h1   h1 "
+      "t1   ls1"
+      "t1   sq1"
+      "h2   h2 "
+      "t2   ls2"
+      "t2   sq2"
+      "h3   h3 "
+      "t3   ls3";
+    gap: 10px;
+  }
+
+  /* Reset every desktop placement so grid-area takes over cleanly */
+  .cat-card--c1, .cat-card--c2, .cat-card--c3,
+  .cat-card--c4, .cat-card--c5, .cat-card--c6, .cat-card--c7,
+  .cat-card--c8, .cat-card--c9, .cat-card--c10, .cat-card--c11 {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  /* Slot assignments */
+  .cat-card--c5  { grid-area: h1;  aspect-ratio: 1.43; }
+  .cat-card--c2  { grid-area: t1; }
+  .cat-card--c1  { grid-area: ls1; aspect-ratio: 1.46; }
+  .cat-card--c6  { grid-area: sq1; aspect-ratio: 1.24; }
+
+  .cat-card--c3  { grid-area: h2;  aspect-ratio: 1.43; }
+  .cat-card--c4  { grid-area: t2; }
+  .cat-card--c8  { grid-area: ls2; aspect-ratio: 1.46; }
+  .cat-card--c9  { grid-area: sq2; aspect-ratio: 1.24; }
+
+  .cat-card--c10 { grid-area: h3;  aspect-ratio: 1.43; }
+  .cat-card--c7  { grid-area: t3; }
+  .cat-card--c11 { grid-area: ls3; aspect-ratio: 1.46; }
+
+  /* <picture> wrapper passes through to <img> so the desktop
+     position:absolute inset:0 rule on .cat-card img anchors the
+     image to .cat-card directly. */
+  .cat-card picture { display: contents; }
+
+  /* Per-tile focal point adjustments — the Sprechanlage panel sits
+     in the left third of its source image, so the default centered
+     crop hides it behind the glass door. Pull the focal point left. */
+  .cat-card--c2 img { object-position: 18% center; }
+
+  /* SCRIM — Solution A: two stacked gradients guarantee a worst-case
+     ~75% black band where the label sits, hitting WCAG AA contrast
+     regardless of underlying photo content. Mobile only — desktop's
+     scrim (line ~1267) is untouched. */
+  .cat-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      /* Wide soft fade for tonal depth */
+      linear-gradient(180deg,
+        rgba(0, 0, 0, 0)    50%,
+        rgba(0, 0, 0, 0.55) 100%),
+      /* Tighter dense band locked to the label zone */
+      linear-gradient(180deg,
+        rgba(0, 0, 0, 0)    70%,
+        rgba(0, 0, 0, 0.75) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* Lift the label container above the scrim. Desktop sets z-index:1
+     on .cat-card__body which collides with the scrim's z-index:1, and
+     because the ::after pseudo appears later in DOM it paints on top
+     of the label. Mobile needs z-index:2 here so the label wins. */
+  .cat-card__body { z-index: 2; }
+
+  /* Hide the teal hover-indicator line on mobile — it flashes on tap
+     (touch :active) and adds noise rather than affordance. */
+  .cat-card__title::before { display: none; }
+
+  /* UNIFIED ANCHOR LABELS — clean white text, no background. Legibility
+     comes from a 1px sharp stroke (8 directional shadows at zero blur)
+     plus a soft drop shadow for depth. This is the photo-overlay typography
+     technique used by Apple Photos, Spotify, and most editorial apps:
+     guaranteed contrast on any image without dimming the glyphs. */
+  .cat-card__title {
+    position: absolute;
+    left: 14px;
+    bottom: 14px;
+    right: 14px;
+    text-align: left;
+    color: #fff;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    z-index: 2;
+    /* No text-shadow — exact desktop technique, scrim only */
+  }
+
+  /* Promo badges — top-right pills, never overlap labels */
+  .cat-card__badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    left: auto;
+    bottom: auto;
+    z-index: 3;
+  }
+  .why__grid { grid-template-columns: 1fr; gap: var(--sp-8); }
+  .why__item { text-align: center; }
+  .awards__seals { grid-template-columns: repeat(2, 1fr); }
+  /* .reviews__head is display:flex by default — gap only. */
+  .reviews__head { gap: var(--sp-5); }
+  .reviews__grid { grid-template-columns: 1fr; }
+  .footer__top { grid-template-columns: 1fr 1fr; }
+  .footer__top > * { grid-column: span 1; }
+  .footer__brand { grid-column: 1 / -1; }
+  .footer__partners { grid-template-columns: 1fr; gap: var(--sp-6); }
+}
+
+@media (max-width: 640px) {
+  :root { --section-y: var(--sp-12); }
+  /* (cats__grid sized exclusively by the 900px @media — no override here) */
+  /* Footer: single-column stack on mobile. Informationen + Service
+     are full-width collapsible <details> accordions (see
+     .footer__details styling above). */
+  .footer__top { grid-template-columns: 1fr; }
+  .footer__top > * { grid-column: 1 / -1; }
+  /* Keep the 4 quality badges on a single line. */
+  .footer__labels { flex-wrap: nowrap; }
+  .footer__quality-grid { grid-template-columns: 1fr; }
+  /* Legal links: wrap within the viewport (instead of running off the right edge)
+     and center each row. */
+  .footer__legal-links {
+    flex-wrap: wrap;
+    white-space: normal;
+    justify-content: center;
+    text-align: center;
+    column-gap: var(--sp-4);
+    row-gap: var(--sp-2);
+  }
+  .header__nav ul { gap: var(--sp-5); }
+}
+
+/* ============================================================
+   Narrow desktop topbar (1024–1199px)
+   Hide claim 4 (Trusted Shops Käuferschutz) and claim 5 (Kauf
+   auf Rechnung) so the topbar stays on one line at smaller
+   desktop widths. At ≥1200px, all five claims are shown.
+   ============================================================ */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .topbar__claims li:nth-child(4),
+  .topbar__claims li:nth-child(5) { display: none; }
+}
+
+/* ============================================================
+   Mobile topbar (≤767px)
+   Shows ONLY the "1.8 Mio. Kunden" + "10 Jahre Garantie" claims.
+   Hides item 1 (Qualität seit 2013), items 4–5, and the right
+   side links. Same teal style + 36px height as desktop — just
+   trimmed content. Sits at the very top of the page above the
+   sticky header.
+   ============================================================ */
+@media (max-width: 767px) {
+  .topbar__claims li:nth-child(1),
+  .topbar__claims li:nth-child(n+4),
+  .topbar__links { display: none; }
+  .topbar__claims li:nth-child(2),
+  .topbar__claims li:nth-child(3) { display: flex; }
+  /* Align the two claims with the burger and cart icons directly
+     below. The icons are 48×48 buttons with a -13px outdent and
+     ~22px SVG glyphs centered inside, so the visible glyph sits
+     roughly where the .container's default padding lands. Using
+     the container padding (no outdent) aligns text with the
+     visible icon glyph, not the invisible button hitbox. */
+  .topbar__inner {
+    justify-content: space-between;
+    gap: var(--sp-3);
+  }
+  .topbar__claims {
+    width: 100%;
+    justify-content: space-between;
+    gap: var(--sp-3);
+    flex: 1;
+  }
+}
+
+/* ============================================================
+   Section titles — entire mobile tier (≤767px) gets the smaller
+   32px size. Previously bound to ≤640, which left 641–767 stuck
+   at the desktop 46px and produced a non-monotonic curve
+   (32 → 46 → 36 → 46 as viewport grew).
+   ============================================================ */
+@media (max-width: 767px) {
+  .section-title,
+  .awards h2 { font-size: 2rem; }
+}
+
+/* ============================================================
+   TABLET HEADER (768–1023px) — placed at end of file so it wins
+   source-order priority over the ≤900 / ≤1100 blocks above.
+   Top row mirrors desktop (logo + search + icons, no burger).
+   Strip below: "Alle" pill button + horizontally scrolling
+   category list. The "Alle" button opens the existing #mobileNav
+   drawer (wired via [data-nav-toggle] in script).
+   ============================================================ */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Unify vertical rhythm across the whole tablet range. Without
+     this, 901–1023 inherits the desktop 80px and there's a jump
+     at the 900/901 boundary. */
+  :root { --section-y: var(--sp-16); }
+
+  /* Section titles — scaled down from desktop's 46px so they don't
+     stretch awkwardly across the narrower tablet viewport. Sits
+     between desktop (46px) and mobile (32px). */
+  .section-title,
+  .awards h2 { font-size: 2.25rem; }
+
+  /* Header — this block lives at the end of the file and wins
+     source-order against the earlier ≤900 / ≤1023 blocks at equal
+     specificity, so no !important is needed. */
+  .header__main {
+    grid-template-columns: auto 1fr auto;
+    gap: var(--sp-6);
+    height: 72px;
+    padding-block: 0;
+  }
+  .header__logo img { height: 28px; }
+  .header__search {
+    grid-column: auto;
+    order: 0;
+    max-width: 846px;
+    padding-bottom: 0;
+  }
+  .header__nav { display: block; }
+  /* Side padding inherits from .container (same as top header).
+     Internal gaps unified at --sp-5 (20px). */
+  .header__nav .container {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-5);
+  }
+  .header__nav-all { display: inline-flex; margin: 0; }
+  .header__nav ul {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    /* Distribute visible items evenly across the row — minimum gap
+       is --sp-5; extra space distributes between items so the last
+       item lands flush with the right edge. */
+    justify-content: space-between;
+    gap: var(--sp-5);
+    overflow: hidden;
+    flex-wrap: nowrap;
+  }
+  .header__nav li { margin: 0; padding: 0; }
+  .header__nav li[hidden] { display: none !important; }
+  .header__nav a { padding: 6px 0; }
+  .header__nav a { font-size: var(--text-body-sm); }
+
+  /* ── Hero banner ──
+     Push device and reddot as far right as possible (flush to
+     the viewport edge). Copy clamps so it never overlaps. */
+  .hero-banner__stage { left: 55%; right: 0; }
+  .hero-banner__poster {
+    transform: translateX(25%);
+    object-position: right center;
+  }
+  .hero-banner__copy { max-width: 560px; }
+  .hero-banner__title { max-width: 30ch; font-size: clamp(1.5rem, 2.6vw, 1.875rem); }
+  .hero-banner__body { max-width: 56ch; font-size: var(--text-body-sm); }
+  .hero-banner__ctas { max-width: 560px; }
+  /* Reddot award — sized to read as a credibility anchor without
+     competing with the device. Inset slightly so the badge text
+     ("reddot winner 2026") isn't clipped at the viewport edge. */
+  .hero-banner__reddot {
+    width: 26%;
+    max-width: 190px;
+    min-width: 140px;
+    bottom: calc(14% - 16px);
+    right: clamp(132px, calc(16vw - 8px), 212px);
+  }
+
+  /* ── Cats (Markenqualität) ──
+     Extend the mobile bento (currently capped at ≤900) up to
+     1023 so the entire tablet range gets the proven 3-module
+     stacked layout instead of the cramped desktop 11-tile grid. */
+  .cats__head { margin-bottom: var(--sp-12); }
+  .cats__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-auto-rows: auto;
+    grid-template-areas:
+      "h1   h1 "
+      "t1   ls1"
+      "t1   sq1"
+      "h2   h2 "
+      "t2   ls2"
+      "t2   sq2"
+      "h3   h3 "
+      "t3   ls3";
+    gap: 10px;
+  }
+  .cat-card--c1, .cat-card--c2, .cat-card--c3,
+  .cat-card--c4, .cat-card--c5, .cat-card--c6, .cat-card--c7,
+  .cat-card--c8, .cat-card--c9, .cat-card--c10, .cat-card--c11 {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .cat-card--c5  { grid-area: h1;  aspect-ratio: 1.43; }
+  .cat-card--c2  { grid-area: t1; }
+  .cat-card--c1  { grid-area: ls1; aspect-ratio: 1.46; }
+  .cat-card--c6  { grid-area: sq1; aspect-ratio: 1.24; }
+  .cat-card--c3  { grid-area: h2;  aspect-ratio: 1.43; }
+  .cat-card--c4  { grid-area: t2; }
+  .cat-card--c8  { grid-area: ls2; aspect-ratio: 1.46; }
+  .cat-card--c9  { grid-area: sq2; aspect-ratio: 1.24; }
+  .cat-card--c10 { grid-area: h3;  aspect-ratio: 1.43; }
+  .cat-card--c7  { grid-area: t3; }
+  .cat-card--c11 { grid-area: ls3; aspect-ratio: 1.46; }
+  .cat-card picture { display: contents; }
+  .cat-card--c2 img { object-position: 18% center; }
+  .cat-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.55) 100%),
+      linear-gradient(180deg, rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0.75) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+  .cat-card__body { z-index: 2; }
+  /* Title styling matches desktop — relative position inside the
+     body, h2 size, teal-mint hover indicator line. Overrides the
+     mobile bento absolute/nowrap/ellipsis treatment. */
+  .cat-card__title {
+    position: relative;
+    inset: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    text-align: left;
+    color: var(--white);
+    font-weight: 700;
+    font-size: var(--text-h2);
+    line-height: 1.2;
+    letter-spacing: normal;
+    background: none;
+    padding: var(--sp-4) 0 0 0;
+    border-radius: 0;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    z-index: 2;
+  }
+  .cat-card__title::before {
+    display: block;
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 36px;
+    height: 2px;
+    background: var(--teal-mint);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .cat-card:hover .cat-card__title::before { transform: scaleX(1); }
+  .cat-card__badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    left: auto;
+    bottom: auto;
+    z-index: 3;
+  }
+
+  /* ── Why (Drei Gründe) ──
+     Extend the mobile 1-col stack to the full tablet range. */
+  .why__grid { grid-template-columns: 1fr; gap: var(--sp-8); }
+  .why__item { text-align: center; }
+
+  /* ── Awards ──
+     Stack to 1 column across the tablet range. Seals stay 2-col
+     so the badge row reads as a small grid, not a long stack.
+     Explicit symmetric padding-block so the section's top and
+     bottom whitespace match (defends against intermediate rules
+     that might add asymmetric margins). */
+  .awards { padding-block: var(--sp-16); }
+  .awards__top { grid-template-columns: 1fr; grid-template-areas: none; gap: var(--sp-12); }
+  .awards__content, .awards__visual, .awards__ctas { grid-area: auto; }
+  .awards__seals { grid-template-columns: repeat(2, 1fr); }
+  .awards__siegel { width: 32%; right: 0; bottom: -8%; }
+  /* Gap inherited from desktop (--sp-5 = 20px). CTAs fill the row equally
+     (like the about-bridge section) instead of sitting centered with a
+     trailing gap — margin-inline:0 overrides the <=1100 auto-centering. */
+  .awards__ctas { justify-content: center; text-align: center; }
+  .awards__ctas .btn { flex: 1 1 0; min-width: 0; margin-inline: 0; }
+
+  /* ── FAQ ──
+     Stack contact box and FAQ list. Contact box must not stick
+     and is reordered AFTER the FAQ list so it reads as a natural
+     "still have questions?" closer rather than floating above
+     the questions. Same pattern as mobile (≤720). */
+  .faq__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-12);
+  }
+  .faq__inner > *:first-child { order: 2; }
+  .faq__inner > *:last-child { order: 1; }
+  .faq__support {
+    position: static;
+    top: auto;
+    max-width: none;
+    margin-inline: 0;
+  }
+
+  /* ── Reviews ──
+     Stack the section head so the rating sits below the title
+     instead of being squeezed (and clipped) at the right edge.
+     Review cards render in a 2-column grid on tablet to use the
+     extra horizontal space. */
+  .reviews__head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--sp-4);
+  }
+  .reviews__rating { align-self: flex-start; }
+  .reviews__rating-num { font-size: 32px; }
+  .reviews__rating-stars { height: 24px; }
+  .reviews__grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* ── Reviews tabs ──
+     Same carousel pattern as mobile: nowrap flex, horizontal
+     scroll, snap. Peek comes from natural tab overflow — no
+     forced trailing padding (which left empty space at end). */
+  .reviews__tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 8px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    position: relative;
+  }
+  .reviews__tabs::-webkit-scrollbar { display: none; }
+  .reviews__tab {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    padding: 10px 14px;
+    font-size: 13px;
+    gap: 8px;
+  }
+  .reviews__tab-logo { width: 16px; height: 16px; }
+  .reviews__tab-count { font-size: 11px; }
+
+  /* Credential row — bumped up from the desktop sizing because
+     the section is wider (1-col) on tablet, so the badge can
+     scale up without crowding adjacent content. Centered as a
+     block since the surrounding copy is also centered on tablet. */
+  .awards__credential {
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    gap: var(--sp-6);
+    padding-top: 0;
+    padding-bottom: var(--sp-4);
+    margin-top: 0;
+    margin-inline: 0;
+    margin-bottom: var(--sp-6);
+  }
+  .awards__copy { text-align: left; }
+  .awards h2 { max-width: none; }
+  .awards__sub { max-width: none; }
+  .awards h2, .awards__sub { margin-inline: 0; }
+  .awards__badge { height: 148px; }
+  .awards__credential-text { padding-left: var(--sp-6); gap: 6px; text-align: left; }
+  .awards__credential-label { font-size: var(--text-body); letter-spacing: 0.2em; }
+  .awards__credential-meta { font-size: var(--text-h4); }
+
+  /* Header — sticky at rest, switches to FIXED + mobile-style
+     layout the moment the user scrolls. JS toggles body.is-scrolled
+     based on window.scrollY; the morph rules below activate then. */
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 90;
+    background: var(--white);
+  }
+
+  body.is-scrolled .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+  /* Topbar hidden during scroll so the fixed header sits flush. */
+  body.is-scrolled .topbar { display: none; }
+  /* Body padding-top compensates for the header being out of flow. */
+  body.is-scrolled { padding-top: 72px; }
+
+  /* ── Header morph (mobile-style layout when scrolled) ── */
+  body.is-scrolled .header__main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    grid-template-columns: none;
+    gap: 0;
+    height: 72px;
+    padding-block: 0;
+  }
+  body.is-scrolled .header__burger { display: flex; }
+  body.is-scrolled .header__search-icon { display: inline-flex; }
+  body.is-scrolled .header__search { display: none; }
+  body.is-scrolled .header__nav { display: none; }
+  body.is-scrolled .header__kategorien { display: none; }
+  body.is-scrolled .header__logo img { height: 28px; }
+  body.is-scrolled .header__left-actions {
+    display: flex;
+    gap: 0;
+  }
+  body.is-scrolled .header__burger,
+  body.is-scrolled .header__search-icon,
+  body.is-scrolled .icon-btn {
+    width: 52px;
+    height: 52px;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: var(--r-pill);
+    color: var(--schwarz);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  body.is-scrolled .header__burger svg { width: 28px; height: 22px; color: var(--schwarz); }
+  body.is-scrolled .header__search-icon svg { width: 26px; height: 26px; color: var(--schwarz); }
+  body.is-scrolled .header__icons {
+    display: flex;
+    gap: 0;
+  }
+
+  /* Topbar — show only the first two claims + both right-side
+     links. Hide claims 3, 4, 5 (10 Jahre Garantie, Trusted Shops,
+     Kauf auf Rechnung) to keep the bar uncluttered on tablet. */
+  .topbar__claims li:nth-child(n+3) { display: none; }
+
+  /* ── Drawer styling (matches desktop) ──
+     Anchored below the tablet header (72px), no backdrop dim,
+     no head bar, items with right chevron. Triggered by the
+     existing "Alle" button in the category strip. */
+  .mobile-nav { pointer-events: none; }
+  .mobile-nav__panel { top: 72px; pointer-events: auto; }
+  .mobile-nav__backdrop { display: none; }
+  .mobile-nav__head { display: none; }
+  .mobile-nav a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-5);
+  }
+  .mobile-nav a::after {
+    content: "";
+    flex: 0 0 auto;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--graphite-500);
+    border-top: 2px solid var(--graphite-500);
+    transform: rotate(45deg);
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .mobile-nav a:hover::after {
+    border-color: var(--teal);
+    transform: rotate(45deg) translate(2px, -2px);
+  }
+}

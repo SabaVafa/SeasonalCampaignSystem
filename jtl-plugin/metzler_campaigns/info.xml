@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Metzler Saison-Kampagnen — JTL-Shop 5 plugin manifest.
+
+  Conventions used here are JTL-Shop 5.x. A few elements are version-sensitive
+  (noted inline); verify against the target shop's plugin API before shipping.
+  Migrations in ./Migrations/ run automatically on install/update.
+-->
+<jtlshopplugin>
+    <Name>Metzler Saison-Kampagnen</Name>
+    <Description>Datums-/saisongesteuerte Kampagnen: Auflösung der aktiven Kampagne, Hero/Promo/Countdown-Ausspielung und Backend-Pflege. Preise/Rabatte bleiben in JTL (Aktionen/Sonderpreise) — dieses Plugin präsentiert nur.</Description>
+    <Author>METZLER</Author>
+    <URL>https://www.edelstahl-tuerklingel.de</URL>
+    <XMLVersion>100</XMLVersion>
+    <ShopVersion>5.2.0</ShopVersion>
+    <PluginID>metzler_campaigns</PluginID>
+    <Version>1.0.0</Version>
+    <CreateDate>2026-09-08</CreateDate>
+    <Icon>icon.svg</Icon>
+
+    <Install>
+        <!-- Backend tab: renders adminmenu/campaigns.php -->
+        <Adminmenu>
+            <Customlink sort="1">
+                <Name>Saison-Kampagnen</Name>
+                <Filename>campaigns.php</Filename>
+            </Customlink>
+        </Adminmenu>
+
+        <!-- Plugin settings -->
+        <Settingslink sort="2">
+            <Name>Einstellungen</Name>
+        </Settingslink>
+        <Config>
+            <SettingsItem type="text">
+                <Name>Zeitzone der Kampagnen-Auflösung</Name>
+                <ValueName>metzler_camp_timezone</ValueName>
+                <Description>IANA-Zeitzone, in der Start/Ende ausgewertet werden.</Description>
+                <InitialValue>Europe/Berlin</InitialValue>
+            </SettingsItem>
+        </Config>
+    </Install>
+</jtlshopplugin>

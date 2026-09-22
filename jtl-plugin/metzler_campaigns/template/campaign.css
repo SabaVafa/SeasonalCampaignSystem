@@ -1,0 +1,42 @@
+/*
+  Campaign presentation styles (mz- prefix). METZLER palette baked in so the
+  plugin is self-contained. Enqueue on the storefront (see README): the full
+  design-system CSS from the prototype can replace/extend this.
+*/
+.mz-campaign-hero {
+  position: relative;
+  padding: 3.5rem 0;
+  background: #14151A;
+  color: #fff;
+  background-size: cover;
+  background-position: center;
+}
+.mz-campaign-hero[style*="--mz-hero-img"] {
+  background-image: linear-gradient(90deg, rgba(20,21,26,.92) 0%, rgba(20,21,26,.55) 60%, rgba(20,21,26,.2) 100%), var(--mz-hero-img);
+}
+.mz-hero__eyebrow {
+  display: inline-block;
+  font-size: .8125rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
+  color: #E4CE8F; margin-bottom: .75rem;
+}
+.mz-hero__headline {
+  font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 800; line-height: 1.05; margin: 0 0 1rem; max-width: 20ch;
+}
+.mz-hero__badge {
+  display: inline-block; font-weight: 700; font-size: .875rem;
+  padding: .35rem .75rem; border-radius: 999px;
+  background: linear-gradient(135deg, #F4E4B0 0%, #E4CE8F 45%, #C8A24C 100%); color: #4A3A12;
+}
+.mz-hero__countdown { margin-top: 1rem; font-size: .9375rem; color: #E4CE8F; }
+
+/* Black Month premium variant */
+.mz-hero--bf { background: #0C0C0E; }
+.mz-hero--bf .mz-hero__headline { letter-spacing: -.01em; }
+
+/* Promo strip */
+.mz-promo-strip { background: #015253; color: #fff; }
+.mz-promo-strip--bf { background: #0C0C0E; color: #E4CE8F; border-bottom: 1px solid rgba(200,162,76,.35); }
+.mz-promo-strip__text { display: block; padding: .625rem 0; font-size: .875rem; font-weight: 500; text-align: center; }
+
+/* Standalone countdown */
+.mz-countdown { font-size: .9375rem; color: #015253; font-weight: 600; }

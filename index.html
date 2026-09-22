@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saisonale Aktion — Metzler</title>
+  <link rel="stylesheet" href="assets/css/metzler-tokens.css">
+  <link rel="stylesheet" href="assets/css/styles-v2.css">
+  <link rel="stylesheet" href="assets/css/campaign.css?v=37">
+  <link rel="stylesheet" href="assets/css/campaign-blackfriday.css?v=6">
+</head>
+<body>
+
+  <!-- Persistent Metzler brand thread (teal) — shown on every campaign -->
+  <div class="brand-keyline" aria-hidden="true"></div>
+
+  <!-- CAMPAIGN TOP SLOT (e.g. Black Month countdown bar) — filled by app.js -->
+  <div id="campaign-top"></div>
+
+  <!-- TOP BAR (campaign-controlled) — far top of the page, above the header -->
+  <div class="promo-strip" id="promo-strip" hidden></div>
+
+  <!-- SVG ICON SPRITE (header) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></symbol>
+    <symbol id="i-search-m" viewBox="0 0 19 20" fill="currentColor"><path d="M16.625 8.86618C16.6247 4.81893 13.2882 1.49999 9.125 1.49999C4.96183 1.49999 1.62525 4.81893 1.625 8.86618C1.625 12.9136 4.96168 16.2333 9.125 16.2333V17.7333L8.66211 17.7216C3.90667 17.4843 0.125 13.6101 0.125 8.86618C0.125251 3.96948 4.15459 0 9.125 0C14.0954 0 18.1248 3.96948 18.125 8.86618C18.125 13.7631 14.0956 17.7333 9.125 17.7333V16.2333C13.2883 16.2333 16.625 12.9136 16.625 8.86618Z"/><path d="M18.659 19.6237C18.3683 19.9188 17.8935 19.9222 17.5984 19.6316L13.4441 15.5398L14.4969 14.4704L18.6511 18.5632C18.9462 18.8539 18.9496 19.3287 18.659 19.6237Z"/></symbol>
+    <symbol id="i-menu-m" viewBox="0 0 21 17" fill="currentColor"><path d="M0 0.8C0 0.358172 0.358172 0 0.8 0H20.2C20.6418 0 21 0.358172 21 0.8C21 1.24183 20.6418 1.6 20.2 1.6H0.799999C0.358171 1.6 0 1.24183 0 0.8Z"/><path d="M0 8.4C0 7.95817 0.358172 7.6 0.8 7.6H14.2C14.6418 7.6 15 7.95817 15 8.4C15 8.84183 14.6418 9.2 14.2 9.2H0.8C0.358172 9.2 0 8.84183 0 8.4Z"/><path d="M0 16C0 15.5582 0.358172 15.2 0.8 15.2H20.2C20.6418 15.2 21 15.5582 21 16C21 16.4418 20.6418 16.8 20.2 16.8H0.799999C0.358171 16.8 0 16.4418 0 16Z"/></symbol>
+  </defs></svg>
+
+  <!-- HEADER (from homepage project — Desktop/Home) -->
+  <header class="header">
+    <div class="container">
+      <div class="header__main">
+        <div class="header__left-actions">
+          <button class="header__burger" id="navBurger" data-nav-toggle aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobileNav"><svg><use href="#i-menu-m"/></svg></button>
+          <button class="header__search-icon" id="searchIcon" aria-label="Suchen" type="button"><svg><use href="#i-search-m"/></svg></button>
+        </div>
+        <a href="home.html" class="header__logo" aria-label="Metzler Startseite">
+          <img src="assets/img/metzler-logo.svg" alt="Metzler" />
+        </a>
+        <button class="header__kategorien" type="button" data-nav-toggle aria-controls="mobileNav" aria-expanded="false" aria-label="Kategorien">
+          <img class="header__kategorien-icon" src="assets/icons/menu.svg" alt="" aria-hidden="true" />
+          <span class="header__kategorien-label">Kategorien</span>
+        </button>
+        <div class="header__search">
+          <svg><use href="#i-search"/></svg>
+          <input type="search" placeholder="Suchen – Türklingel, Briefkasten, Sprechanlage…" />
+        </div>
+        <div class="header__icons">
+          <a class="icon-btn" href="#" aria-label="Mein Konto"><img src="assets/icons/profile.svg" alt="" /></a>
+          <a class="icon-btn" href="https://edelstahl-tuerklingel.de/Warenkorb" aria-label="Warenkorb"><img src="assets/icons/cart.svg" alt="" /><span class="badge">0</span></a>
+        </div>
+      </div>
+    </div>
+    <nav class="header__nav" aria-label="Hauptnavigation">
+      <div class="container">
+        <button class="header__nav-all" type="button" data-nav-toggle aria-controls="mobileNav" aria-expanded="false" aria-label="Alle Kategorien">
+          <img class="header__nav-all-icon" src="assets/icons/menu.svg" alt="" aria-hidden="true" />
+          <span class="header__nav-all-label">Alle</span>
+        </button>
+        <ul>
+          <li><a href="https://edelstahl-tuerklingel.de/briefkasten">Briefkästen</a></li>
+          <li><a href="https://edelstahl-tuerklingel.de/paketboxen">Paketboxen</a></li>
+          <li><a href="https://edelstahl-tuerklingel.de/muelltonnenbox">Mülltonnenboxen</a></li>
+          <li><a href="https://edelstahl-tuerklingel.de/tuersprechanlagen">Sprechanlagen</a></li>
+          <li><a href="https://edelstahl-tuerklingel.de/sicherheitstechnik">Sicherheitstechnik</a></li>
+          <li><a href="https://edelstahl-tuerklingel.de/tuerklingel">Türklingeln</a></li>
+          <li><a href="https://edelstahl-tuerklingel.de/hausnummern-schilder-schriftzuege">Hausnummern</a></li>
+          <li><a href="https://edelstahl-tuerklingel.de/beleuchtung">Außenleuchten</a></li>
+          <li><a href="https://edelstahl-tuerklingel.de/garten">Garten</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- MOBILE SLIDE-IN NAV -->
+  <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+    <div class="mobile-nav__backdrop" data-close></div>
+    <aside class="mobile-nav__panel" role="dialog" aria-label="Mobile Navigation">
+      <div class="mobile-nav__head">
+        <img src="assets/img/metzler-logo.svg" alt="Metzler" />
+        <button class="mobile-nav__close" data-close aria-label="Menü schließen">×</button>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="https://edelstahl-tuerklingel.de/briefkasten">Briefkästen</a></li>
+          <li><a href="https://edelstahl-tuerklingel.de/paketboxen">Paketboxen</a></li>
+          <li><a href="https://edelstahl-tuerklingel.de/muelltonnenbox">Mülltonnenboxen</a></li>
+          <li><a href="https://edelstahl-tuerklingel.de/tuersprechanlagen">Sprechanlagen</a></li>
+          <li><a href="https://edelstahl-tuerklingel.de/sicherheitstechnik">Sicherheitstechnik</a></li>
+          <li><a href="https://edelstahl-tuerklingel.de/tuerklingel">Türklingeln</a></li>
+          <li><a href="https://edelstahl-tuerklingel.de/hausnummern-schilder-schriftzuege">Hausnummern</a></li>
+          <li><a href="https://edelstahl-tuerklingel.de/beleuchtung">Außenleuchten</a></li>
+          <li><a href="https://edelstahl-tuerklingel.de/garten">Garten</a></li>
+        </ul>
+      </nav>
+    </aside>
+  </div>
+
+  <main>
+    <!-- HERO (campaign-controlled) -->
+    <section class="hero" id="hero"></section>
+
+    <!-- PRODUCTS (campaign-controlled) -->
+    <section class="section section--tinted" id="products" hidden>
+      <div class="container">
+        <div class="section-intro" id="products-intro"></div>
+        <div class="product-grid" id="product-grid"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER (persistent — exact design-system content) -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col footer-col--brand">
+          <a class="header-logo" href="https://edelstahl-tuerklingel.de" style="margin-bottom:1.25rem;">
+            <svg class="header-logo__mark" viewBox="0 0 184.3 184.3" aria-hidden="true"><rect width="184.3" height="184.3" rx="5.75" fill="#D42924"/><path fill="#fff" d="M70.19,34.81l19.04,32.98-9.58,16.57-28.59-49.55h19.13ZM70.28,108.58h0l-23.45-40.64v85.89h-16.57V34.81h16.57l33.02,57.21L123.92,15.65h19.13l-63.22,109.52-9.58-16.57.02-.02ZM153.14,153.83h-16.57v-85.87l-33,57.14h-19.13l52.11-90.28h16.57v119.02l.02-.02Z"/></svg>
+            <span class="header-logo__word" style="color:#fff;">METZLER</span>
+          </a>
+          <p class="footer-tagline">Edelstahl-Tuerklingel.de ist ein Unternehmen der <a href="https://metzlergmbh.de" class="footer-mint-link">Metzler Gruppe</a></p>
+          <p class="footer-tagline" style="font-weight:700;color:var(--color-white);margin-top:0.75rem;">Der Anbieter für Briefkästen, Sprechanlagen, Türklingeln und Hausnummern.</p>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-heading">Kontakt</p>
+          <div class="footer-contact-block"><p class="footer-contact-label">Allgemeine Hotline:</p><a href="tel:+4971213177310" class="footer-mint-link">+49 (0) 7121 / 317 7310</a><p class="footer-contact-hours">Mo–Fr: 09:00–16:00 Uhr</p></div>
+          <div class="footer-contact-block"><p class="footer-contact-label">Sprechanlagen Hotline:</p><a href="tel:+4971213177333" class="footer-mint-link">+49 (0) 7121 / 317 7333</a><p class="footer-contact-hours">Mo–Fr: 09:00–16:00 Uhr</p></div>
+          <div class="footer-contact-block"><p class="footer-contact-label">E-Mail Support:</p><a href="mailto:service@metzlergmbh.de" class="footer-mint-link">service@metzlergmbh.de</a></div>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-heading">Informationen</p>
+          <ul class="footer-links">
+            <li><a href="#">Auszeichnungen</a></li>
+            <li><a href="#">Fotowettbewerb</a></li>
+            <li><a href="#">Kundenbilder</a></li>
+            <li><a href="#">Stellenangebote</a></li>
+            <li><a href="#">News</a></li>
+            <li><a href="#">Zahlung und Versand</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-heading">Service</p>
+          <ul class="footer-links">
+            <li><a href="#">Begriffserklärung</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Geschäftskunden</a></li>
+            <li><a href="#">Newsletter</a></li>
+            <li><a href="#">VDM10 FAQ</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <span>Alle Preise inkl. gesetzl. MwSt., zzgl. Versand © 2013 – 2026 | Metzler GmbH</span>
+        <div class="footer-legal-links">
+          <a href="#">Datenschutz</a><a href="#">AGB</a><a href="#">Impressum</a><a href="#">Widerrufsrecht</a><a href="#">Sitemap</a><a href="#">Cookie-Einstellungen</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- DEMO / PREVIEW PANEL (dev tool, not shop chrome) -->
+  <div class="demo-bar" id="demo-bar">
+    <button class="demo-bar__head" id="demo-collapse" aria-expanded="true" aria-controls="demo-body" aria-label="Saison-Vorschau ein-/ausklappen">
+      <span class="demo-bar__head-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/><path d="M7.5 13.5l2 2 4-4.5" class="demo-bar__head-check"/></svg>
+      </span>
+      <span class="demo-bar__head-text">
+        <span class="demo-bar__title">Saison-Vorschau</span>
+        <span class="demo-bar__head-sub" id="demo-head-sub"></span>
+      </span>
+      <span class="demo-bar__chevron" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </span>
+    </button>
+    <div class="demo-bar__body" id="demo-body">
+      <div class="demo-bar__body-inner">
+       <div class="demo-bar__body-pad">
+        <label for="demo-date">Datum simulieren</label>
+        <input type="date" id="demo-date">
+        <label>Schnellwahl</label>
+        <div class="demo-dd" id="demo-jump">
+          <button type="button" class="demo-dd__btn" id="demo-jump-btn" aria-haspopup="listbox" aria-expanded="false">
+            <span id="demo-jump-label">Zu Kampagne springen…</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <ul class="demo-dd__list" id="demo-jump-list" role="listbox"></ul>
+        </div>
+        <div class="demo-bar__active" id="demo-active"></div>
+        <a class="demo-bar__admin" href="admin.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1l2-1.5-2-3.4-2.3 1a7 7 0 0 0-1.7-1l-.3-2.5H10.4l-.3 2.5a7 7 0 0 0-1.7 1l-2.3-1-2 3.4 2 1.5a7 7 0 0 0 0 2l-2 1.5 2 3.4 2.3-1a7 7 0 0 0 1.7 1l.3 2.5h3.9l.3-2.5a7 7 0 0 0 1.7-1l2.3 1 2-3.4-2-1.5a7 7 0 0 0 .1-1z"/></svg>
+          Kampagnen verwalten
+        </a>
+       </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header behaviour (from homepage project): mobile/tablet nav toggle + desktop scroll-shrink -->
+  <script>
+    (function () {
+      var toggles = document.querySelectorAll('[data-nav-toggle]');
+      var panel = document.getElementById('mobileNav');
+      if (toggles.length && panel) {
+        function setExpanded(v) { toggles.forEach(function (t) { t.setAttribute('aria-expanded', v ? 'true' : 'false'); }); }
+        function syncTop() {
+          var header = document.querySelector('.header');
+          var inner = panel.querySelector('.mobile-nav__panel');
+          if (header && inner) inner.style.top = Math.max(0, header.getBoundingClientRect().bottom) + 'px';
+        }
+        function open() { syncTop(); panel.classList.add('is-open'); panel.setAttribute('aria-hidden', 'false'); setExpanded(true); document.body.style.overflow = 'hidden'; }
+        function close() { panel.classList.remove('is-open'); panel.setAttribute('aria-hidden', 'true'); setExpanded(false); document.body.style.overflow = ''; }
+        function toggle() { if (panel.classList.contains('is-open')) close(); else open(); }
+        toggles.forEach(function (t) { t.addEventListener('click', toggle); });
+        panel.querySelectorAll('[data-close], a').forEach(function (el) { el.addEventListener('click', close); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+      }
+      var ticking = false;
+      function update() { document.body.classList.toggle('is-scrolled', window.scrollY > 0); ticking = false; }
+      window.addEventListener('scroll', function () { if (!ticking) { requestAnimationFrame(update); ticking = true; } }, { passive: true });
+      update();
+    })();
+  </script>
+
+  <script src="assets/js/campaign-engine.js?v=4"></script>
+  <script src="assets/js/campaign-store.js?v=3"></script>
+  <script src="assets/js/product-provider.js?v=4"></script>
+  <script src="assets/js/app.js?v=26"></script>
+<style id="pf-lockdown-css">
+footer a,[class*="topbar"] a,[class*="top-bar"] a,[class*="trustbar"] a,[class*="claims"] a{pointer-events:none !important;cursor:default !important;}
+</style>
+<script id="pf-lockdown-js">
+(function(){function blk(a){if(!a)return false;var h=a.getAttribute('href')||'';if(/^(https?:|tel:|mailto:)/i.test(h))return true;return !!(a.closest&&a.closest('footer,[class*="topbar"],[class*="top-bar"],[class*="trustbar"],[class*="claims"]'));}
+['click','auxclick'].forEach(function(ev){document.addEventListener(ev,function(e){var t=e.target;var a=t&&t.closest?t.closest('a'):null;if(a&&blk(a)){e.preventDefault();e.stopPropagation();}},true);});})();
+</script>
+</body>
+</html>
