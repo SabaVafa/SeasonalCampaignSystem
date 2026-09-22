@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
+<style id="pf-ext-css">[data-pf-ext]{pointer-events:none !important;cursor:default !important;}</style>
   <meta name="robots" content="noindex, nofollow">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -475,5 +476,6 @@ footer a,[class*="topbar"] a,[class*="top-bar"] a,[class*="trustbar"] a,[class*=
 (function(){function blk(a){if(!a)return false;var h=a.getAttribute('href')||'';if(/^(https?:|tel:|mailto:)/i.test(h))return true;return !!(a.closest&&a.closest('footer,[class*="topbar"],[class*="top-bar"],[class*="trustbar"],[class*="claims"]'));}
 ['click','auxclick'].forEach(function(ev){document.addEventListener(ev,function(e){var t=e.target;var a=t&&t.closest?t.closest('a'):null;if(a&&blk(a)){e.preventDefault();e.stopPropagation();}},true);});})();
 </script>
+<script id="pf-ext-js">(function(){["click","auxclick","keydown"].forEach(function(ev){document.addEventListener(ev,function(e){var t=e.target;if(!t||!t.closest)return;var el=t.closest("[data-pf-ext],[data-href][role=link]");if(!el)return;if(ev!=="keydown"||e.key==="Enter"||e.key===" "){e.preventDefault();e.stopImmediatePropagation();}},true);});})();</script>
 </body>
 </html>

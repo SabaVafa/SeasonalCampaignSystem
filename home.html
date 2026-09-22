@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
+<style id="pf-ext-css">[data-pf-ext]{pointer-events:none !important;cursor:default !important;}</style>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <!-- Prototype: keep out of search engines. Page stays crawlable so bots SEE this
@@ -187,7 +188,7 @@
     <svg><use href="#i-search"/></svg>
     <span>Suchen</span>
   </a>
-  <a href="tel:+4971213177310" class="mobile-bar__action mobile-bar__action--accent" aria-label="Hotline anrufen">
+  <a href="#" data-pf-ext="1" tabindex="-1" class="mobile-bar__action mobile-bar__action--accent" aria-label="Hotline anrufen">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.37 1.9.72 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0122 16.92z"/></svg>
     <span>Beratung</span>
   </a>
@@ -374,7 +375,7 @@
         <p class="trustbar__sub">Trusted Shops</p>
       </li>
 
-      <li class="trustbar__item trustbar__item--link" tabindex="0" role="link" data-href="https://edelstahl-tuerklingel.de/metzler-garantieerklaerung" aria-label="Metzler Garantie – zu den Garantiebedingungen">
+      <li class="trustbar__item trustbar__item--link" data-pf-ext="1" tabindex="-1" aria-label="Metzler Garantie – zu den Garantiebedingungen">
         <div class="trustbar__icon">
           <div class="trustbar__face trustbar__face--front">
             <img src="Trust%20badges/Garantie2.svg" alt="Metzler Garantie" loading="lazy" />
@@ -827,17 +828,17 @@
       <div class="footer__hotline">
         <div class="footer__hotline-item">
           <strong class="footer__hotline-label">Allgemeine Hotline:</strong>
-          <a class="footer__hotline-num" href="tel:+4971213177310">+49 (0) 7121 / 317 7310</a>
+          <a class="footer__hotline-num" href="#" data-pf-ext="1" tabindex="-1">+49 (0) 7121 / 317 7310</a>
           <em>(Mo-Fr.: 09:00-16:00 Uhr)</em>
         </div>
         <div class="footer__hotline-item">
           <strong class="footer__hotline-label">Sprechanlagen Hotline:</strong>
-          <a class="footer__hotline-num" href="tel:+4971213177333">+49 (0) 7121 / 317 7333</a>
+          <a class="footer__hotline-num" href="#" data-pf-ext="1" tabindex="-1">+49 (0) 7121 / 317 7333</a>
           <em>(Mo-Fr.: 09:00-16:00 Uhr)</em>
         </div>
         <div class="footer__hotline-item">
           <strong class="footer__hotline-label">E-Mail Support:</strong>
-          <a class="footer__hotline-num" href="mailto:service@metzlergmbh.de">service@metzlergmbh.de</a>
+          <a class="footer__hotline-num" href="#" data-pf-ext="1" tabindex="-1">service@metzlergmbh.de</a>
         </div>
       </div>
 
@@ -1167,5 +1168,6 @@ footer a,[class*="topbar"] a,[class*="top-bar"] a,[class*="trustbar"] a,[class*=
 (function(){function blk(a){if(!a)return false;var h=a.getAttribute('href')||'';if(/^(https?:|tel:|mailto:)/i.test(h))return true;return !!(a.closest&&a.closest('footer,[class*="topbar"],[class*="top-bar"],[class*="trustbar"],[class*="claims"]'));}
 ['click','auxclick'].forEach(function(ev){document.addEventListener(ev,function(e){var t=e.target;var a=t&&t.closest?t.closest('a'):null;if(a&&blk(a)){e.preventDefault();e.stopPropagation();}},true);});})();
 </script>
+<script id="pf-ext-js">(function(){["click","auxclick","keydown"].forEach(function(ev){document.addEventListener(ev,function(e){var t=e.target;if(!t||!t.closest)return;var el=t.closest("[data-pf-ext],[data-href][role=link]");if(!el)return;if(ev!=="keydown"||e.key==="Enter"||e.key===" "){e.preventDefault();e.stopImmediatePropagation();}},true);});})();</script>
 </body>
 </html>
