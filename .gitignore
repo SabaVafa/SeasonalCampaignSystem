@@ -19,5 +19,4 @@ tmp/
 # Internal README kept local only (not published to the public remote)
 
 .claude/
-metzler-content-briefing.md
 *.zip
