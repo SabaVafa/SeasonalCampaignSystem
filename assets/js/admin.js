@@ -29,11 +29,6 @@
   // Templates whose hero renders a background image (enables the Hero-Bild fields).
   // Add future image-based templates here — no other change needed.
   var HERO_TEMPLATES = ['blackfriday'];
-  var DISCOUNTS = [
-    ['', 'Kein Rabatt'], ['percent', 'Prozent (%)'], ['free_shipping', 'Gratis Versand'],
-    ['free_gravur', 'Gratis Gravur'], ['bundle', 'Set-Vorteil'], ['gift', 'Gratis Zugabe']
-  ];
-
   var state = { campaigns: [], editingId: null, query: '', hidePaused: false };
 
   // ── helpers ──
@@ -163,7 +158,6 @@
     el('drawer-title').textContent = campaign ? 'Kampagne bearbeiten' : 'Neue Kampagne';
     el('btn-delete-inline').style.display = (campaign && !campaign.isFallback) ? '' : 'none';
 
-    var d = c.discountRule || {};
     var curAccent = (c.theme && c.theme.accent) || 'brand-default';
     el('drawer-body').innerHTML =
       grp('Grunddaten',
@@ -254,37 +248,6 @@
     function syncPauseState() { if (recurRow) recurRow.classList.toggle('is-suspended', pauseCb.checked); }
     if (pauseCb) { pauseCb.addEventListener('change', syncPauseState); syncPauseState(); }
 
-    // ── Conditional fields: active only when applicable ──
-    // Fields with a real dependency disable + fade when they don't apply (the
-    // entered value is preserved). Always-relevant fields are never touched.
-    function setEnabled(id, on) {
-      var input = el(id); if (!input) return;
-      var msel = input.closest('.msel');
-      if (msel) { var trig = msel.querySelector('.msel__trigger'); if (trig) trig.disabled = !on; }
-      else { input.disabled = !on; }
-      var frow = input.closest('.form-row'); if (frow) frow.classList.toggle('is-na', !on);
-    }
-    function syncConditional() {
-      var dtype = (el('f-disc-type') || {}).value || '';
-      setEnabled('f-disc-value', ['percent', 'bundle', 'gift'].indexOf(dtype) !== -1); // value only for these
-      setEnabled('f-disc-scope', dtype !== '');                                        // scope only with a discount
-      // Hero images apply to EVERY campaign (the storefront uses c.heroImage with
-      // a placeholder fallback), so the image fields stay enabled for all templates.
-      validateDiscValue(false);                                                        // re-check when Art changes
-    }
-    // Per-field error slot + live validation for the Rabatt value.
-    var discInput = el('f-disc-value');
-    if (discInput) {
-      if (!el('disc-value-err')) {
-        var em = document.createElement('div');
-        em.id = 'disc-value-err'; em.className = 'field-error'; em.hidden = true;
-        discInput.closest('.form-row').appendChild(em);
-      }
-      discInput.addEventListener('input', function () { validateDiscValue(false); });
-    }
-    ['f-disc-type', 'f-template'].forEach(function (id) { var n = el(id); if (n) n.addEventListener('change', syncConditional); });
-    syncConditional();
-
     el('drawer').classList.add('is-open');
     el('drawer-backdrop').classList.add('is-open');
     document.body.classList.add('is-drawer-open'); // lock background scroll
@@ -333,6 +296,8 @@
     base.heroHeadline = v('f-headline');
     base.promoStrip = v('f-promo');
     base.targetCategories = tc;
+    // discountRule is no longer edited here; any existing value (from seed data)
+    // is preserved via the clone of the original above.
     setOrDelete(base, 'template', v('f-template'));
     setOrDelete(base, 'eyebrow', v('f-eyebrow'));
     setOrDelete(base, 'badge', v('f-badge'));
@@ -345,33 +310,6 @@
   }
   function setOrDelete(o, k, val) { if (val) o[k] = val; else delete o[k]; }
 
-  // Live validation for the Rabatt "Wert": percent needs a number 1–100.
-  // `force` also flags an empty required value (used on save). Returns validity.
-  function validateDiscValue(force) {
-    var input = el('f-disc-value');
-    if (!input) return true;
-    var msg = el('disc-value-err');
-    var type = (el('f-disc-type') || {}).value || '';
-    var raw = input.value.trim();
-    var invalid = false, text = '';
-    if (!input.disabled && type === 'percent') {
-      if (raw === '') {
-        if (force) { invalid = true; text = 'Bitte eine Zahl zwischen 1 und 100 angeben.'; }
-      } else {
-        var n = Number(raw.replace(',', '.'));
-        if (!isFinite(n) || n <= 0 || n > 100) { invalid = true; text = 'Bitte eine Zahl zwischen 1 und 100 angeben (z. B. 20).'; }
-      }
-    }
-    input.classList.toggle('is-invalid', invalid);
-    input.setAttribute('aria-invalid', invalid ? 'true' : 'false');
-    if (msg) { msg.textContent = text; msg.hidden = !invalid; }
-    // The error replaces the instructional hint (they say the same thing).
-    var frow = input.closest('.form-row');
-    var hint = frow ? frow.querySelector('.hint') : null;
-    if (hint) hint.hidden = invalid;
-    return !invalid;
-  }
-
   function validate(c) {
     if (!c.name) return 'Bitte einen Namen angeben.';
     if (!c.isFallback && (!c.startDate || !c.endDate)) return 'Bitte Start- und Enddatum angeben.';
@@ -382,7 +320,6 @@
   }
 
   function saveEditor() {
-    if (!validateDiscValue(true)) { el('f-disc-value').focus(); return; }
     var c = collectForm();
     var err = validate(c);
     if (err) { var e = el('form-error'); e.hidden = false; e.textContent = err; return; }
