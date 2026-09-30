@@ -433,9 +433,38 @@
     });
   }
 
+  // Paint a consistent TT.MM.JJJJ label over a native date input so it looks the
+  // same on desktop and iOS (which otherwise spells the month and centres it).
+  function enhanceDate(input) {
+    if (!input || input.dataset.dtEnhanced) return;
+    input.dataset.dtEnhanced = '1';
+    var wrap = document.createElement('span');
+    wrap.className = 'dt-field';
+    input.parentNode.insertBefore(wrap, input);
+    wrap.appendChild(input);
+    var view = document.createElement('span');
+    view.className = 'dt-view';
+    view.setAttribute('aria-hidden', 'true');
+    view.innerHTML = '<span class="dt-view__txt"></span>' +
+      '<svg class="dt-view__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M16 2.5v4M8 2.5v4M3 9.5h18"/></svg>';
+    wrap.appendChild(view);
+    var txt = view.firstChild;
+    function paint() {
+      var v = input.value;
+      if (!v) { txt.textContent = 'TT.MM.JJJJ'; view.classList.add('is-empty'); return; }
+      var p = v.split('-');
+      txt.textContent = p[2] + '.' + p[1] + '.' + p[0];
+      view.classList.remove('is-empty');
+    }
+    input.addEventListener('input', paint);
+    input.addEventListener('change', paint);
+    paint();
+  }
+
   function init() {
     el('preview-date').value = todayISO();
     el('preview-date').addEventListener('change', render);
+    enhanceDate(el('preview-date'));
     el('search').addEventListener('input', function () { state.query = this.value; render(); });
     el('filter-hidepaused').addEventListener('change', function () { state.hidePaused = this.checked; render(); });
     el('btn-new').addEventListener('click', function () { openEditor(null); });

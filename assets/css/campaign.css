@@ -486,10 +486,25 @@ h3 { font-size: 1.25rem; font-weight: 700; line-height: 1.35; }
 .demo-bar label + input, .demo-bar label + .demo-dd { margin-top: 0; }
 .demo-bar input[type="date"] { width: 100%; padding: 0.45rem 0.5rem; border: 0.0625rem solid var(--color-graphite-300); border-radius: var(--radius); font-family: var(--font-family); font-size: 0.875rem; margin-bottom: 0.75rem; color: var(--color-digital-black); text-align: left; }
 .demo-bar input[type="date"]:focus { outline: none; border-color: var(--color-teal); }
-/* iOS Safari centres the date value and can clip its right edge — pin it left and
-   keep the picker indicator visible so the whole field reads correctly on mobile. */
-.demo-bar input[type="date"]::-webkit-date-and-time-value { text-align: left; }
-.demo-bar input[type="date"]::-webkit-calendar-picker-indicator { margin-left: auto; }
+
+/* ── Consistent date field on every OS ─────────────────────────────────
+   Native <input type="date"> renders its value differently per platform
+   (iOS Safari spells the month and centres it; desktop shows numeric,
+   left-aligned). We hide the native value + picker glyph and paint our own
+   left-aligned TT.MM.JJJJ label with a calendar icon, so the field looks the
+   same on mobile and desktop. The native input still drives the picker. */
+.dt-field { position: relative; display: block; }
+.dt-field > input[type="date"] { margin: 0; color: transparent; }
+.dt-field > input[type="date"]::-webkit-datetime-edit { opacity: 0; }
+.dt-field > input[type="date"]::-webkit-date-and-time-value { opacity: 0; }
+.dt-field > input[type="date"]::-webkit-calendar-picker-indicator { opacity: 0; }
+.dt-view { position: absolute; inset: 0; display: flex; align-items: center; gap: 0.5rem; padding: 0 0.75rem; pointer-events: none; font-size: 0.9375rem; color: var(--color-digital-black); }
+.dt-view__txt { flex: 1; text-align: left; }
+.dt-view.is-empty .dt-view__txt { color: var(--color-graphite-500); }
+.dt-view__ico { width: 1.05rem; height: 1.05rem; flex: none; color: var(--color-graphite-500); }
+/* storefront widget uses tighter input padding + its own field spacing/scale */
+.demo-bar .dt-field { margin-bottom: 0.75rem; }
+.demo-bar .dt-view { padding: 0 0.5rem; font-size: 0.875rem; }
 /* Custom dropdown (native <select> popups don't render reliably in embedded webviews) */
 .demo-dd { position: relative; }
 .demo-dd__btn { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; padding: 0.45rem 0.5rem; border: 0.0625rem solid var(--color-graphite-300); border-radius: var(--radius); background: var(--color-white); font-family: var(--font-family); font-size: 0.8125rem; color: var(--color-digital-black); cursor: pointer; text-align: left; }
