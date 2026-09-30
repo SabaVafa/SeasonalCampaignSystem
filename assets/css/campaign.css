@@ -484,8 +484,12 @@ h3 { font-size: 1.25rem; font-weight: 700; line-height: 1.35; }
 .demo-bar__body-pad { padding: 0 0.875rem 0.875rem; }
 .demo-bar label { display: block; font-size: 0.75rem; color: var(--color-graphite-600); margin-bottom: 0.25rem; }
 .demo-bar label + input, .demo-bar label + .demo-dd { margin-top: 0; }
-.demo-bar input[type="date"] { width: 100%; padding: 0.45rem 0.5rem; border: 0.0625rem solid var(--color-graphite-300); border-radius: var(--radius); font-family: var(--font-family); font-size: 0.875rem; margin-bottom: 0.75rem; color: var(--color-digital-black); }
+.demo-bar input[type="date"] { width: 100%; padding: 0.45rem 0.5rem; border: 0.0625rem solid var(--color-graphite-300); border-radius: var(--radius); font-family: var(--font-family); font-size: 0.875rem; margin-bottom: 0.75rem; color: var(--color-digital-black); text-align: left; }
 .demo-bar input[type="date"]:focus { outline: none; border-color: var(--color-teal); }
+/* iOS Safari centres the date value and can clip its right edge — pin it left and
+   keep the picker indicator visible so the whole field reads correctly on mobile. */
+.demo-bar input[type="date"]::-webkit-date-and-time-value { text-align: left; }
+.demo-bar input[type="date"]::-webkit-calendar-picker-indicator { margin-left: auto; }
 /* Custom dropdown (native <select> popups don't render reliably in embedded webviews) */
 .demo-dd { position: relative; }
 .demo-dd__btn { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; padding: 0.45rem 0.5rem; border: 0.0625rem solid var(--color-graphite-300); border-radius: var(--radius); background: var(--color-white); font-family: var(--font-family); font-size: 0.8125rem; color: var(--color-digital-black); cursor: pointer; text-align: left; }
