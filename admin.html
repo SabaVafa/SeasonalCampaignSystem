@@ -316,6 +316,9 @@
        actions as a full-width button row. ── */
     @media (max-width: 52rem) {
       .tbl-wrap { overflow: visible; background: transparent; border: none; border-radius: 0; }
+      /* In card mode the meta is a standalone card, not the table header — round all
+         corners and add a gap before the first campaign card. */
+      .tbl-meta { border-radius: var(--radius-lg); border-bottom-color: var(--color-graphite-200); margin-bottom: 0.75rem; }
       table.tbl { min-width: 0; }
       .tbl thead { position: absolute; width: 0.0625rem; height: 0.0625rem; padding: 0; margin: -0.0625rem; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
       .tbl, .tbl tbody, .tbl tr, .tbl td { display: block; width: 100%; }
