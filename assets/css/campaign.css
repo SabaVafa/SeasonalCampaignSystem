@@ -501,7 +501,7 @@ h3 { font-size: 1.25rem; font-weight: 700; line-height: 1.35; }
 .dt-field > input[type="date"] {
   margin: 0; width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box;
   -webkit-appearance: none; -moz-appearance: none; appearance: none;
-  color: transparent;
+  color: transparent; cursor: pointer;
 }
 .dt-field > input[type="date"]::-webkit-datetime-edit { opacity: 0; }
 .dt-field > input[type="date"]::-webkit-date-and-time-value { opacity: 0; }

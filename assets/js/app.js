@@ -312,8 +312,18 @@
     }
     input.addEventListener('input', paint);
     input.addEventListener('change', paint);
-    // appearance:none removes the native tap-to-open, so open the picker ourselves.
-    input.addEventListener('click', function () { if (typeof input.showPicker === 'function') { try { input.showPicker(); } catch (e) {} } });
+    // Toggle the native picker: the whole field opens it, pressing again closes it.
+    // (appearance:none removed the native tap-to-open, so we drive it via showPicker.)
+    var pickerOpen = false, justClosed = false;
+    input.addEventListener('click', function () {
+      if (justClosed) { justClosed = false; return; }
+      if (pickerOpen) { pickerOpen = false; input.blur(); return; }
+      if (typeof input.showPicker === 'function') { try { input.showPicker(); pickerOpen = true; } catch (e) {} }
+    });
+    input.addEventListener('blur', function () {
+      if (pickerOpen) { pickerOpen = false; justClosed = true; setTimeout(function () { justClosed = false; }, 300); }
+    });
+    input.addEventListener('change', function () { pickerOpen = false; });
     paint();
   }
 
