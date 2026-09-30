@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kampagnen-Verwaltung — Metzler</title>
   <link rel="stylesheet" href="assets/css/metzler-tokens.css">
-  <link rel="stylesheet" href="assets/css/campaign.css?v=39">
+  <link rel="stylesheet" href="assets/css/campaign.css?v=40">
   <style>
     /* ── Admin-specific back-office chrome (Metzler tokens throughout) ── */
     body { background: var(--color-paper); }
@@ -293,6 +293,7 @@
     .legend__item { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.72rem; color: var(--color-graphite-600); white-space: nowrap; }
 
     /* ── Toolbar search ── */
+    .toolbar__field--date { flex: 0 0 12rem; }   /* fixed width on desktop; the mobile rule below stretches it full-width */
     .toolbar__actions { margin-left: auto; display: flex; gap: 0.75rem; flex-wrap: wrap; }
     .toolbar__field--grow { flex: 0 1 22rem; min-width: 12rem; }
     .toolbar__search { position: relative; width: 100%; }
@@ -388,7 +389,7 @@
     <div class="container">
 
       <div class="toolbar">
-        <div class="toolbar__field">
+        <div class="toolbar__field toolbar__field--date">
           <label for="preview-date">Vorschau-Datum</label>
           <input type="date" id="preview-date" class="admin-input">
         </div>

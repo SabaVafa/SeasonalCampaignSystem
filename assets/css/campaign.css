@@ -494,7 +494,9 @@ h3 { font-size: 1.25rem; font-weight: 700; line-height: 1.35; }
    left-aligned TT.MM.JJJJ label with a calendar icon, so the field looks the
    same on mobile and desktop. The native input still drives the picker. */
 .dt-field { position: relative; display: block; }
-.dt-field > input[type="date"] { margin: 0; color: transparent; }
+/* Fill the field: iOS gives native date inputs a narrow intrinsic width, which
+   would leave the overlay icon floating outside the box. */
+.dt-field > input[type="date"] { margin: 0; width: 100%; box-sizing: border-box; color: transparent; }
 .dt-field > input[type="date"]::-webkit-datetime-edit { opacity: 0; }
 .dt-field > input[type="date"]::-webkit-date-and-time-value { opacity: 0; }
 .dt-field > input[type="date"]::-webkit-calendar-picker-indicator { opacity: 0; }
