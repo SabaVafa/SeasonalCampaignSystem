@@ -293,9 +293,9 @@
     .legend__item { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.72rem; color: var(--color-graphite-600); white-space: nowrap; }
 
     /* ── Toolbar search ── */
-    .toolbar__field--date { flex: 0 0 12rem; }   /* fixed width on desktop; the mobile rule below stretches it full-width */
-    .toolbar__actions { margin-left: auto; display: flex; gap: 0.75rem; flex-wrap: wrap; }
-    .toolbar__field--grow { flex: 0 1 22rem; min-width: 12rem; }
+    .toolbar__field--date { flex: 0 0 17.5rem; }   /* desktop: ~ native calendar-popup width so the field aligns with the picker (also tightens the gap to the actions); mobile rule below stretches it full-width */
+    .toolbar__actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .toolbar__field--grow { flex: 1 1 12rem; min-width: 10rem; }   /* small basis keeps everything on one row; grows to fill so there's no empty gap */
     .toolbar__search { position: relative; width: 100%; }
     .toolbar__search input { width: 100%; padding-left: 2.25rem; }
     .toolbar__search svg { position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); width: 1rem; height: 1rem; color: var(--color-graphite-500); pointer-events: none; }
