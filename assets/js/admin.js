@@ -458,6 +458,8 @@
     }
     input.addEventListener('input', paint);
     input.addEventListener('change', paint);
+    // appearance:none removes the native tap-to-open, so open the picker ourselves.
+    input.addEventListener('click', function () { if (typeof input.showPicker === 'function') { try { input.showPicker(); } catch (e) {} } });
     paint();
   }
 

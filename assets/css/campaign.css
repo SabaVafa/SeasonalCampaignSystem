@@ -493,10 +493,16 @@ h3 { font-size: 1.25rem; font-weight: 700; line-height: 1.35; }
    left-aligned). We hide the native value + picker glyph and paint our own
    left-aligned TT.MM.JJJJ label with a calendar icon, so the field looks the
    same on mobile and desktop. The native input still drives the picker. */
-.dt-field { position: relative; display: block; }
-/* Fill the field: iOS gives native date inputs a narrow intrinsic width, which
-   would leave the overlay icon floating outside the box. */
-.dt-field > input[type="date"] { margin: 0; width: 100%; box-sizing: border-box; color: transparent; }
+.dt-field { position: relative; display: block; min-width: 0; }
+/* iOS Safari keeps a native date control with its own intrinsic width and ignores
+   width:100%, so the box spills past its container and the right edge (icon) is
+   hidden. Strip the native widget so our sizing is honoured; the picker is opened
+   via showPicker() on tap. */
+.dt-field > input[type="date"] {
+  margin: 0; width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box;
+  -webkit-appearance: none; -moz-appearance: none; appearance: none;
+  color: transparent;
+}
 .dt-field > input[type="date"]::-webkit-datetime-edit { opacity: 0; }
 .dt-field > input[type="date"]::-webkit-date-and-time-value { opacity: 0; }
 .dt-field > input[type="date"]::-webkit-calendar-picker-indicator { opacity: 0; }
