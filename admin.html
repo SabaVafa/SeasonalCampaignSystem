@@ -27,6 +27,9 @@
       border: 0.0625rem solid var(--color-graphite-300); border-radius: var(--radius); outline: none;
     }
     .admin-input:focus, .admin-select:focus { border-color: var(--color-teal); }
+    /* iOS Safari centres a date input's value by default — keep it left-aligned like every other field */
+    .admin-input[type="date"] { text-align: left; }
+    .admin-input[type="date"]::-webkit-date-and-time-value { text-align: left; }
     /* Design-system text field: no native search clear button */
     .admin-input[type="search"]::-webkit-search-cancel-button,
     .admin-input[type="search"]::-webkit-search-decoration { -webkit-appearance: none; appearance: none; }
@@ -361,6 +364,12 @@
       .admin-header .container { flex-wrap: wrap; height: auto; padding-block: 0.5rem; gap: 0.5rem 0.75rem; }
       .admin-header__spacer { flex-basis: 100%; height: 0; }
       .admin-header__title { font-size: 1rem; }
+      /* Status legend: drop it onto its own full-width row, left-aligned, with a
+         hairline divider so it reads as a tidy key for the card badges instead of
+         an orphaned wrap next to the count. */
+      .tbl-meta { gap: 0.5rem 0.75rem; }
+      .legend { margin: 0.125rem 0 0; width: 100%; gap: 0.5rem 0.75rem; padding-top: 0.625rem; border-top: 0.0625rem solid var(--color-graphite-100); }
+      .legend__item { font-size: 0.6875rem; }
     }
   </style>
 </head>
